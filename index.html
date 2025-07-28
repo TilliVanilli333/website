@@ -844,7 +844,93 @@
             margin: 0;
         }
 
-        
+
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            max-width: 350px;
+            background: rgba(0, 8, 20, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(79, 172, 254, 0.2);
+            z-index: 1000;
+            color: white;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-in-out;
+            pointer-events: none;
+        }
+
+        .cookie-banner.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .cookie-banner h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #4facfe;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cookie-banner h3::before {
+            content: '🚀';
+            font-size: 1.2rem;
+        }
+
+        .cookie-banner p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #e0e0e0;
+            margin-bottom: 15px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            width: 20px;
+            height: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px;
+            line-height: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: rgba(255, 255, 255, 1);
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+
+        /* Responsive Cookie Banner */
+        @media (max-width: 768px) {
+            .cookie-banner {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                margin: 0 10px;
+            }
+        }
+
+
         /* Responsive */
         @media (max-width: 768px) {
             .main-content h1 {
@@ -1104,6 +1190,8 @@
                     <div class="footer-links">
                         <a href="impressum.html">Impressum</a>
                         <span class="footer-separator">|</span>
+                        <a href="datenschutz.html">Datenschutz</a>
+                        <span class="footer-separator">|</span>
                         <a href="mailto:desk@diskurs-niederrhein.de">Kontakt</a>
                     </div>
                     <div class="footer-copyright">
@@ -1111,6 +1199,13 @@
                     </div>
                 </div>
             </footer>
+        </div>
+
+        <!-- Cookie Banner -->
+        <div class="cookie-banner" id="cookieBanner">
+            <span class="close-btn" id="closeBanner">&times;</span>
+            <h3>Cookie-freie Zone!</h3>
+            <p>Als Medien-Experten verzichten wir bewusst auf Cookies und Tracking. Ihre Privatsphäre ist uns wichtig! 🚀</p>
         </div>
     </div>
 
@@ -1233,10 +1328,46 @@
             }
         }
 
+        // Cookie Banner Functionality
+        let autoCloseTimer;
+
+        function dismissCookieBanner() {
+            const banner = document.getElementById('cookieBanner');
+            banner.classList.remove('show');
+            localStorage.setItem('cookieBannerDismissed', 'true');
+
+            // Stoppe Auto-Close Timer falls noch aktiv
+            if (autoCloseTimer) {
+                clearTimeout(autoCloseTimer);
+            }
+        }
+
+        function checkCookieBanner() {
+            const isDismissed = localStorage.getItem('cookieBannerDismissed');
+
+            if (!isDismissed) {
+                // Banner nach 1s anzeigen
+                setTimeout(() => {
+                    const banner = document.getElementById('cookieBanner');
+                    banner.classList.add('show');
+
+                    // X-Button Event Listener hinzufügen
+                    const closeBtn = document.getElementById('closeBanner');
+                    closeBtn.addEventListener('click', dismissCookieBanner);
+
+                    // Auto-Close nach 8 Sekunden
+                    autoCloseTimer = setTimeout(() => {
+                        dismissCookieBanner();
+                    }, 8000);
+                }, 1000);
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createMainWebsiteStars();
             initPlanetNavigation();
+            checkCookieBanner();
             
             // Navigation functionality
             const navLinks = document.querySelectorAll('.nav a');
