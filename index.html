@@ -129,6 +129,40 @@
             color: #ff4444;
         }
 
+        /* Hamburger Icon - Hidden on Desktop */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 101;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Hamburger Animation when Active */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
         /* Main Content */
         .main-content {
             padding-top: 120px;
@@ -939,9 +973,36 @@
             .main-content p {
                 font-size: 1.2rem;
             }
+            .hamburger {
+                display: flex;
+            }
+            
             .nav {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(0, 8, 20, 0.95);
+                backdrop-filter: blur(15px);
                 flex-direction: column;
-                gap: 20px;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 50px;
+                transition: right 0.3s ease-in-out;
+                gap: 30px;
+            }
+            
+            .nav.active {
+                right: 0;
+            }
+            
+            .nav a {
+                font-size: 20px;
+                padding: 15px;
+                width: 80%;
+                text-align: center;
+                border-bottom: 1px solid rgba(135, 206, 250, 0.1);
             }
             .section-title {
                 font-size: 2rem;
@@ -1003,6 +1064,11 @@
             
             <!-- Header -->
             <header class="header">
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <nav class="nav">
                     <a href="#mission">Demokratiebildung</a>
                     <a href="#raumstation">Raumsta<span style="color: #4facfe;">ti</span>on</a>
@@ -1362,11 +1428,42 @@
             }
         }
 
+        // Mobile Hamburger Menu
+        function initMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const nav = document.querySelector('.nav');
+
+            if (hamburger && nav) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                });
+
+                // Close menu when clicking on nav links
+                const navLinks = nav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                    });
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                    }
+                });
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createMainWebsiteStars();
             initPlanetNavigation();
             checkCookieBanner();
+            initMobileMenu();
             
             // Navigation functionality
             const navLinks = document.querySelectorAll('.nav a');
