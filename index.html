@@ -90,7 +90,7 @@
             width: 100%;
             height: 150%;
             top: -25%;
-            z-index: 2;
+            z-index: 1; /* Sterne hinter dem Inhalt */
             pointer-events: none;
             will-change: transform;
         }
@@ -358,6 +358,22 @@
             align-items: center;
             position: relative;
             z-index: 10;
+        }
+
+        /* Sterne-freie Zone um den Haupttitel */
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70vw;
+            max-width: 700px;
+            height: 20vh;
+            max-height: 250px;
+            background: radial-gradient(circle, #000 60%, rgba(0,0,0,0) 100%);
+            pointer-events: none;
+            z-index: 5;
         }
 
         .main-content h1 {
