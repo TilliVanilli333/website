@@ -37,6 +37,7 @@
             position: relative;
             overflow: hidden;
         }
+
         /* Enhanced Animated Cosmic Dust */
         #main-website::before {
             content: '';
@@ -90,7 +91,7 @@
             width: 100%;
             height: 150%;
             top: -25%;
-            z-index: 1; /* Sterne hinter dem Inhalt */
+            z-index: 1;
             pointer-events: none;
             will-change: transform;
         }
@@ -280,7 +281,6 @@
             }
         }
 
-
         /* Header */
         .header {
             position: fixed;
@@ -360,7 +360,6 @@
             z-index: 10;
         }
 
-
         .main-content h1 {
             font-size: 4rem;
             margin-bottom: 20px;
@@ -378,14 +377,14 @@
             margin-bottom: 40px;
         }
 
-        /* Content Sections - Entfernung der harten Hintergrund-Übergänge */
+        /* Content Sections */
         .content-section {
             padding: 80px 20px;
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
             z-index: 10;
-            background: transparent; /* Entfernt harte Hintergrund-Übergänge */
+            background: transparent;
         }
 
         .section-title {
@@ -407,22 +406,22 @@
             margin: 0 auto;
         }
 
-        /* Interactive Planet Sections */
+        /* Enhanced Planet Sections */
         .planet-sections {
             padding: 80px 20px;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            background: transparent; /* Entfernt harte Hintergrund-Übergänge */
+            background: transparent;
         }
 
         .planet-section {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 60px;
             margin-bottom: 120px;
-            min-height: 500px;
+            min-height: 600px;
             position: relative;
-            scroll-margin-top: 100px; /* Offset for fixed header */
+            scroll-margin-top: 100px;
         }
 
         .planet-section.reverse {
@@ -430,212 +429,90 @@
         }
 
         .planet-wrapper {
-            flex: 0 0 300px;
+            flex: 0 0 280px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             position: relative;
+            padding-top: 20px;
         }
 
         .planet-large {
-            width: 280px;
-            height: 280px;
+            width: 260px;
+            height: 260px;
             border-radius: 50%;
             position: relative;
             z-index: 3;
             box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
             overflow: hidden;
             animation: planetFloat 10s ease-in-out infinite;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            transform: scale(1);
-        }
-
-        .planet-large:hover {
-            transform: scale(0.95) !important;
-        }
-
-        .planet-large.clicked {
-            transform: scale(1.15) !important;
-            transition: transform 0.1s ease;
         }
 
         .content-wrapper {
             flex: 1;
-            max-width: 600px;
-        }
-
-        .planet-nav {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            justify-content: flex-start;
-        }
-
-        .planet-section.reverse .planet-nav {
-            justify-content: flex-end;
-        }
-
-        .nav-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-dot.active {
-            background: rgba(255, 255, 255, 0.9);
-            transform: scale(1.3);
-        }
-
-        .content-slide {
-            display: none;
-            animation: slideIn 0.5s ease-in-out;
-        }
-
-        .content-slide.active {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
+            max-width: none;
         }
 
         .content-title {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+            font-size: 2.8rem;
+            margin-bottom: 30px;
             font-weight: 300;
             letter-spacing: 1px;
+            line-height: 1.2;
         }
 
         .content-text {
-            font-size: 1.1rem;
-            line-height: 1.7;
+            font-size: 1.2rem;
+            line-height: 1.8;
             color: #d0d0d0;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            text-align: left;
         }
 
-        .gif-placeholder {
-            width: 100%;
-            height: 200px;
+        .content-highlight {
             background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-left: 4px solid;
+            padding: 20px;
+            margin: 25px 0;
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .content-list {
+            color: #d0d0d0;
+            margin: 20px 0;
+            padding-left: 25px;
+            line-height: 1.8;
+        }
+
+        .content-list li {
+            margin-bottom: 12px;
             font-size: 1.1rem;
-            transition: all 0.3s ease;
         }
 
-        .gif-placeholder:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        /* Chart animations */
-        @keyframes drawLarge {
-            0% { stroke-dasharray: 0 469.94; }
-            100% { stroke-dasharray: 427.53 42.41; }
-        }
-
-        @keyframes drawSmall {
-            0% { stroke-dasharray: 0 469.94; }
-            100% { stroke-dasharray: 42.41 427.53; }
-        }
-
-        /* Planet-style chart animations */
-        @keyframes drawLargeOuter {
-            0% { stroke-dasharray: 0 533.84; }
-            100% { stroke-dasharray: 485.28 48.56; }
-        }
-
-        @keyframes drawSmallInner {
-            0% { stroke-dasharray: 0 439.3; }
-            100% { stroke-dasharray: 39.27 400.03; }
-        }
-
-        @keyframes chartGlow {
-            0% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.3), inset 0 0 40px rgba(0,0,0,0.3); }
-            100% { box-shadow: 0 0 60px rgba(255, 107, 53, 0.6), inset 0 0 60px rgba(0,0,0,0.2); }
-        }
-
-        @keyframes cosmicRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeInLine {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes fadeInText {
-            0% { opacity: 0; transform: translateY(5px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes particleFloat1 {
-            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
-            50% { transform: translateY(-8px) scale(1.2); opacity: 1; }
-        }
-
-        @keyframes particleFloat2 {
-            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
-            50% { transform: translateY(-6px) translateX(3px); opacity: 1; }
-        }
-
-        @keyframes particleFloat3 {
-            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.5; }
-            50% { transform: translateY(-10px) scale(0.8); opacity: 0.9; }
+        .citation {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            margin: 10px 0 25px 0;
+            line-height: 1.3;
+            font-style: italic;
         }
 
         /* Planet-specific colors */
         .planet-section-1 .content-title { color: #4facfe; }
-        .planet-section-1 .nav-dot.active { background: #4facfe; }
+        .planet-section-1 .content-highlight { border-color: #4facfe; }
 
         .planet-section-2 .content-title { color: #667eea; }
-        .planet-section-2 .nav-dot.active { background: #667eea; }
+        .planet-section-2 .content-highlight { border-color: #667eea; }
 
         .planet-section-3 .content-title { color: #56ab2f; }
-        .planet-section-3 .nav-dot.active { background: #56ab2f; }
+        .planet-section-3 .content-highlight { border-color: #56ab2f; }
 
         .planet-section-4 .content-title { color: #ff6b35; }
-        .planet-section-4 .nav-dot.active { background: #ff6b35; }
+        .planet-section-4 .content-highlight { border-color: #ff6b35; }
 
         @keyframes planetFloat {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
-        }
-
-        @keyframes techPatterns {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes spaceRings {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(-360deg); }
-        }
-
-        @keyframes naturePulse {
-            0%, 100% { opacity: 0.7; transform: rotate(0deg); }
-            50% { opacity: 1; transform: rotate(0deg); }
-        }
-
-        @keyframes fireWaves {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(0deg); }
-        }
-
-        @keyframes planetBounce {
-            0% { transform: scale(1.05); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1.05); }
         }
 
         /* Mission Planet - Blue Tech Planet */
@@ -660,162 +537,14 @@
             animation: techPatterns 20s linear infinite;
         }
 
-        .planet-mission::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80px;
-            height: 80px;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(135,206,250,0.6) 30%, transparent 70%);
-            border-radius: 50%;
-            animation: coreGlow 3s ease-in-out infinite alternate;
-        }
-
-        /* Data visualization version of mission planet */
-        .planet-mission.data-active {
-            background: radial-gradient(circle at 30% 30%, #4facfe 0%, #00f2fe 40%, #1e3c72 80%, #0f1419 100%);
-            animation: planetFloat 8s ease-in-out infinite, dataVisualizationGlow 4s ease-in-out infinite alternate;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .planet-mission.data-active::before {
-            background: 
-                radial-gradient(circle at 60% 20%, rgba(255,255,255,0.2) 0%, transparent 25%),
-                radial-gradient(circle at 20% 70%, rgba(135,206,250,0.3) 0%, transparent 35%);
-            animation: dataOverlayRotate 25s linear infinite;
-        }
-
-        .planet-mission.data-active::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: conic-gradient(from 0deg, 
-                #ff6b35 0deg, 
-                #ff6b35 0deg, 
-                transparent 0deg, 
-                transparent 360deg);
-            border-radius: 50%;
-            animation: dataFillAnimation 3s ease-in-out forwards;
-            z-index: 2;
-        }
-
-        /* Data labels overlay */
-        .planet-mission .data-labels {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        .planet-mission.data-active .data-labels {
-            display: block;
-            animation: labelsAppear 1s ease-in-out 2.5s forwards;
-            opacity: 0;
-        }
-
-        .data-label-91 {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: rgba(255,255,255,0.95);
-            font-size: 22px;
-            font-weight: bold;
-            text-shadow: 0 0 8px rgba(79,172,254,0.7);
-            z-index: 10;
-        }
-
-        .data-label-9 {
-            position: absolute;
-            top: 25%;
-            right: 20%;
-            color: rgba(255,255,255,0.95);
-            font-size: 14px;
-            font-weight: bold;
-            text-shadow: 0 0 6px rgba(255,107,53,0.8);
-            z-index: 10;
-        }
-
         @keyframes missionGlow {
             0% { box-shadow: 0 0 40px rgba(0, 242, 254, 0.3), 0 0 80px rgba(79, 172, 254, 0.2); }
             100% { box-shadow: 0 0 60px rgba(0, 242, 254, 0.6), 0 0 120px rgba(79, 172, 254, 0.4); }
         }
 
-        @keyframes dataVisualizationGlow {
-            0% { box-shadow: 0 0 50px rgba(79, 172, 254, 0.4), 0 0 100px rgba(79, 172, 254, 0.3); }
-            100% { box-shadow: 0 0 80px rgba(79, 172, 254, 0.7), 0 0 150px rgba(255, 107, 53, 0.3); }
-        }
-
-        @keyframes planetDataTransform {
-            0% { 
-                background: radial-gradient(circle at 30% 30%, #4facfe 0%, #00f2fe 40%, #1e3c72 80%, #0f1419 100%);
-                transform: scale(1);
-            }
-            50% { 
-                transform: scale(1.05);
-            }
-            100% { 
-                background: conic-gradient(from 0deg, 
-                    #ff6b35 0deg, 
-                    #ff6b35 327.6deg, 
-                    #4facfe 327.6deg, 
-                    #4facfe 360deg);
-                transform: scale(1);
-            }
-        }
-
-        @keyframes dataFillAnimation {
-            0% { 
-                background: conic-gradient(from 0deg, 
-                    #ff6b35 0deg, 
-                    #ff6b35 0deg, 
-                    transparent 0deg, 
-                    transparent 360deg);
-            }
-            50% { 
-                background: conic-gradient(from 0deg, 
-                    #ff6b35 0deg, 
-                    #ff6b35 16.2deg, 
-                    transparent 16.2deg, 
-                    transparent 360deg);
-            }
-            100% { 
-                background: conic-gradient(from 0deg, 
-                    #ff6b35 0deg, 
-                    #ff6b35 32.4deg, 
-                    transparent 32.4deg, 
-                    transparent 360deg);
-            }
-        }
-
-        @keyframes dataOverlayRotate {
+        @keyframes techPatterns {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        @keyframes dataCoreGlow {
-            0% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.9); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        @keyframes labelsAppear {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes coreGlow {
-            0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.8); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
         }
 
         /* Raumstation Planet - Purple Space Planet */
@@ -840,26 +569,14 @@
             animation: spaceRings 25s linear infinite;
         }
 
-        .planet-raumstation::after {
-            content: '';
-            position: absolute;
-            top: 30%;
-            right: 15%;
-            width: 8px;
-            height: 8px;
-            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: spaceshipOrbit 8s linear infinite;
-        }
-
         @keyframes stationGlow {
             0% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.4), 0 0 80px rgba(118, 75, 162, 0.3); }
             100% { box-shadow: 0 0 60px rgba(102, 126, 234, 0.7), 0 0 120px rgba(118, 75, 162, 0.5); }
         }
 
-        @keyframes spaceshipOrbit {
-            0% { transform: rotate(0deg) translateX(60px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+        @keyframes spaceRings {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
         }
 
         /* Paedagogik Planet - Green Nature Planet */
@@ -884,27 +601,14 @@
             animation: naturePulse 18s ease-in-out infinite;
         }
 
-        .planet-paedagogik::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 12px;
-            height: 12px;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(86,171,47,0.7) 50%, transparent 70%);
-            border-radius: 50%;
-            animation: growthPulse 4s ease-in-out infinite;
-        }
-
         @keyframes natureGlow {
             0% { box-shadow: 0 0 40px rgba(86, 171, 47, 0.4), 0 0 80px rgba(168, 230, 207, 0.3); }
             100% { box-shadow: 0 0 60px rgba(86, 171, 47, 0.7), 0 0 120px rgba(168, 230, 207, 0.5); }
         }
 
-        @keyframes growthPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.3); }
+        @keyframes naturePulse {
+            0%, 100% { opacity: 0.7; transform: rotate(0deg); }
+            50% { opacity: 1; transform: rotate(0deg); }
         }
 
         /* Team Planet - Orange Fire Planet */
@@ -929,92 +633,14 @@
             animation: fireWaves 22s ease-in-out infinite;
         }
 
-        .planet-team::after {
-            content: '';
-            position: absolute;
-            top: 30%;
-            left: 30%;
-            width: 10px;
-            height: 10px;
-            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,215,0,0.8) 50%, transparent 70%);
-            border-radius: 50%;
-            animation: energyBolt 2s ease-in-out infinite alternate;
-        }
-
         @keyframes fireGlow {
             0% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.5), 0 0 80px rgba(247, 147, 30, 0.4); }
             100% { box-shadow: 0 0 60px rgba(255, 107, 53, 0.8), 0 0 120px rgba(247, 147, 30, 0.6); }
         }
 
-        @keyframes energyBolt {
-            0% { opacity: 0.6; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Planet Info */
-        .planet-info {
-            z-index: 10;
-            position: relative;
-        }
-
-        .planet-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-
-        .planet-mission .planet-info h3 { color: #4facfe; }
-        .planet-raumstation .planet-info h3 { color: #667eea; }
-        .planet-paedagogik .planet-info h3 { color: #56ab2f; }
-        .planet-team .planet-info h3 { color: #ff6b35; }
-
-        .planet-info p {
-            color: #d0d0d0;
-            line-height: 1.6;
-            font-size: 1rem;
-            max-width: 280px;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            padding: 60px 20px;
-            text-align: center;
-            background: transparent; /* Entfernt harte Hintergrund-Übergänge */
-        }
-
-        .hero-title {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            font-weight: 300;
-            color: #87ceeb;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: #a8dadc;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
-        }
-
-        /* Button */
-        .cta-button {
-            display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #ff4444, #ff6b6b);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .cta-button:hover {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+        @keyframes fireWaves {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(0deg); }
         }
 
         /* Footer */
@@ -1063,7 +689,6 @@
         .footer-copyright p {
             margin: 0;
         }
-
 
         /* Cookie Banner */
         .cookie-banner {
@@ -1139,18 +764,6 @@
             transform: scale(1.1);
         }
 
-        /* Responsive Cookie Banner */
-        @media (max-width: 768px) {
-            .cookie-banner {
-                bottom: 10px;
-                right: 10px;
-                left: 10px;
-                max-width: none;
-                margin: 0 10px;
-            }
-        }
-
-
         /* Responsive */
         @media (max-width: 768px) {
             .main-content h1 {
@@ -1190,40 +803,37 @@
                 text-align: center;
                 border-bottom: 1px solid rgba(135, 206, 250, 0.1);
             }
+            
             .section-title {
                 font-size: 2rem;
             }
-            .hero-title {
+            
+            .content-title {
                 font-size: 2.2rem;
             }
+            
             .planet-section {
                 flex-direction: column !important;
                 text-align: center;
                 gap: 40px;
+                align-items: center;
             }
+            
             .planet-section.reverse {
                 flex-direction: column !important;
             }
+            
             .planet-wrapper {
                 flex: none;
             }
+            
             .planet-large {
-                width: 220px;
-                height: 220px;
-            }
-            .planet-nav {
-                justify-content: center !important;
+                width: 200px;
+                height: 200px;
             }
             
-            /* Mobile chart adjustments */
-            .content-slide .planet-chart-wrapper {
-                flex: none !important;
-                margin-top: 20px;
-            }
-            
-            .content-slide > div {
-                flex-direction: column !important;
-                gap: 20px !important;
+            .content-text {
+                text-align: left;
             }
 
             .footer-links {
@@ -1238,6 +848,14 @@
             .footer-links a {
                 margin: 5px 0;
             }
+
+            .cookie-banner {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                margin: 0 10px;
+            }
         }
     </style>
 </head>
@@ -1245,7 +863,7 @@
     <div class="page-container">
         <!-- Main Website -->
         <div id="main-website">
-              <!-- Enhanced Stars Container -->
+            <!-- Enhanced Stars Container -->
             <div class="main-website-stars" id="mainWebsiteStars"></div>
             
             <!-- Header -->
@@ -1271,45 +889,45 @@
 
             <!-- Planet Sections -->
             <section id="planets" class="planet-sections">
-                <!-- Mission & Vision - Links -->
+                <!-- Demokratiebildung - Links -->
                 <div class="planet-section planet-section-1" id="mission">
                     <div class="planet-wrapper">
-                        <div class="planet-large planet-mission" id="missionPlanet">
-                            <div class="liquid-waves"></div>
-                            <div class="data-labels">
-                                <div class="data-label-91">91%</div>
-                                <div class="data-label-9">9%</div>
-                            </div>
-                        </div>
+                        <div class="planet-large planet-mission"></div>
                     </div>
                     <div class="content-wrapper">
-                        <div class="planet-nav">
-                            <div class="nav-dot active" data-slide="0"></div>
-                            <div class="nav-dot" data-slide="1"></div>
-                            <div class="nav-dot" data-slide="2"></div>
-                        </div>
+                        <h3 class="content-title">Vier wichtige Dinge für Bildung und Demokratie</h3>
                         
-                        <div class="content-slide active">
-                            <h3 class="content-title">Unsere Aufgabe: Demokratie & Bildung</h3>
-                            <p class="content-text"><strong>Die Bildungslandschaft steht unter Druck:</strong> Kinder, Jugendliche und Fachkräfte stehen vor immer größer werdenden Herausforderungen.</p>
-                            <p class="content-text">Das Deutsche Schulbarometer 2025 zeigt: Nur 9 % der Jugendlichen fühlen sich ausreichend über demokratische Prozesse informiert.</p>
-                            <p style="font-size: 10px; color: rgba(255,255,255,0.5); margin: 5px 0 20px 0; line-height: 1.3;">
-                                Limpert, A.-L. (2025, 25. Juni). <em>Demokratiebildung: „Viele Schulen sind gekippt" – Interview mit Anja Besand</em>. Deutsches Schulportal.
-                            </p>
-                            <p class="content-text"><strong>Wenn wir Demokratie stärken wollen, müssen wir Bildung stärken.</strong></p>
+                        <div class="content-highlight">
+                            <ul class="content-list">
+                                <li><strong>Neue gesellschaftliche Impulse anregen</strong></li>
+                                <li><strong>Sichere Räume schaffen:</strong> Fremdes wird nicht als Bedrohung wahrgenommen, sondern Lösungen werden gemeinsam gestaltet</li>
+                                <li><strong>Kinder und Jugendliche stärken,</strong> damit sie Zukunftsproblemen nicht ohnmächtig gegenüberstehen, sondern sich als aktive Gestalter erleben</li>
+                                <li><strong>Engagement für Demokratie</strong> – damit aus Handeln Haltung wird</li>
+                            </ul>
                         </div>
+
+                        <p class="content-text"><strong>Warum wir genauer hinschauen müssen:</strong></p>
+                        <p class="content-text">Demokratiebildung braucht eine solide Grundlage. Studien zeigen, dass viele Jugendliche in NRW nur über begrenztes politisches Wissen verfügen und damit weniger sicher im Umgang mit demokratischen Prozessen sind. Diese Erkenntnis macht deutlich: Schulen und Bildungspartner stehen vor der Aufgabe, Kinder und Jugendliche gezielt zu stärken.</p>
                         
-                        <div class="content-slide">
-                            <h3 class="content-title">Unsere Pflicht als Pädagogen</h3>
-                            <p class="content-text">Deshalb setzen wir auf Partizipation und Inklusion im pädagogischen Alltag und beteiligen alle Kinder und Jugendlichen an der Mitgestaltung ihrer Lebenswelt. Durch unsere Raumsta<span style="color: #87ceeb;">ti</span>on-Pädagogik fördern wir Selbstwirksamkeit, kritisches Hinterfragen und eigenständige Entscheidungen – Grundlagen für wichtige Zukunftskompetenzen.</p>
-                            <img src="images/demokratie1.gif" alt="Pädagogische Pflicht" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1);">
-                        </div>
+                        <p class="content-text">Genau hier setzen wir an, mit Projekten, die Wissen vertiefen, Kompetenzen fördern und Demokratie erlebbar machen.</p>
                         
-                        <div class="content-slide">
-                            <h3 class="content-title">Unsere Vision</h3>
-                            <p class="content-text">Kinderrechte ins Grundgesetz und die Lösung schwieriger gesellschaftlicher Herausforderungen durch eine hervorragende Bildung. Deutschland muss wieder Vorbild bei Bildung im internationalen Vergleich werden. Durch unsere Arbeit bei Diskurs Niederrhein, mit den Institutionen, Fachkräften, Entscheidungstragenden und Kindern und Jugendlichen, tragen wir mit aller Kraft dazu bei, dieses Ziel zu erreichen.</p>
-                            <img src="images/demokratie2.gif" alt="Vision" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1);">
-                        </div>
+                        <img src="images/demokratie1.gif" alt="Pädagogische Pflicht" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1); margin: 20px 0;">
+                        
+                        <p class="content-text">Die Grafik zeigt, dass nur 36 % der Schülerinnen und Schüler in NRW über ein hohes konzeptionelles politisches Wissen verfügen und politische Argumente multiperspektivisch einordnen können. Gleichzeitig erreicht ein erheblicher Teil nur die unteren Kompetenzstufen, was bedeutet, dass ihnen grundlegendes Wissen und die Fähigkeit zum politischen Argumentieren noch fehlt.</p>
+                        
+                        <p class="citation">Grafik eigen Darstellung: Quelle: Sudies et al. (2024), ICCS 2022 Länderbericht Deutschland (NRW).</p>
+
+                        <h4 style="color: #4facfe; font-size: 1.4rem; margin: 30px 0 15px 0;">Unsere Projekte: Kinder gestalten Gesellschaft</h4>
+                        <p class="content-text">Kinderrechte-Ausstellungen, Demokratie-Workshops oder Stadtplanungsprojekte – in der Raumstation gestalten Kinder aktiv ihre Zukunft. Unsere Projekte basieren auf den Kinderrechten und geben Kindern und Jugendlichen das Vertrauen und die Verantwortung, die sie verdienen.</p>
+                        
+                        <p class="content-text">Dabei erwerben sie wichtige Kompetenzen für die Welt von morgen: kreativ denken, Verantwortung übernehmen, Lösungen entwickeln. Wir trauen ihnen zu, Gesellschaft nicht nur zu erleben, sondern sie mitzugestalten.</p>
+
+                        <h4 style="color: #4facfe; font-size: 1.4rem; margin: 30px 0 15px 0;">Unsere Vision: Bildung neu denken</h4>
+                        <p class="content-text">Wir glauben: Bildung muss mehr sein als Wissensvermittlung. In der Raumstation lernen Kinder, ihre Rechte zu kennen, Verantwortung zu übernehmen und Gesellschaft mitzugestalten. So entstehen Haltungen und Kompetenzen, die in keiner Prüfung abgefragt werden, aber über unsere gemeinsame Zukunft entscheiden.</p>
+                        
+                        <img src="images/demokratie2.gif" alt="Vision" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1); margin: 20px 0;">
+                        
+                        <p class="content-text"><strong>Kinderrechte ins Grundgesetz:</strong> Wir setzen uns dafür ein, dass Kinderrechte nicht nur anerkannt, sondern rechtlich fest verankert werden. Denn eine starke Demokratie beginnt mit starken Rechten für Kinder.</p>
                     </div>
                 </div>
 
@@ -1319,71 +937,86 @@
                         <div class="planet-large planet-raumstation"></div>
                     </div>
                     <div class="content-wrapper">
-                        <div class="planet-nav">
-                            <div class="nav-dot active" data-slide="0"></div>
-                            <div class="nav-dot" data-slide="1"></div>
-                            <div class="nav-dot" data-slide="2"></div>
-                        </div>
+                        <h3 class="content-title">Die Raumsta<span style="color: #667eea;">ti</span>on: Was, Wie, Warum</h3>
                         
-                        <div class="content-slide active">
-                            <h3 class="content-title">Raumsta<span style="color: #667eea;">ti</span>on-Projekte</h3>
-                            <p class="content-text">Seit nun 5 Jahren etablieren wir im gesamten Kreis Kleve Projekte in Kitas und Schulen, in denen Kinder und Jugendliche durch die Raumsta<span style="color: #667eea;">ti</span>on-Pädagogik bis heute individuell gefördert werden. Hier vermitteln wir Kompetenzen, die sie befähigen, ihre Zukunft selbstbewusst und sicher zu gestalten. Gleichzeitig entwickeln wir Lösungen für Fachkräfte und Institutionen, um sie bei ihrer Arbeit zu unterstützen.</p>
-                            <img src="images/stuhl.gif" alt="Raumstation-Projekte" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(102, 126, 234, 0.4); box-shadow: 0 0 15px rgba(102, 126, 234, 0.3), 0 0 30px rgba(102, 126, 234, 0.15), inset 0 0 10px rgba(102, 126, 234, 0.1);">
-                        </div>
+                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 0 0 15px 0;">Was wir tun: Raumstation-Projekte</h4>
+                        <p class="content-text">Seit fünf Jahren setzen wir im gesamten Kreis Kleve Projekte in Kitas und Schulen um. Durch die Raumstation-Pädagogik werden Kinder und Jugendliche individuell gefördert und erwerben Kompetenzen, die sie befähigen, ihre Zukunft selbstbewusst und sicher zu gestalten.</p>
                         
-                        <div class="content-slide">
-                            <h3 class="content-title">Raumsta<span style="color: #667eea;">ti</span>on-Pädagogik</h3>
-                            <p class="content-text">Die Raumsta<span style="color: #667eea;">ti</span>on-Pädagogik lässt pädagogische Situationen zu einem sicheren Raum werden, in dem Kinder eine intensive Zeit (time intensive) erleben.</p>
-                            <p class="content-text" style="margin-top: 15px;"><strong>Die wichtigsten Merkmale:</strong></p>
-                            <ul style="color: #d0d0d0; margin: 15px 0; padding-left: 20px; line-height: 1.6;">
-                                <li>Wertschätzen ohne zu bewerten</li>
-                                <li>Die Kinderrechte bilden die Basis der Raumsta<span style="color: #667eea;">ti</span>on-Pädagogik</li>
-                                <li>Die Kinder sind an jeder Stufe des Gesamtprozesses beteiligt</li>
-                                <li>Sie sind kompetent</li>
-                                <li>Neugier und Begeisterung sind ihr Antrieb</li>
-                                <li>Raumsta<span style="color: #667eea;">ti</span>on-Fachkräfte geben individuelle Lernimpulse</li>
-                                <li>Sie schaffen einen sicheren Raum für optimale Förderbedingungen</li>
+                        <p class="content-text">Gemeinsam mit den Institutionen vor Ort entwickeln wir Formate, die passgenau sind und sich direkt in den Schul- und Kita-Alltag implementieren lassen. So entstehen Lösungen, die wirken, heute und morgen.</p>
+
+                        <img src="images/stuhl.gif" alt="Raumstation-Projekte" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(102, 126, 234, 0.4); box-shadow: 0 0 15px rgba(102, 126, 234, 0.3), 0 0 30px rgba(102, 126, 234, 0.15), inset 0 0 10px rgba(102, 126, 234, 0.1); margin: 20px 0;">
+
+                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 30px 0 15px 0;">Wie wir es tun: Raumstation-Pädagogik</h4>
+                        <p class="content-text">Die Raumstation-Pädagogik verwandelt pädagogische Situationen in sichere Räume, in denen Kinder eine intensive und prägende Zeit erleben.</p>
+                        
+                        <div class="content-highlight">
+                            <p style="font-weight: 600; margin-bottom: 15px; color: #667eea;">Ihre Merkmale:</p>
+                            <ul class="content-list">
+                                <li>Wertschätzung statt Bewertung</li>
+                                <li>Kinderrechte als Fundament jeder Situation</li>
+                                <li>Beteiligung auf allen Ebenen des Prozesses</li>
+                                <li>Anerkennung kindlicher Kompetenz</li>
+                                <li>Neugier und Begeisterung als Motor</li>
+                                <li>Individuelle Lernimpulse durch Raumstation-Fachkräfte</li>
+                                <li>Sichere Räume für optimale Entwicklungsbedingungen</li>
                             </ul>
                         </div>
+
+                        <p class="content-text">Der methodische Ansatz der Raumstation verbindet Bewährtes mit Neuem. Wir setzen auf traditionelle pädagogische Methoden, die Kindern ermöglichen, die Welt mit allen Sinnen zu erfahren, durch Anfassen, Riechen, Begreifen und unmittelbares Erleben.</p>
                         
-                        <div class="content-slide">
-                            <h3 class="content-title">Unsere Pädagogik setzt auf:</h3>
-                            <p class="content-text">Medien als Chance. Kinderperspektive als wichtiger Ausgangspunkt für Demokratiebildung und an Kinderrechte, als wichtigster Grundstein für eine faire Bildung!</p>
-                            <img src="images/interviews.gif" alt="Pädagogische Prinzipien" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(102, 126, 234, 0.4); box-shadow: 0 0 15px rgba(102, 126, 234, 0.3), 0 0 30px rgba(102, 126, 234, 0.15), inset 0 0 10px rgba(102, 126, 234, 0.1);">
-                        </div>
+                        <p class="content-text">Zugleich begreifen wir Medien als Chance und setzen sie altersgerecht und reflektiert ein. Richtig eingesetzt sind digitale Werkzeuge kein Ersatz, sondern eine sinnvolle Ergänzung, die neue Ausdrucksformen eröffnet und Kinder in ihrer Medienkompetenz stärkt.</p>
+
+                        <img src="images/interviews.gif" alt="Pädagogische Prinzipien" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(102, 126, 234, 0.4); box-shadow: 0 0 15px rgba(102, 126, 234, 0.3), 0 0 30px rgba(102, 126, 234, 0.15), inset 0 0 10px rgba(102, 126, 234, 0.1); margin: 20px 0;">
+
+                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 30px 0 15px 0;">Warum wir es tun: Unsere Ziele</h4>
+                        <p class="content-text">Wir wollen, dass Kinder nicht ohnmächtig vor Zukunftsproblemen stehen, sondern sie gestalten lernen. Unsere Projekte hinterlassen Wirkung, die bleibt. Sie prägen Haltungen, fördern Beteiligung und machen erfahrbar, dass Gesellschaft nur gemeinsam gelingt.</p>
+                        
+                        <p class="content-text">Gleichzeitig verstehen wir uns als Partner der Fachkräfte. Wir erkennen ihre Expertise und ihre wertvolle Arbeit an und stimmen uns eng mit ihnen ab, um ihre Bedarfe präzise aufzugreifen. Auf dieser Basis entwickeln wir passgenaue Formate, die sich in den Alltag der Institutionen einfügen und gleichzeitig dort ansetzen, wo Unterstützung gebraucht wird.</p>
                     </div>
                 </div>
 
-                <!-- Pädagogik - Links -->
+                <!-- Kinderperspektive - Links -->
                 <div class="planet-section planet-section-3" id="paedagogik">
                     <div class="planet-wrapper">
                         <div class="planet-large planet-paedagogik"></div>
                     </div>
                     <div class="content-wrapper">
-                        <div class="planet-nav">
-                            <div class="nav-dot active" data-slide="0"></div>
-                            <div class="nav-dot" data-slide="1"></div>
-                            <div class="nav-dot" data-slide="2"></div>
+                        <h3 class="content-title">Wünschestadt – Kinder erkunden ihre Kommune</h3>
+                        
+                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 0 0 15px 0;">Ein demokratisches Beteiligungsprojekt für Kinder in der Stadtplanung</h4>
+                        <p class="content-text">Unser Projekt macht sichtbar, wie Kinder ihre Kommune erleben und gibt Impulse für eine Stadtplanung, die ihre Perspektiven ernst nimmt.</p>
+                        
+                        <p class="content-text">Welche Orte lieben sie? Wo fühlen sie sich sicher, wo unsicher? Gibt es Angsträume? Was fehlt ihnen? In Rundgängen durch ihre Stadt führen Kinder unser Raumstation-Team zu den Orten, die für sie Bedeutung haben, von Lieblingsplätzen bis zu Bereichen, die ihnen Sorgen machen.</p>
+                        
+                        <p class="content-text">So wird deutlich, wie die Stadt mit Kinderaugen wahrgenommen wird – eine wichtige Perspektive, die bislang in der Stadtplanung wenig Beachtung findet.</p>
+
+                        <img src="images/WünschestadtGif1.gif" alt="Stadtbegehung aus der Kinderperspektive" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.3); margin: 20px 0;">
+
+                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 30px 0 15px 0;">Methoden: Analog trifft Digital</h4>
+                        <p class="content-text">Traditionelles Erleben und digitale Werkzeuge verbinden sich zu neuen Beteiligungsformen. Die gesamte Projektzeit ist Raumstation-Zeit. Während der Stadtbegehungen und in den kreativen Phasen danach kommen Kinder in all ihren Ausdrucksformen zu Wort.</p>
+                        
+                        <p class="content-text">Wir hören zu, beobachten und führen Interviews. Kinder malen, zeichnen oder bauen Modelle und setzen sich so mit ihrer Stadt auseinander. Digitale Methoden wie QR-Codes, Collagen oder Stop-Motion erweitern diese Möglichkeiten.</p>
+                        
+                        <p class="content-text">So entsteht ein besonderer Raum, in dem Kinder uns ihre Sichtweise näher bringen und uns zeigen, wie sie sich ihre Stadt wünschen – eben: Wünschestadt!</p>
+
+                        <img src="images/WünschestadtGif2.gif" alt="Verbindung von Analogem und Digitalem" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.3); margin: 20px 0;">
+
+                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 30px 0 15px 0;">Ein Stadtplan aus Kinderperspektive</h4>
+                        <p class="content-text">Mit der Wünschestadt entsteht ein Stadtplan aus Kinderperspektive, einzigartig für Ihre Kommune. Sie erfahren, was Kinder bewegt, welche Orte sie lieben, wo sie Unsicherheiten spüren und welche Ideen sie für die Zukunft haben.</p>
+                        
+                        <div class="content-highlight">
+                            <p style="font-weight: 600; margin-bottom: 15px; color: #56ab2f;">Das zeigt, wie Ihre Stadt ist:</p>
+                            <ul class="content-list">
+                                <li><strong>Kinderfreundlich</strong> – Sie geben den jüngsten Bürgern und Bürgerinnen Raum, ihre Sicht einzubringen</li>
+                                <li><strong>Innovativ</strong> – Sie nutzen ein Beteiligungsformat, das analoge und digitale Methoden verbindet</li>
+                                <li><strong>Demokratisch</strong> – Sie machen deutlich, dass Partizipation ernst genommen wird</li>
+                                <li><strong>Attraktiv</strong> – Sie setzen ein Zeichen für Familienfreundlichkeit und Zukunftsgestaltung</li>
+                            </ul>
                         </div>
                         
-                        <div class="content-slide active">
-                            <h3 class="content-title">Stadtbegehung aus der Kinderperspektive</h3>
-                            <p class="content-text">Die Wünschestadt zeigt, was den Kindern und Jugendlichen wirklich wichtig ist. Was wünschen sie sich für ihre Heimat? Welche Veränderungen braucht es? Wo sind Angsträume? Wir kommen ins Gespräch.</p>
-                            <p class="content-text">Kinder und Jugendliche führen unser Raumstation-Team durch ihre Stadt und zeigen die Orte, die ihnen besonders wichtig sind.</p>
-                            <img src="images/WünschestadtGif1.gif" alt="Stadtbegehung aus der Kinderperspektive" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.3);">
-                        </div>
-                        
-                        <div class="content-slide">
-                            <h3 class="content-title">Verbindung von Analogem und Digitalem</h3>
-                            <p class="content-text">Nach der Stadtbegehung setzen wir uns mit gestalterischen Methoden gemeinsam mit den Bedürfnissen und Wünschen der Kinder und Jugendlichen auseinander. Die Wünschestadt entsteht.</p>
-                            <img src="images/WünschestadtGif2.gif" alt="Verbindung von Analogem und Digitalem" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.3);">
-                        </div>
-                        
-                        <div class="content-slide">
-                            <h3 class="content-title">Ein Stadtplan aus Kinderperspektive</h3>
-                            <p class="content-text">Am Ende entsteht eine Miniatur-Stadt, ein Stadtplan aus Kinderperspektiven, bei dem alle Ideen der Kinder und Jugendlichen zu den einzelnen Stadtteilen und Gebäuden festgehalten und wissenschaftlich ausgewertet werden. Die Kommune erhält nun die Version ihrer Stadt, wie sie von den kleinsten Bewohnerinnen und Bewohnern erlebt wird.</p>
-                            <img src="images/crowd.gif" alt="Stadtplan aus Kinderperspektive" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.4); box-shadow: 0 0 15px rgba(86, 171, 47, 0.3), 0 0 30px rgba(86, 171, 47, 0.15), inset 0 0 10px rgba(86, 171, 47, 0.1);">
-                        </div>
+                        <p class="content-text">So gewinnt Ihre Kommune Impulse, die unmittelbar in die Stadtentwicklung einfließen und zeigt gleichzeitig, dass sie Kinder und Jugendliche als wichtigen Teil der Gesellschaft wertschätzt.</p>
+
+                        <img src="images/crowd.gif" alt="Stadtplan aus Kinderperspektive" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.4); box-shadow: 0 0 15px rgba(86, 171, 47, 0.3), 0 0 30px rgba(86, 171, 47, 0.15), inset 0 0 10px rgba(86, 171, 47, 0.1); margin: 20px 0;">
                     </div>
                 </div>
 
@@ -1393,36 +1026,34 @@
                         <div class="planet-large planet-team"></div>
                     </div>
                     <div class="content-wrapper">
-                        <div class="planet-nav">
-                            <div class="nav-dot active" data-slide="0"></div>
-                            <div class="nav-dot" data-slide="1"></div>
-                            <div class="nav-dot" data-slide="2"></div>
-                        </div>
+                        <h3 class="content-title">Das Team Raumstation: Wissenschaft & Praxis vereint</h3>
                         
-                        <div class="content-slide active">
-                            <h3 class="content-title">Unser Team: Expertise aus der Pädagogik</h3>
-                            <p class="content-text">Wir bringen Fachwissen rund um Lernpsychologie, Didaktik und Bildungstheorien mit ein. Unsere Fachkräfte sind auf dem neuesten pädagogischen Stand.</p>
-                            <p class="content-text">Mit diesem Fundament entwickeln wir effektive Lernkonzepte, die auf wissenschaftlicher Basis eine optimale Förderung aller Lernenden ermöglichen.</p>
-                            <p class="content-text">Diese pädagogische Expertise fließt in die Gestaltung innovativer Projekte ein, prägt die Durchführung unserer Lehrgänge und ist die Basis für fundierte Beratung.</p>
-                            <img src="images/galaxieraum.gif" alt="Pädagogische Expertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1);">
-                        </div>
+                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 0 0 15px 0;">Kinderrechte sind unser Fundament – Wertschätzung unser Prinzip</h4>
+                        <p class="content-text">Kinder sind unsere Passion, ihre Rechte der Kompass unseres Handelns. Unser Ansatz: Wertschätzen statt bewerten.</p>
                         
-                        <div class="content-slide">
-                            <h3 class="content-title">Expertise aus der Beratung</h3>
-                            <p class="content-text">Aus der Beratung unterschiedlichster Bildungsinstitutionen zeichnen wir uns durch Wissen rund um Organisationsentwicklung, Prozessoptimierung und Personalentwicklung aus.</p>
-                            <p class="content-text">Wir analysieren die individuellen Bedarfe und Ziele und erarbeiten passgenaue Lösungsvorschläge. Durch kommunikative und analytische Fähigkeiten gelingt es uns auch, komplexe Sachverhalte verständlich aufzubereiten und konstruktiv mit allen Beteiligten zusammenzuarbeiten.</p>
-                            <p class="content-text">Wir vermitteln praxisrelevante Methoden und begleiten deren erfolgreiche Umsetzung.</p>
-                            <img src="images/gifemmerichpan.gif" alt="Beratungsexpertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1);">
-                        </div>
+                        <p class="content-text">Was uns ausmacht: Wir arbeiten mitten im Leben. In großen Kinderrechte-Ausstellungen, in kreativen Beteiligungsprojekten, in der Zusammenarbeit mit Kitas, Schulen und Jugendhilfe. Dort erleben wir täglich, wie viel Kraft in den Ideen von Kindern steckt.</p>
                         
-                        <div class="content-slide">
-                            <h3 class="content-title">Expertise aus der Praxis</h3>
-                            <p class="content-text">Unser Team verfügt über umfassende Praxiserfahrung aus diversen Arbeitsfeldern.</p>
-                            <p class="content-text">Es kennt die täglichen Herausforderungen in Bildungseinrichtungen, Unternehmen und Organisationen aus eigener Erfahrung.</p>
-                            <p class="content-text">Dies ermöglicht es, Bedarfe vor Ort schnell zu erfassen und maßgeschneiderte Lösungen zu entwickeln. Anhand von Praxisbeispielen veranschaulichen wir Theorien und Methoden und machen sie konkret anwendbar.</p>
-                            <p class="content-text">Wir stellen sicher, dass die Konzepte umsetzbar sind und echten Mehrwert schaffen.</p>
-                            <img src="images/november2024.gif" alt="Praxisexpertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1);">
-                        </div>
+                        <p class="content-text">Diese Erfahrungen begeistern uns und treiben uns an, Theorie und Praxis so zu verbinden, dass echte Veränderungen möglich werden, für Kinder, für Fachkräfte, für die Gesellschaft.</p>
+
+                        <img src="images/galaxieraum.gif" alt="Pädagogische Expertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1); margin: 20px 0;">
+
+                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 30px 0 15px 0;">Unsere Kompetenz: Forschung trifft Praxis</h4>
+                        <p class="content-text">Theorie und Praxis verbinden, um Lösungen zu schaffen, die sowohl wissenschaftlich fundiert als auch alltagspraktisch sind. Unser Team vereint wissenschaftliche Forschung und praktische Erfahrung.</p>
+                        
+                        <p class="content-text">Wir entwickeln Projekte auf Basis aktueller Bildungstheorien, Didaktik und Lernpsychologie und setzen sie mit Schulen, Kitas und Institutionen erfolgreich um. Wir beraten, begleiten und schaffen Formate, die passgenau zu den Bedarfen vor Ort passen.</p>
+                        
+                        <p class="content-text">Unsere Stärke: Wir können analysieren, konzipieren und gleichzeitig anpacken.</p>
+
+                        <img src="images/gifemmerichpan.gif" alt="Beratungsexpertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1); margin: 20px 0;">
+
+                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 30px 0 15px 0;">Unsere Stärke: Methodenvielfalt mit Medienkompetenz</h4>
+                        <p class="content-text">Wir greifen auf die ganze Bandbreite pädagogischer Methoden zurück, von bewährten Formen wie Rollenspielen, kreativen Werkstätten, Projektarbeit und Gesprächsrunden bis hin zu innovativen digitalen Formaten.</p>
+                        
+                        <p class="content-text">Wir wissen, wie Kinder lernen, und setzen deshalb auf Methoden, die Neugier wecken, Beteiligung ermöglichen und nachhaltig wirken. Medien sind dabei eine wichtige Ergänzung. Interviews, QR-Codes, digitale Visualisierungen oder kreative Medienarbeit erweitern den Werkzeugkasten und eröffnen Kindern neue Ausdrucksformen.</p>
+                        
+                        <p class="content-text">So verbinden wir Tradition und Innovation, geben Fachkräften praxisnahe Methoden an die Hand und schaffen Ergebnisse, die sichtbar und wirksam sind.</p>
+
+                        <img src="images/november2024.gif" alt="Praxisexpertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1); margin: 20px 0;">
                     </div>
                 </div>
             </section>
@@ -1452,9 +1083,7 @@
         </div>
     </div>
 
-
     <script>
-
         // Create enhanced glowing stars
         function createGlowingStars() {
             const starsContainer = document.getElementById('mainWebsiteStars');
@@ -1502,100 +1131,6 @@
             
             window.addEventListener('scroll', updateScrollEffect, { passive: true });
         }
-        // Planet sections navigation
-        function initPlanetNavigation() {
-            const planetSections = document.querySelectorAll('.planet-section');
-            
-            planetSections.forEach(section => {
-                const navDots = section.querySelectorAll('.nav-dot');
-                const slides = section.querySelectorAll('.content-slide');
-                const planet = section.querySelector('.planet-large');
-                
-                let currentSlide = 0;
-                
-                // Function to switch to next slide
-                function switchToNextSlide() {
-                    // Remove active class from current dot and slide
-                    navDots[currentSlide].classList.remove('active');
-                    slides[currentSlide].classList.remove('active');
-                    
-                    // Move to next slide (loop back to 0 if at end)
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    
-                    // Add active class to new dot and slide
-                    navDots[currentSlide].classList.add('active');
-                    slides[currentSlide].classList.add('active');
-                    
-                    // Special handling for mission planet data visualization
-                    const missionPlanet = document.getElementById('missionPlanet');
-                    if (missionPlanet && section.classList.contains('planet-section-1')) {
-                        if (currentSlide === 1) { // Second slide = "Zukunftsvision"
-                            missionPlanet.classList.add('data-active');
-                        } else {
-                            missionPlanet.classList.remove('data-active');
-                        }
-                    }
-                }
-                
-                // Function to switch to specific slide
-                function switchToSlide(index) {
-                    // Remove active class from all dots and slides
-                    navDots.forEach(d => d.classList.remove('active'));
-                    slides.forEach(s => s.classList.remove('active'));
-                    
-                    // Add active class to clicked dot and corresponding slide
-                    navDots[index].classList.add('active');
-                    slides[index].classList.add('active');
-                    
-                    // Update current slide index
-                    currentSlide = index;
-                    
-                    // Special handling for mission planet data visualization
-                    const missionPlanet = document.getElementById('missionPlanet');
-                    if (missionPlanet && section.classList.contains('planet-section-1')) {
-                        if (currentSlide === 1) { // Second slide = "Zukunftsvision"
-                            missionPlanet.classList.add('data-active');
-                        } else {
-                            missionPlanet.classList.remove('data-active');
-                        }
-                    }
-                }
-                
-                // Planet click handler
-                if (planet) {
-                    planet.addEventListener('click', () => {
-                        // Add clicked class for visual feedback
-                        planet.classList.add('clicked');
-                        
-                        // Switch to next slide
-                        switchToNextSlide();
-                        
-                        // Remove clicked class after animation
-                        setTimeout(() => {
-                            planet.classList.remove('clicked');
-                        }, 200);
-                    });
-                }
-                
-                // Navigation dot handlers
-                navDots.forEach((dot, index) => {
-                    dot.addEventListener('click', () => {
-                        switchToSlide(index);
-                    });
-                });
-            });
-        }
-
-        // Smooth scrolling for navigation links
-        function smoothScroll(target) {
-            const element = document.querySelector(target);
-            if (element) {
-                element.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        }
 
         // Cookie Banner Functionality
         let autoCloseTimer;
@@ -1605,7 +1140,6 @@
             banner.classList.remove('show');
             localStorage.setItem('cookieBannerDismissed', 'true');
 
-            // Stoppe Auto-Close Timer falls noch aktiv
             if (autoCloseTimer) {
                 clearTimeout(autoCloseTimer);
             }
@@ -1615,16 +1149,13 @@
             const isDismissed = localStorage.getItem('cookieBannerDismissed');
 
             if (!isDismissed) {
-                // Banner nach 1s anzeigen
                 setTimeout(() => {
                     const banner = document.getElementById('cookieBanner');
                     banner.classList.add('show');
 
-                    // X-Button Event Listener hinzufügen
                     const closeBtn = document.getElementById('closeBanner');
                     closeBtn.addEventListener('click', dismissCookieBanner);
 
-                    // Auto-Close nach 8 Sekunden
                     autoCloseTimer = setTimeout(() => {
                         dismissCookieBanner();
                     }, 8000);
@@ -1643,7 +1174,6 @@
                     nav.classList.toggle('active');
                 });
 
-                // Close menu when clicking on nav links
                 const navLinks = nav.querySelectorAll('a');
                 navLinks.forEach(link => {
                     link.addEventListener('click', () => {
@@ -1652,7 +1182,6 @@
                     });
                 });
 
-                // Close menu when clicking outside
                 document.addEventListener('click', (e) => {
                     if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
                         hamburger.classList.remove('active');
@@ -1662,11 +1191,21 @@
             }
         }
 
+        // Smooth scrolling for navigation links
+        function smoothScroll(target) {
+            const element = document.querySelector(target);
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createGlowingStars();
             initUniverseScroll();
-            initPlanetNavigation();
             checkCookieBanner();
             initMobileMenu();
             
@@ -1679,7 +1218,7 @@
                     if (target.startsWith('#')) {
                         const targetElement = document.querySelector(target);
                         if (targetElement) {
-                            const headerHeight = 100; // Account for fixed header
+                            const headerHeight = 100;
                             const targetPosition = targetElement.offsetTop - headerHeight;
                             window.scrollTo({
                                 top: targetPosition,
@@ -1689,19 +1228,9 @@
                     }
                 });
             });
-
-            // CTA button functionality
-            const ctaButtons = document.querySelectorAll('.cta-button');
-            ctaButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    const target = this.getAttribute('href');
-                    if (target.startsWith('#')) {
-                        e.preventDefault();
-                        smoothScroll(target);
-                    }
-                });
-            });
         });
     </script>
+</body>
+</html>
 </body>
 </html>
