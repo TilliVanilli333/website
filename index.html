@@ -379,8 +379,8 @@
 
         /* Content Sections */
         .content-section {
-            padding: 80px 20px;
-            max-width: 1200px;
+            padding: 60px 20px;
+            max-width: 1000px;
             margin: 0 auto;
             position: relative;
             z-index: 10;
@@ -388,9 +388,9 @@
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-weight: 300;
             font-family: 'Segoe UI Light', 'Roboto Light', sans-serif;
             letter-spacing: 2px;
@@ -398,18 +398,18 @@
         }
 
         .section-content {
-            font-size: 1.2rem;
-            line-height: 1.8;
+            font-size: 1.1rem;
+            line-height: 1.7;
             color: #e0e0e0;
             text-align: center;
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
         /* Enhanced Planet Sections */
         .planet-sections {
             padding: 80px 20px;
-            max-width: 1400px;
+            max-width: 1000px;
             margin: 0 auto;
             background: transparent;
         }
@@ -417,11 +417,12 @@
         .planet-section {
             display: flex;
             align-items: flex-start;
-            gap: 60px;
-            margin-bottom: 120px;
-            min-height: 600px;
+            gap: 40px;
+            margin-bottom: 100px;
+            min-height: 500px;
             position: relative;
             scroll-margin-top: 100px;
+            padding: 0 20px;
         }
 
         .planet-section.reverse {
@@ -429,7 +430,7 @@
         }
 
         .planet-wrapper {
-            flex: 0 0 280px;
+            flex: 0 0 200px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -438,8 +439,8 @@
         }
 
         .planet-large {
-            width: 260px;
-            height: 260px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             position: relative;
             z-index: 3;
@@ -450,43 +451,44 @@
 
         .content-wrapper {
             flex: 1;
-            max-width: none;
+            max-width: 700px;
+            padding: 0 10px;
         }
 
         .content-title {
-            font-size: 2.8rem;
-            margin-bottom: 30px;
+            font-size: 2.4rem;
+            margin-bottom: 25px;
             font-weight: 300;
             letter-spacing: 1px;
             line-height: 1.2;
         }
 
         .content-text {
-            font-size: 1.2rem;
-            line-height: 1.8;
+            font-size: 1.1rem;
+            line-height: 1.7;
             color: #d0d0d0;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
         .content-highlight {
             background: rgba(255, 255, 255, 0.05);
             border-left: 4px solid;
-            padding: 20px;
-            margin: 25px 0;
+            padding: 15px 20px;
+            margin: 20px 0;
             border-radius: 8px;
         }
 
         .content-list {
             color: #d0d0d0;
-            margin: 20px 0;
-            padding-left: 25px;
-            line-height: 1.8;
+            margin: 15px 0;
+            padding-left: 20px;
+            line-height: 1.7;
         }
 
         .content-list li {
-            margin-bottom: 12px;
-            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
         }
 
         .citation {
@@ -805,18 +807,20 @@
             }
             
             .section-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .content-title {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
             .planet-section {
                 flex-direction: column !important;
                 text-align: center;
-                gap: 40px;
+                gap: 30px;
                 align-items: center;
+                padding: 0 10px;
+                margin-bottom: 80px;
             }
             
             .planet-section.reverse {
@@ -828,12 +832,18 @@
             }
             
             .planet-large {
-                width: 200px;
-                height: 200px;
+                width: 160px;
+                height: 160px;
+            }
+            
+            .content-wrapper {
+                max-width: 100%;
+                padding: 0;
             }
             
             .content-text {
                 text-align: left;
+                font-size: 1rem;
             }
 
             .footer-links {
@@ -1230,7 +1240,5 @@
             });
         });
     </script>
-</body>
-</html>
 </body>
 </html>
