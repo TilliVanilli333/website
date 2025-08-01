@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DISKURS Niederrhein - Ihr Partner für Bildung</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -406,10 +407,10 @@
             margin: 0 auto;
         }
 
-        /* Enhanced Planet Sections */
+        /* Enhanced Planet Sections with Three.js */
         .planet-sections {
             padding: 80px 20px;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: transparent;
         }
@@ -418,7 +419,7 @@
             display: flex;
             align-items: flex-start;
             gap: 40px;
-            margin-bottom: 100px;
+            margin-bottom: 60px;
             min-height: 500px;
             position: relative;
             scroll-margin-top: 100px;
@@ -438,15 +439,14 @@
             padding-top: 20px;
         }
 
-        .planet-large {
+        /* Three.js Planet Container */
+        .planet-3d {
             width: 200px;
             height: 200px;
-            border-radius: 50%;
+            border-radius: 15px;
+            overflow: hidden;
             position: relative;
             z-index: 3;
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
-            overflow: hidden;
-            animation: planetFloat 10s ease-in-out infinite;
         }
 
         .content-wrapper {
@@ -467,7 +467,7 @@
             font-size: 1.1rem;
             line-height: 1.7;
             color: #d0d0d0;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: left;
         }
 
@@ -475,13 +475,13 @@
             background: rgba(255, 255, 255, 0.05);
             border-left: 4px solid;
             padding: 15px 20px;
-            margin: 20px 0;
+            margin: 15px 0;
             border-radius: 8px;
         }
 
         .content-list {
             color: #d0d0d0;
-            margin: 15px 0;
+            margin: 10px 0;
             padding-left: 20px;
             line-height: 1.7;
         }
@@ -494,7 +494,7 @@
         .citation {
             font-size: 0.9rem;
             color: rgba(255,255,255,0.5);
-            margin: 10px 0 25px 0;
+            margin: 8px 0 20px 0;
             line-height: 1.3;
             font-style: italic;
         }
@@ -511,139 +511,6 @@
 
         .planet-section-4 .content-title { color: #ff6b35; }
         .planet-section-4 .content-highlight { border-color: #ff6b35; }
-
-        @keyframes planetFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Mission Planet - Blue Tech Planet */
-        .planet-mission {
-            background: radial-gradient(circle at 30% 30%, #4facfe 0%, #00f2fe 40%, #1e3c72 80%, #0f1419 100%);
-            animation: planetFloat 8s ease-in-out infinite, missionGlow 4s ease-in-out infinite alternate;
-            transition: all 0.3s ease;
-        }
-
-        .planet-mission::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 60% 20%, rgba(255,255,255,0.3) 0%, transparent 30%),
-                radial-gradient(circle at 20% 70%, rgba(135,206,250,0.4) 0%, transparent 40%),
-                linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-            border-radius: 50%;
-            animation: techPatterns 20s linear infinite;
-        }
-
-        @keyframes missionGlow {
-            0% { box-shadow: 0 0 40px rgba(0, 242, 254, 0.3), 0 0 80px rgba(79, 172, 254, 0.2); }
-            100% { box-shadow: 0 0 60px rgba(0, 242, 254, 0.6), 0 0 120px rgba(79, 172, 254, 0.4); }
-        }
-
-        @keyframes techPatterns {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Raumstation Planet - Purple Space Planet */
-        .planet-raumstation {
-            background: radial-gradient(circle at 40% 20%, #667eea 0%, #764ba2 30%, #4c1d95 70%, #1a0933 100%);
-            animation: planetFloat 7s ease-in-out infinite, stationGlow 5s ease-in-out infinite alternate;
-            transition: all 0.3s ease;
-        }
-
-        .planet-raumstation::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 80% 30%, rgba(255,255,255,0.4) 0%, transparent 25%),
-                radial-gradient(circle at 30% 80%, rgba(186,164,238,0.3) 0%, transparent 35%),
-                radial-gradient(circle at 70% 70%, rgba(147,112,219,0.2) 0%, transparent 40%);
-            border-radius: 50%;
-            animation: spaceRings 25s linear infinite;
-        }
-
-        @keyframes stationGlow {
-            0% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.4), 0 0 80px rgba(118, 75, 162, 0.3); }
-            100% { box-shadow: 0 0 60px rgba(102, 126, 234, 0.7), 0 0 120px rgba(118, 75, 162, 0.5); }
-        }
-
-        @keyframes spaceRings {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(-360deg); }
-        }
-
-        /* Paedagogik Planet - Green Nature Planet */
-        .planet-paedagogik {
-            background: radial-gradient(circle at 25% 25%, #56ab2f 0%, #a8e6cf 20%, #2d5016 60%, #0d1b06 90%);
-            animation: planetFloat 6.5s ease-in-out infinite, natureGlow 6s ease-in-out infinite alternate;
-            transition: all 0.3s ease;
-        }
-
-        .planet-paedagogik::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 40% 60%, rgba(86,171,47,0.5) 0%, transparent 30%),
-                radial-gradient(circle at 70% 30%, rgba(168,230,207,0.4) 0%, transparent 35%),
-                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 25%);
-            border-radius: 50%;
-            animation: naturePulse 18s ease-in-out infinite;
-        }
-
-        @keyframes natureGlow {
-            0% { box-shadow: 0 0 40px rgba(86, 171, 47, 0.4), 0 0 80px rgba(168, 230, 207, 0.3); }
-            100% { box-shadow: 0 0 60px rgba(86, 171, 47, 0.7), 0 0 120px rgba(168, 230, 207, 0.5); }
-        }
-
-        @keyframes naturePulse {
-            0%, 100% { opacity: 0.7; transform: rotate(0deg); }
-            50% { opacity: 1; transform: rotate(0deg); }
-        }
-
-        /* Team Planet - Orange Fire Planet */
-        .planet-team {
-            background: radial-gradient(circle at 30% 30%, #ff6b35 0%, #f7931e 30%, #c73e1d 70%, #741b0d 100%);
-            animation: planetFloat 5.5s ease-in-out infinite, fireGlow 3s ease-in-out infinite alternate;
-            transition: all 0.3s ease;
-        }
-
-        .planet-team::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 60% 40%, rgba(255,255,255,0.4) 0%, transparent 20%),
-                radial-gradient(circle at 20% 60%, rgba(255,215,0,0.3) 0%, transparent 30%),
-                radial-gradient(circle at 80% 80%, rgba(255,107,53,0.5) 0%, transparent 40%);
-            border-radius: 50%;
-            animation: fireWaves 22s ease-in-out infinite;
-        }
-
-        @keyframes fireGlow {
-            0% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.5), 0 0 80px rgba(247, 147, 30, 0.4); }
-            100% { box-shadow: 0 0 60px rgba(255, 107, 53, 0.8), 0 0 120px rgba(247, 147, 30, 0.6); }
-        }
-
-        @keyframes fireWaves {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(0deg); }
-        }
 
         /* Footer */
         .footer {
@@ -831,7 +698,7 @@
                 flex: none;
             }
             
-            .planet-large {
+            .planet-3d {
                 width: 160px;
                 height: 160px;
             }
@@ -899,10 +766,10 @@
 
             <!-- Planet Sections -->
             <section id="planets" class="planet-sections">
-                <!-- Demokratiebildung - Links -->
+                <!-- BLAU 1: Simple Planet Links -->
                 <div class="planet-section planet-section-1" id="mission">
                     <div class="planet-wrapper">
-                        <div class="planet-large planet-mission"></div>
+                        <div class="planet-3d" id="blue-simple"></div>
                     </div>
                     <div class="content-wrapper">
                         <h3 class="content-title">Vier wichtige Dinge für Bildung und Demokratie</h3>
@@ -917,22 +784,38 @@
                         </div>
 
                         <p class="content-text"><strong>Warum wir genauer hinschauen müssen:</strong></p>
-                        <p class="content-text">Demokratiebildung braucht eine solide Grundlage. Studien zeigen, dass viele Jugendliche in NRW nur über begrenztes politisches Wissen verfügen und damit weniger sicher im Umgang mit demokratischen Prozessen sind. Diese Erkenntnis macht deutlich: Schulen und Bildungspartner stehen vor der Aufgabe, Kinder und Jugendliche gezielt zu stärken.</p>
+                        <p class="content-text">Demokratiebildung braucht eine solide Grundlage. Studien zeigen, dass viele Jugendliche in NRW nur über begrenztes politisches Wissen verfügen und damit weniger sicher im Umgang mit demokratischen Prozessen sind.</p>
                         
                         <p class="content-text">Genau hier setzen wir an, mit Projekten, die Wissen vertiefen, Kompetenzen fördern und Demokratie erlebbar machen.</p>
                         
                         <img src="images/demokratie1.gif" alt="Pädagogische Pflicht" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1); margin: 20px 0;">
                         
-                        <p class="content-text">Die Grafik zeigt, dass nur 36 % der Schülerinnen und Schüler in NRW über ein hohes konzeptionelles politisches Wissen verfügen und politische Argumente multiperspektivisch einordnen können. Gleichzeitig erreicht ein erheblicher Teil nur die unteren Kompetenzstufen, was bedeutet, dass ihnen grundlegendes Wissen und die Fähigkeit zum politischen Argumentieren noch fehlt.</p>
+                        <p class="content-text">Die Grafik zeigt, dass nur 36 % der Schülerinnen und Schüler in NRW über ein hohes konzeptionelles politisches Wissen verfügen. Gleichzeitig erreicht ein erheblicher Teil nur die unteren Kompetenzstufen.</p>
                         
                         <p class="citation">Grafik eigen Darstellung: Quelle: Sudies et al. (2024), ICCS 2022 Länderbericht Deutschland (NRW).</p>
+                    </div>
+                </div>
 
-                        <h4 style="color: #4facfe; font-size: 1.4rem; margin: 30px 0 15px 0;">Unsere Projekte: Kinder gestalten Gesellschaft</h4>
+                <!-- BLAU 2: Ring Planet Rechts -->
+                <div class="planet-section planet-section-1 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="blue-ring"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4 style="color: #4facfe; font-size: 1.4rem; margin: 0 0 15px 0;">Unsere Projekte: Kinder gestalten Gesellschaft</h4>
                         <p class="content-text">Kinderrechte-Ausstellungen, Demokratie-Workshops oder Stadtplanungsprojekte – in der Raumstation gestalten Kinder aktiv ihre Zukunft. Unsere Projekte basieren auf den Kinderrechten und geben Kindern und Jugendlichen das Vertrauen und die Verantwortung, die sie verdienen.</p>
                         
                         <p class="content-text">Dabei erwerben sie wichtige Kompetenzen für die Welt von morgen: kreativ denken, Verantwortung übernehmen, Lösungen entwickeln. Wir trauen ihnen zu, Gesellschaft nicht nur zu erleben, sondern sie mitzugestalten.</p>
+                    </div>
+                </div>
 
-                        <h4 style="color: #4facfe; font-size: 1.4rem; margin: 30px 0 15px 0;">Unsere Vision: Bildung neu denken</h4>
+                <!-- BLAU 3: Solar System Links -->
+                <div class="planet-section planet-section-1">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="blue-solar"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4 style="color: #4facfe; font-size: 1.4rem; margin: 0 0 15px 0;">Unsere Vision: Bildung neu denken</h4>
                         <p class="content-text">Wir glauben: Bildung muss mehr sein als Wissensvermittlung. In der Raumstation lernen Kinder, ihre Rechte zu kennen, Verantwortung zu übernehmen und Gesellschaft mitzugestalten. So entstehen Haltungen und Kompetenzen, die in keiner Prüfung abgefragt werden, aber über unsere gemeinsame Zukunft entscheiden.</p>
                         
                         <img src="images/demokratie2.gif" alt="Vision" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1); margin: 20px 0;">
@@ -941,10 +824,10 @@
                     </div>
                 </div>
 
-                <!-- Raumstation - Rechts -->
+                <!-- LILA 1: Simple Planet Rechts -->
                 <div class="planet-section planet-section-2 reverse" id="raumstation">
                     <div class="planet-wrapper">
-                        <div class="planet-large planet-raumstation"></div>
+                        <div class="planet-3d" id="purple-simple"></div>
                     </div>
                     <div class="content-wrapper">
                         <h3 class="content-title">Die Raumsta<span style="color: #667eea;">ti</span>on: Was, Wie, Warum</h3>
@@ -952,11 +835,19 @@
                         <h4 style="color: #667eea; font-size: 1.4rem; margin: 0 0 15px 0;">Was wir tun: Raumstation-Projekte</h4>
                         <p class="content-text">Seit fünf Jahren setzen wir im gesamten Kreis Kleve Projekte in Kitas und Schulen um. Durch die Raumstation-Pädagogik werden Kinder und Jugendliche individuell gefördert und erwerben Kompetenzen, die sie befähigen, ihre Zukunft selbstbewusst und sicher zu gestalten.</p>
                         
-                        <p class="content-text">Gemeinsam mit den Institutionen vor Ort entwickeln wir Formate, die passgenau sind und sich direkt in den Schul- und Kita-Alltag implementieren lassen. So entstehen Lösungen, die wirken, heute und morgen.</p>
+                        <p class="content-text">Gemeinsam mit den Institutionen vor Ort entwickeln wir Formate, die passgenau sind und sich direkt in den Schul- und Kita-Alltag implementieren lassen.</p>
 
                         <img src="images/stuhl.gif" alt="Raumstation-Projekte" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(102, 126, 234, 0.4); box-shadow: 0 0 15px rgba(102, 126, 234, 0.3), 0 0 30px rgba(102, 126, 234, 0.15), inset 0 0 10px rgba(102, 126, 234, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
 
-                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 30px 0 15px 0;">Wie wir es tun: Raumstation-Pädagogik</h4>
+                <!-- LILA 2: Ring Planet Links -->
+                <div class="planet-section planet-section-2">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="purple-ring"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 0 0 15px 0;">Wie wir es tun: Raumstation-Pädagogik</h4>
                         <p class="content-text">Die Raumstation-Pädagogik verwandelt pädagogische Situationen in sichere Räume, in denen Kinder eine intensive und prägende Zeit erleben.</p>
                         
                         <div class="content-highlight">
@@ -972,23 +863,29 @@
                             </ul>
                         </div>
 
-                        <p class="content-text">Der methodische Ansatz der Raumstation verbindet Bewährtes mit Neuem. Wir setzen auf traditionelle pädagogische Methoden, die Kindern ermöglichen, die Welt mit allen Sinnen zu erfahren, durch Anfassen, Riechen, Begreifen und unmittelbares Erleben.</p>
+                        <p class="content-text">Der methodische Ansatz der Raumstation verbindet Bewährtes mit Neuem. Wir setzen auf traditionelle pädagogische Methoden, die Kindern ermöglichen, die Welt mit allen Sinnen zu erfahren.</p>
                         
-                        <p class="content-text">Zugleich begreifen wir Medien als Chance und setzen sie altersgerecht und reflektiert ein. Richtig eingesetzt sind digitale Werkzeuge kein Ersatz, sondern eine sinnvolle Ergänzung, die neue Ausdrucksformen eröffnet und Kinder in ihrer Medienkompetenz stärkt.</p>
-
                         <img src="images/interviews.gif" alt="Pädagogische Prinzipien" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(102, 126, 234, 0.4); box-shadow: 0 0 15px rgba(102, 126, 234, 0.3), 0 0 30px rgba(102, 126, 234, 0.15), inset 0 0 10px rgba(102, 126, 234, 0.1); margin: 20px 0;">
-
-                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 30px 0 15px 0;">Warum wir es tun: Unsere Ziele</h4>
-                        <p class="content-text">Wir wollen, dass Kinder nicht ohnmächtig vor Zukunftsproblemen stehen, sondern sie gestalten lernen. Unsere Projekte hinterlassen Wirkung, die bleibt. Sie prägen Haltungen, fördern Beteiligung und machen erfahrbar, dass Gesellschaft nur gemeinsam gelingt.</p>
-                        
-                        <p class="content-text">Gleichzeitig verstehen wir uns als Partner der Fachkräfte. Wir erkennen ihre Expertise und ihre wertvolle Arbeit an und stimmen uns eng mit ihnen ab, um ihre Bedarfe präzise aufzugreifen. Auf dieser Basis entwickeln wir passgenaue Formate, die sich in den Alltag der Institutionen einfügen und gleichzeitig dort ansetzen, wo Unterstützung gebraucht wird.</p>
                     </div>
                 </div>
 
-                <!-- Kinderperspektive - Links -->
+                <!-- LILA 3: Solar System Rechts -->
+                <div class="planet-section planet-section-2 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="purple-solar"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 0 0 15px 0;">Warum wir es tun: Unsere Ziele</h4>
+                        <p class="content-text">Wir wollen, dass Kinder nicht ohnmächtig vor Zukunftsproblemen stehen, sondern sie gestalten lernen. Unsere Projekte hinterlassen Wirkung, die bleibt. Sie prägen Haltungen, fördern Beteiligung und machen erfahrbar, dass Gesellschaft nur gemeinsam gelingt.</p>
+                        
+                        <p class="content-text">Gleichzeitig verstehen wir uns als Partner der Fachkräfte. Wir erkennen ihre Expertise und ihre wertvolle Arbeit an und stimmen uns eng mit ihnen ab, um ihre Bedarfe präzise aufzugreifen. Auf dieser Basis entwickeln wir passgenaue Formate, die sich in den Alltag der Institutionen einfügen.</p>
+                    </div>
+                </div>
+
+                <!-- GRÜN 1: Simple Planet Links -->
                 <div class="planet-section planet-section-3" id="paedagogik">
                     <div class="planet-wrapper">
-                        <div class="planet-large planet-paedagogik"></div>
+                        <div class="planet-3d" id="green-simple"></div>
                     </div>
                     <div class="content-wrapper">
                         <h3 class="content-title">Wünschestadt – Kinder erkunden ihre Kommune</h3>
@@ -996,13 +893,21 @@
                         <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 0 0 15px 0;">Ein demokratisches Beteiligungsprojekt für Kinder in der Stadtplanung</h4>
                         <p class="content-text">Unser Projekt macht sichtbar, wie Kinder ihre Kommune erleben und gibt Impulse für eine Stadtplanung, die ihre Perspektiven ernst nimmt.</p>
                         
-                        <p class="content-text">Welche Orte lieben sie? Wo fühlen sie sich sicher, wo unsicher? Gibt es Angsträume? Was fehlt ihnen? In Rundgängen durch ihre Stadt führen Kinder unser Raumstation-Team zu den Orten, die für sie Bedeutung haben, von Lieblingsplätzen bis zu Bereichen, die ihnen Sorgen machen.</p>
+                        <p class="content-text">Welche Orte lieben sie? Wo fühlen sie sich sicher, wo unsicher? Gibt es Angsträume? Was fehlt ihnen? In Rundgängen durch ihre Stadt führen Kinder unser Raumstation-Team zu den Orten, die für sie Bedeutung haben.</p>
                         
                         <p class="content-text">So wird deutlich, wie die Stadt mit Kinderaugen wahrgenommen wird – eine wichtige Perspektive, die bislang in der Stadtplanung wenig Beachtung findet.</p>
 
                         <img src="images/WünschestadtGif1.gif" alt="Stadtbegehung aus der Kinderperspektive" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.3); margin: 20px 0;">
+                    </div>
+                </div>
 
-                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 30px 0 15px 0;">Methoden: Analog trifft Digital</h4>
+                <!-- GRÜN 2: Ring Planet Rechts -->
+                <div class="planet-section planet-section-3 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="green-ring"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 0 0 15px 0;">Methoden: Analog trifft Digital</h4>
                         <p class="content-text">Traditionelles Erleben und digitale Werkzeuge verbinden sich zu neuen Beteiligungsformen. Die gesamte Projektzeit ist Raumstation-Zeit. Während der Stadtbegehungen und in den kreativen Phasen danach kommen Kinder in all ihren Ausdrucksformen zu Wort.</p>
                         
                         <p class="content-text">Wir hören zu, beobachten und führen Interviews. Kinder malen, zeichnen oder bauen Modelle und setzen sich so mit ihrer Stadt auseinander. Digitale Methoden wie QR-Codes, Collagen oder Stop-Motion erweitern diese Möglichkeiten.</p>
@@ -1010,8 +915,16 @@
                         <p class="content-text">So entsteht ein besonderer Raum, in dem Kinder uns ihre Sichtweise näher bringen und uns zeigen, wie sie sich ihre Stadt wünschen – eben: Wünschestadt!</p>
 
                         <img src="images/WünschestadtGif2.gif" alt="Verbindung von Analogem und Digitalem" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.3); margin: 20px 0;">
+                    </div>
+                </div>
 
-                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 30px 0 15px 0;">Ein Stadtplan aus Kinderperspektive</h4>
+                <!-- GRÜN 3: Solar System Links -->
+                <div class="planet-section planet-section-3">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="green-solar"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 0 0 15px 0;">Ein Stadtplan aus Kinderperspektive</h4>
                         <p class="content-text">Mit der Wünschestadt entsteht ein Stadtplan aus Kinderperspektive, einzigartig für Ihre Kommune. Sie erfahren, was Kinder bewegt, welche Orte sie lieben, wo sie Unsicherheiten spüren und welche Ideen sie für die Zukunft haben.</p>
                         
                         <div class="content-highlight">
@@ -1030,10 +943,10 @@
                     </div>
                 </div>
 
-                <!-- Team - Rechts -->
+                <!-- ORANGE 1: Simple Planet Rechts -->
                 <div class="planet-section planet-section-4 reverse" id="team">
                     <div class="planet-wrapper">
-                        <div class="planet-large planet-team"></div>
+                        <div class="planet-3d" id="orange-simple"></div>
                     </div>
                     <div class="content-wrapper">
                         <h3 class="content-title">Das Team Raumstation: Wissenschaft & Praxis vereint</h3>
@@ -1046,8 +959,16 @@
                         <p class="content-text">Diese Erfahrungen begeistern uns und treiben uns an, Theorie und Praxis so zu verbinden, dass echte Veränderungen möglich werden, für Kinder, für Fachkräfte, für die Gesellschaft.</p>
 
                         <img src="images/galaxieraum.gif" alt="Pädagogische Expertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
 
-                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 30px 0 15px 0;">Unsere Kompetenz: Forschung trifft Praxis</h4>
+                <!-- ORANGE 2: Ring Planet Links -->
+                <div class="planet-section planet-section-4">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="orange-ring"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 0 0 15px 0;">Unsere Kompetenz: Forschung trifft Praxis</h4>
                         <p class="content-text">Theorie und Praxis verbinden, um Lösungen zu schaffen, die sowohl wissenschaftlich fundiert als auch alltagspraktisch sind. Unser Team vereint wissenschaftliche Forschung und praktische Erfahrung.</p>
                         
                         <p class="content-text">Wir entwickeln Projekte auf Basis aktueller Bildungstheorien, Didaktik und Lernpsychologie und setzen sie mit Schulen, Kitas und Institutionen erfolgreich um. Wir beraten, begleiten und schaffen Formate, die passgenau zu den Bedarfen vor Ort passen.</p>
@@ -1055,8 +976,16 @@
                         <p class="content-text">Unsere Stärke: Wir können analysieren, konzipieren und gleichzeitig anpacken.</p>
 
                         <img src="images/gifemmerichpan.gif" alt="Beratungsexpertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
 
-                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 30px 0 15px 0;">Unsere Stärke: Methodenvielfalt mit Medienkompetenz</h4>
+                <!-- ORANGE 3: Solar System Rechts -->
+                <div class="planet-section planet-section-4 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="orange-solar"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 0 0 15px 0;">Unsere Stärke: Methodenvielfalt mit Medienkompetenz</h4>
                         <p class="content-text">Wir greifen auf die ganze Bandbreite pädagogischer Methoden zurück, von bewährten Formen wie Rollenspielen, kreativen Werkstätten, Projektarbeit und Gesprächsrunden bis hin zu innovativen digitalen Formaten.</p>
                         
                         <p class="content-text">Wir wissen, wie Kinder lernen, und setzen deshalb auf Methoden, die Neugier wecken, Beteiligung ermöglichen und nachhaltig wirken. Medien sind dabei eine wichtige Ergänzung. Interviews, QR-Codes, digitale Visualisierungen oder kreative Medienarbeit erweitern den Werkzeugkasten und eröffnen Kindern neue Ausdrucksformen.</p>
@@ -1094,6 +1023,377 @@
     </div>
 
     <script>
+        // Global storage for all planet instances
+        const planetInstances = {};
+        
+        // Color configurations for each theme
+        const colorConfigs = {
+            blue: {
+                primary: 0x4facfe,
+                secondary: 0x87ceeb,
+                accent: 0x00f2fe,
+                glow: [79, 172, 254]
+            },
+            purple: {
+                primary: 0x667eea,
+                secondary: 0x764ba2,
+                accent: 0xba9ce6,
+                glow: [102, 126, 234]
+            },
+            green: {
+                primary: 0x56ab2f,
+                secondary: 0x90ee90,
+                accent: 0xa8e6cf,
+                glow: [86, 171, 47]
+            },
+            orange: {
+                primary: 0xff6b35,
+                secondary: 0xffa500,
+                accent: 0xffd700,
+                glow: [255, 107, 53]
+            }
+        };
+
+        // CREATE SIMPLE 3D PLANET
+        function createSimplePlanet(containerId, colorTheme) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            renderer.setSize(200, 200);
+            renderer.setClearColor(0x000000, 0);
+            container.innerHTML = '';
+            container.appendChild(renderer.domElement);
+            
+            const colors = colorConfigs[colorTheme];
+            
+            // Create main planet with realistic surface
+            const geometry = new THREE.SphereGeometry(1, 64, 64);
+            
+            // Add surface displacement for realistic terrain
+            const vertices = geometry.attributes.position.array;
+            for (let i = 0; i < vertices.length; i += 3) {
+                const x = vertices[i];
+                const y = vertices[i + 1];
+                const z = vertices[i + 2];
+                
+                // Create procedural surface noise
+                const noise1 = Math.sin(x * 8) * Math.cos(y * 8) * Math.sin(z * 8) * 0.02;
+                const noise2 = Math.sin(x * 15) * Math.cos(y * 15) * Math.sin(z * 15) * 0.01;
+                const displacement = noise1 + noise2;
+                
+                vertices[i] = x * (1 + displacement);
+                vertices[i + 1] = y * (1 + displacement);
+                vertices[i + 2] = z * (1 + displacement);
+            }
+            geometry.computeVertexNormals();
+            
+            const material = new THREE.MeshPhongMaterial({
+                color: colors.primary,
+                shininess: 30
+            });
+            
+            const planet = new THREE.Mesh(geometry, material);
+            scene.add(planet);
+            
+            // Lighting setup for realistic planet lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+            scene.add(ambientLight);
+            
+            const sunLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            sunLight.position.set(3, 2, 1);
+            scene.add(sunLight);
+            
+            // Subtle planet glow
+            const glowLight = new THREE.PointLight(colors.primary, 0.4, 50);
+            scene.add(glowLight);
+            
+            camera.position.z = 3;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                planet.rotation.y += 0.008;
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            planetInstances[containerId] = { scene, camera, renderer, planet };
+        }
+
+        // CREATE RING PLANET (SATURN-STYLE)
+        function createRingPlanet(containerId, colorTheme) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            renderer.setSize(200, 200);
+            renderer.setClearColor(0x000000, 0);
+            container.innerHTML = '';
+            container.appendChild(renderer.domElement);
+            
+            const colors = colorConfigs[colorTheme];
+            
+            // Create main planet with realistic surface
+            const planetGeometry = new THREE.SphereGeometry(0.8, 64, 64);
+            
+            // Add surface displacement
+            const vertices = planetGeometry.attributes.position.array;
+            for (let i = 0; i < vertices.length; i += 3) {
+                const x = vertices[i];
+                const y = vertices[i + 1];
+                const z = vertices[i + 2];
+                
+                const noise1 = Math.sin(x * 10) * Math.cos(y * 10) * Math.sin(z * 10) * 0.015;
+                const noise2 = Math.sin(x * 20) * Math.cos(y * 20) * Math.sin(z * 20) * 0.008;
+                const displacement = noise1 + noise2;
+                
+                vertices[i] = x * (1 + displacement);
+                vertices[i + 1] = y * (1 + displacement);
+                vertices[i + 2] = z * (1 + displacement);
+            }
+            planetGeometry.computeVertexNormals();
+            
+            const planetMaterial = new THREE.MeshPhongMaterial({
+                color: colors.primary,
+                shininess: 40
+            });
+            const planet = new THREE.Mesh(planetGeometry, planetMaterial);
+            scene.add(planet);
+            
+            // Create larger ring system
+            const ringGroup = new THREE.Group();
+            
+            // Ring configuration
+            const ringConfigs = [
+                { inner: 1.1, outer: 1.5, opacity: 0.7 },
+                { inner: 1.6, outer: 1.9, opacity: 0.5 },
+                { inner: 2.0, outer: 2.3, opacity: 0.3 }
+            ];
+            
+            ringConfigs.forEach(config => {
+                const ringGeometry = new THREE.RingGeometry(config.inner, config.outer, 64);
+                const ringMaterial = new THREE.MeshBasicMaterial({
+                    color: colors.secondary,
+                    transparent: true,
+                    opacity: config.opacity,
+                    side: THREE.DoubleSide
+                });
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.rotation.x = Math.PI / 2; // Lay flat horizontally
+                ringGroup.add(ring);
+            });
+            
+            scene.add(ringGroup);
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            directionalLight.position.set(2, 2, 2);
+            scene.add(directionalLight);
+            
+            camera.position.z = 4.2;
+            camera.position.y = 0.8;
+            camera.lookAt(0, 0, 0);
+            
+            // Animation
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.02;
+                
+                planet.rotation.y += 0.005;
+                ringGroup.rotation.y += 0.015;
+                
+                // Add pulsing effect to rings
+                ringGroup.children.forEach((ring, index) => {
+                    const baseOpacity = [0.7, 0.5, 0.3][index];
+                    const phasedPulse = Math.sin(time * 1.5 + index * 0.5) * 0.3 + 0.7;
+                    ring.material.opacity = baseOpacity * phasedPulse;
+                });
+                
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            planetInstances[containerId] = { scene, camera, renderer, planet, ringGroup };
+        }
+
+        // CREATE SOLAR SYSTEM (CENTRAL STAR + 2 ORBITING PLANETS)
+        function createSolarSystem(containerId, colorTheme) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            renderer.setSize(200, 200);
+            renderer.setClearColor(0x000000, 0);
+            container.innerHTML = '';
+            container.appendChild(renderer.domElement);
+            
+            const colors = colorConfigs[colorTheme];
+            
+            // Create central star with IDENTICAL surface to simple planets
+            const starGeometry = new THREE.SphereGeometry(0.6, 64, 64);
+            
+            // SAME surface displacement technique as simple planets
+            const vertices = starGeometry.attributes.position.array;
+            for (let i = 0; i < vertices.length; i += 3) {
+                const x = vertices[i];
+                const y = vertices[i + 1];
+                const z = vertices[i + 2];
+                
+                // IDENTICAL noise pattern as simple planets
+                const noise1 = Math.sin(x * 8) * Math.cos(y * 8) * Math.sin(z * 8) * 0.02;
+                const noise2 = Math.sin(x * 15) * Math.cos(y * 15) * Math.sin(z * 15) * 0.01;
+                const displacement = noise1 + noise2;
+                
+                vertices[i] = x * (1 + displacement);
+                vertices[i + 1] = y * (1 + displacement);
+                vertices[i + 2] = z * (1 + displacement);
+            }
+            starGeometry.computeVertexNormals();
+            
+            // SAME material settings as simple planets
+            const starMaterial = new THREE.MeshPhongMaterial({
+                color: colors.primary,
+                shininess: 30
+            });
+            const centralStar = new THREE.Mesh(starGeometry, starMaterial);
+            scene.add(centralStar);
+            
+            // Create orbital system
+            const orbitGroup1 = new THREE.Group();
+            const orbitGroup2 = new THREE.Group();
+            
+            // Planet 1 (closer orbit)
+            const planet1Geometry = new THREE.SphereGeometry(0.15, 48, 48);
+            const p1Vertices = planet1Geometry.attributes.position.array;
+            for (let i = 0; i < p1Vertices.length; i += 3) {
+                const x = p1Vertices[i];
+                const y = p1Vertices[i + 1];
+                const z = p1Vertices[i + 2];
+                
+                const noise1 = Math.sin(x * 20) * Math.cos(y * 20) * Math.sin(z * 20) * 0.015;
+                const noise2 = Math.sin(x * 35) * Math.cos(y * 35) * Math.sin(z * 35) * 0.008;
+                const displacement = noise1 + noise2;
+                
+                p1Vertices[i] = x * (1 + displacement);
+                p1Vertices[i + 1] = y * (1 + displacement);
+                p1Vertices[i + 2] = z * (1 + displacement);
+            }
+            planet1Geometry.computeVertexNormals();
+            
+            const planet1Material = new THREE.MeshPhongMaterial({
+                color: colors.secondary,
+                shininess: 30
+            });
+            const planet1 = new THREE.Mesh(planet1Geometry, planet1Material);
+            planet1.position.set(1.2, 0, 0);
+            orbitGroup1.add(planet1);
+            
+            // Planet 2 (farther orbit)
+            const planet2Geometry = new THREE.SphereGeometry(0.12, 48, 48);
+            const p2Vertices = planet2Geometry.attributes.position.array;
+            for (let i = 0; i < p2Vertices.length; i += 3) {
+                const x = p2Vertices[i];
+                const y = p2Vertices[i + 1];
+                const z = p2Vertices[i + 2];
+                
+                const noise1 = Math.sin(x * 25) * Math.cos(y * 25) * Math.sin(z * 25) * 0.012;
+                const noise2 = Math.sin(x * 40) * Math.cos(y * 40) * Math.sin(z * 40) * 0.007;
+                const displacement = noise1 + noise2;
+                
+                p2Vertices[i] = x * (1 + displacement);
+                p2Vertices[i + 1] = y * (1 + displacement);
+                p2Vertices[i + 2] = z * (1 + displacement);
+            }
+            planet2Geometry.computeVertexNormals();
+            
+            const planet2Material = new THREE.MeshPhongMaterial({
+                color: colors.accent,
+                shininess: 25
+            });
+            const planet2 = new THREE.Mesh(planet2Geometry, planet2Material);
+            planet2.position.set(1.8, 0, 0);
+            orbitGroup2.add(planet2);
+            
+            scene.add(orbitGroup1);
+            scene.add(orbitGroup2);
+            
+            // Add orbit trails
+            const orbitTrail1 = new THREE.RingGeometry(1.18, 1.22, 64);
+            const trailMaterial1 = new THREE.MeshBasicMaterial({
+                color: colors.secondary,
+                transparent: true,
+                opacity: 0.2,
+                side: THREE.DoubleSide
+            });
+            const trail1 = new THREE.Mesh(orbitTrail1, trailMaterial1);
+            trail1.rotation.x = Math.PI / 2;
+            scene.add(trail1);
+            
+            const orbitTrail2 = new THREE.RingGeometry(1.78, 1.82, 64);
+            const trailMaterial2 = new THREE.MeshBasicMaterial({
+                color: colors.accent,
+                transparent: true,
+                opacity: 0.15,
+                side: THREE.DoubleSide
+            });
+            const trail2 = new THREE.Mesh(orbitTrail2, trailMaterial2);
+            trail2.rotation.x = Math.PI / 2;
+            scene.add(trail2);
+            
+            // SAME lighting setup as simple planets
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+            scene.add(ambientLight);
+            
+            const sunLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            sunLight.position.set(3, 2, 1);
+            scene.add(sunLight);
+            
+            // Subtle planet glow
+            const glowLight = new THREE.PointLight(colors.primary, 0.4, 50);
+            scene.add(glowLight);
+            
+            camera.position.z = 3.2;
+            camera.position.y = 0.8;
+            camera.lookAt(0, 0, 0);
+            
+            // Animation with orbital mechanics
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Central star rotation (same speed as simple planets)
+                centralStar.rotation.y += 0.008;
+                
+                // Planet orbits
+                orbitGroup1.rotation.y += 0.025;
+                orbitGroup2.rotation.y += 0.015;
+                
+                // Planet self-rotation
+                planet1.rotation.y += 0.05;
+                planet2.rotation.y += 0.08;
+                
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            planetInstances[containerId] = { 
+                scene, camera, renderer, centralStar, orbitGroup1, orbitGroup2, planet1, planet2 
+            };
+        }
+
         // Create enhanced glowing stars
         function createGlowingStars() {
             const starsContainer = document.getElementById('mainWebsiteStars');
@@ -1201,16 +1501,21 @@
             }
         }
 
-        // Smooth scrolling for navigation links
-        function smoothScroll(target) {
-            const element = document.querySelector(target);
-            if (element) {
-                element.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        }
+        // Handle window resize for Three.js
+        window.addEventListener('resize', function() {
+            Object.keys(planetInstances).forEach(id => {
+                const instance = planetInstances[id];
+                if (instance && instance.renderer) {
+                    const container = document.getElementById(id);
+                    if (container) {
+                        const size = Math.min(container.offsetWidth, 200);
+                        instance.renderer.setSize(size, size);
+                        instance.camera.aspect = 1;
+                        instance.camera.updateProjectionMatrix();
+                    }
+                }
+            });
+        });
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -1218,6 +1523,29 @@
             initUniverseScroll();
             checkCookieBanner();
             initMobileMenu();
+            
+            // Initialize all Three.js planets after a short delay
+            setTimeout(() => {
+                // Blue planets
+                createSimplePlanet('blue-simple', 'blue');
+                createRingPlanet('blue-ring', 'blue');
+                createSolarSystem('blue-solar', 'blue');
+                
+                // Purple planets
+                createSimplePlanet('purple-simple', 'purple');
+                createRingPlanet('purple-ring', 'purple');
+                createSolarSystem('purple-solar', 'purple');
+                
+                // Green planets
+                createSimplePlanet('green-simple', 'green');
+                createRingPlanet('green-ring', 'green');
+                createSolarSystem('green-solar', 'green');
+                
+                // Orange planets
+                createSimplePlanet('orange-simple', 'orange');
+                createRingPlanet('orange-ring', 'orange');
+                createSolarSystem('orange-solar', 'orange');
+            }, 500);
             
             // Navigation functionality
             const navLinks = document.querySelectorAll('.nav a');
