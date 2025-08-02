@@ -185,18 +185,6 @@
             position: relative;
             z-index: 25;
         }
-
-        /* Animation Container Optimierung */
-        .animation-container {
-            width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-            height: 450px;
-            overflow: visible;
-            position: relative;
-            z-index: 25;
-        }
-
         /* Header - Retro-Futuristic Style */
         .header {
             position: fixed;
@@ -905,17 +893,19 @@
                         
                         <p class="content-text">Genau hier setzen wir an, mit Projekten, die Wissen vertiefen, Kompetenzen fördern und Demokratie erlebbar machen.</p>
                         
-                        <!-- Vergrößerte Animation - bündig mit Text -->
-                        <div class="animation-container" style="width: 100%; height: 400px; margin: 20px 0; position: relative; z-index: 25;">
-                            <iframe src="nrw_animation (1)/index.html" 
-                                    style="width: 100%; 
-                                           height: 100%; 
-                                           border: none; 
-                                           border-radius: 8px; 
-                                           transform: scale(1.8); 
-                                           transform-origin: center center;">
-                            </iframe>
-                        </div>
+                        <!-- NRW-Animation in konsistentem Container -->
+                        <iframe src="nrw_animation (1)/index.html" 
+                                alt="NRW Bildungsdaten Demokratiekompetenz" 
+                                style="width: 100%; 
+                                       height: 250px; 
+                                       border: none; 
+                                       border-radius: 8px; 
+                                       border: 2px solid rgba(79, 172, 254, 0.4); 
+                                       box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1); 
+                                       margin: 20px 0; 
+                                       position: relative; 
+                                       z-index: 25;">
+                        </iframe>
 
                         <p class="content-text">Die Grafik zeigt, dass nur 36 % der Schülerinnen und Schüler in NRW über ein hohes konzeptionelles politisches Wissen verfügen. Gleichzeitig erreicht ein erheblicher Teil nur die unteren Kompetenzstufen.</p>
 
