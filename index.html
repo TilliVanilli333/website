@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DISKURS Niederrhein - Ihr Partner für Bildung</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Google Fonts for Retro-Futuristic Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,7 +15,7 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Exo 2', 'Arial', sans-serif;
             background: #000;
             color: white;
             overflow-x: hidden;
@@ -86,232 +88,95 @@
             }
         }
 
-        /* Stars Container */
+        /* Three.js Stars Container - Always in background */
         .main-website-stars {
             position: fixed;
             width: 100%;
-            height: 150%;
-            top: -25%;
+            height: 100%;
+            top: 0;
+            left: 0;
             z-index: 1;
             pointer-events: none;
-            will-change: transform;
         }
 
-        /* White/Yellow Stars */
-        .glow-star {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 248, 220, 0.8) 30%, transparent 70%);
-            animation: starTwinkle 6s ease-in-out infinite;
-            box-shadow: 0 0 6px rgba(255, 248, 220, 0.4);
-            transition: all 0.3s ease-in-out;
+        /* All content must be above starfield */
+        .main-content {
+            position: relative;
+            z-index: 20;
         }
 
-        .glow-star.bright {
-            background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 235, 180, 0.9) 40%, transparent 80%);
-            animation: starBrightTwinkle 4s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(255, 235, 180, 0.8);
-            transition: all 0.4s ease-in-out;
+        .planet-sections {
+            position: relative;
+            z-index: 20;
         }
 
-        .glow-star.micro {
-            background: rgba(255, 255, 255, 0.9);
-            animation: microPulse 5s ease-in-out infinite;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
-            transition: all 0.2s ease-in-out;
+        .planet-section {
+            position: relative;
+            z-index: 20;
         }
 
-        /* Blue Stars */
-        .glow-star.blue {
-            background: radial-gradient(circle, rgba(135, 206, 250, 1) 0%, rgba(173, 216, 230, 0.8) 30%, transparent 70%);
-            animation: starTwinkleBlue 6s ease-in-out infinite;
-            box-shadow: 0 0 6px rgba(135, 206, 250, 0.4);
-            transition: all 0.3s ease-in-out;
+        /* Three.js Planet Container - Above starfield */
+        .planet-3d {
+            width: 220px;
+            height: 220px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            z-index: 25;
         }
 
-        .glow-star.blue.bright {
-            background: radial-gradient(circle, rgba(100, 180, 255, 1) 0%, rgba(135, 206, 250, 0.9) 40%, transparent 80%);
-            animation: starBrightTwinkleBlue 4s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(100, 180, 255, 0.8);
-            transition: all 0.4s ease-in-out;
+        /* Images and GIFs must be above starfield */
+        img {
+            position: relative;
+            z-index: 25;
         }
 
-        .glow-star.blue.micro {
-            background: rgba(173, 216, 230, 0.9);
-            animation: microPulseBlue 5s ease-in-out infinite;
-            box-shadow: 0 0 4px rgba(173, 216, 230, 0.6);
-            transition: all 0.2s ease-in-out;
-        }
-
-        /* Star Animations */
-        @keyframes starTwinkle {
-            0%, 100% { 
-                opacity: 0.3; 
-                transform: scale(0.9);
-                box-shadow: 0 0 4px rgba(255, 248, 220, 0.3);
-            }
-            25% { 
-                opacity: 0.6; 
-                transform: scale(1.05);
-                box-shadow: 0 0 8px rgba(255, 248, 220, 0.5);
-            }
-            50% { 
-                opacity: 1; 
-                transform: scale(1.2);
-                box-shadow: 0 0 12px rgba(255, 248, 220, 0.8), 0 0 20px rgba(255, 248, 220, 0.3);
-            }
-            75% { 
-                opacity: 0.7; 
-                transform: scale(1.1);
-                box-shadow: 0 0 10px rgba(255, 248, 220, 0.6);
-            }
-        }
-
-        @keyframes starBrightTwinkle {
-            0%, 100% { 
-                opacity: 0.4; 
-                transform: scale(0.95);
-                box-shadow: 0 0 6px rgba(255, 235, 180, 0.6);
-            }
-            20% { 
-                opacity: 0.7; 
-                transform: scale(1.1);
-                box-shadow: 0 0 12px rgba(255, 235, 180, 0.8);
-            }
-            50% { 
-                opacity: 1; 
-                transform: scale(1.4);
-                box-shadow: 0 0 18px rgba(255, 235, 180, 1), 0 0 30px rgba(255, 235, 180, 0.5);
-            }
-            80% { 
-                opacity: 0.8; 
-                transform: scale(1.2);
-                box-shadow: 0 0 15px rgba(255, 235, 180, 0.9);
-            }
-        }
-
-        @keyframes microPulse {
-            0%, 100% { 
-                opacity: 0.2; 
-                transform: scale(0.6);
-                box-shadow: 0 0 2px rgba(255, 255, 255, 0.4);
-            }
-            30% { 
-                opacity: 0.5; 
-                transform: scale(0.8);
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-            }
-            50% { 
-                opacity: 0.9; 
-                transform: scale(1);
-                box-shadow: 0 0 8px rgba(255, 255, 255, 1);
-            }
-            70% { 
-                opacity: 0.6; 
-                transform: scale(0.9);
-                box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
-            }
-        }
-
-        @keyframes starTwinkleBlue {
-            0%, 100% { 
-                opacity: 0.3; 
-                transform: scale(0.9);
-                box-shadow: 0 0 4px rgba(135, 206, 250, 0.3);
-            }
-            25% { 
-                opacity: 0.6; 
-                transform: scale(1.05);
-                box-shadow: 0 0 8px rgba(135, 206, 250, 0.5);
-            }
-            50% { 
-                opacity: 1; 
-                transform: scale(1.2);
-                box-shadow: 0 0 12px rgba(135, 206, 250, 0.8), 0 0 20px rgba(135, 206, 250, 0.3);
-            }
-            75% { 
-                opacity: 0.7; 
-                transform: scale(1.1);
-                box-shadow: 0 0 10px rgba(135, 206, 250, 0.6);
-            }
-        }
-
-        @keyframes starBrightTwinkleBlue {
-            0%, 100% { 
-                opacity: 0.4; 
-                transform: scale(0.95);
-                box-shadow: 0 0 6px rgba(100, 180, 255, 0.6);
-            }
-            20% { 
-                opacity: 0.7; 
-                transform: scale(1.1);
-                box-shadow: 0 0 12px rgba(100, 180, 255, 0.8);
-            }
-            50% { 
-                opacity: 1; 
-                transform: scale(1.4);
-                box-shadow: 0 0 18px rgba(100, 180, 255, 1), 0 0 30px rgba(100, 180, 255, 0.5);
-            }
-            80% { 
-                opacity: 0.8; 
-                transform: scale(1.2);
-                box-shadow: 0 0 15px rgba(100, 180, 255, 0.9);
-            }
-        }
-
-        @keyframes microPulseBlue {
-            0%, 100% { 
-                opacity: 0.2; 
-                transform: scale(0.6);
-                box-shadow: 0 0 2px rgba(173, 216, 230, 0.4);
-            }
-            30% { 
-                opacity: 0.5; 
-                transform: scale(0.8);
-                box-shadow: 0 0 5px rgba(173, 216, 230, 0.7);
-            }
-            50% { 
-                opacity: 0.9; 
-                transform: scale(1);
-                box-shadow: 0 0 8px rgba(173, 216, 230, 1);
-            }
-            70% { 
-                opacity: 0.6; 
-                transform: scale(0.9);
-                box-shadow: 0 0 6px rgba(173, 216, 230, 0.8);
-            }
-        }
-
-        /* Header */
+        /* Header - Retro-Futuristic Style */
         .header {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 8, 20, 0.85);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(135, 206, 250, 0.1);
+            background: rgba(0, 8, 20, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(79, 172, 254, 0.3);
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             z-index: 100;
-            padding: 20px 0;
-            height: 80px;
+            padding: 25px 0;
+            height: 90px;
         }
 
         .nav {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
         }
 
         .nav a {
             color: white;
             text-decoration: none;
+            font-family: 'Orbitron', monospace;
             font-size: 18px;
             font-weight: 500;
-            transition: color 0.3s ease;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
             cursor: pointer;
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 6px;
         }
 
         .nav a:hover {
-            color: #ff4444;
+            color: #4facfe;
+            text-shadow: 
+                0 0 10px rgba(79, 172, 254, 0.8),
+                0 0 20px rgba(79, 172, 254, 0.4);
+            background: rgba(79, 172, 254, 0.1);
+            box-shadow: 
+                inset 0 0 10px rgba(79, 172, 254, 0.2),
+                0 0 15px rgba(79, 172, 254, 0.3);
         }
 
         /* Hamburger Icon - Hidden on Desktop */
@@ -348,69 +213,92 @@
             transform: rotate(45deg) translate(-5px, -6px);
         }
 
-        /* Main Content */
+        /* Main Content - Enhanced Typography */
         .main-content {
-            padding-top: 120px;
+            padding-top: 140px;
             text-align: center;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
-            z-index: 10;
         }
 
         .main-content h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            font-weight: 300;
-            font-family: 'Segoe UI Light', 'Roboto Light', sans-serif;
-            letter-spacing: 4px;
+            font-family: 'Orbitron', monospace;
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            letter-spacing: 8px;
             text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff, #4facfe, #00f2fe);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 
+                0 0 30px rgba(79, 172, 254, 0.5),
+                0 0 60px rgba(79, 172, 254, 0.3);
+            position: relative;
+        }
+
+        .main-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4facfe, transparent);
+            box-shadow: 0 0 10px #4facfe;
         }
 
         .main-content p {
-            font-size: 1.5rem;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.8rem;
             color: #a8dadc;
-            font-family: 'Segoe UI', 'Roboto', sans-serif;
-            font-weight: 300;
+            font-weight: 400;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Content Sections - Clean without containers */
+        .content-section {
+            padding: 80px 30px;
+            max-width: 1100px;
+            margin: 0 auto;
             margin-bottom: 40px;
         }
 
-        /* Content Sections */
-        .content-section {
-            padding: 60px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-            background: transparent;
-        }
-
         .section-title {
-            font-size: 2.2rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 2.8rem;
             text-align: center;
-            margin-bottom: 30px;
-            font-weight: 300;
-            font-family: 'Segoe UI Light', 'Roboto Light', sans-serif;
-            letter-spacing: 2px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 4px;
             text-transform: uppercase;
+            text-shadow: 
+                0 0 20px rgba(79, 172, 254, 0.6),
+                0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         .section-content {
-            font-size: 1.1rem;
-            line-height: 1.7;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
             color: #e0e0e0;
             text-align: center;
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
+            font-weight: 400;
         }
 
-        /* Enhanced Planet Sections with Three.js */
+        /* Enhanced Planet Sections */
         .planet-sections {
-            padding: 80px 20px;
-            max-width: 1200px;
+            padding: 100px 30px;
+            max-width: 1300px;
             margin: 0 auto;
             background: transparent;
         }
@@ -418,12 +306,12 @@
         .planet-section {
             display: flex;
             align-items: flex-start;
-            gap: 40px;
-            margin-bottom: 60px;
+            gap: 50px;
+            margin-bottom: 100px;
             min-height: 500px;
             position: relative;
-            scroll-margin-top: 100px;
-            padding: 0 20px;
+            scroll-margin-top: 120px;
+            padding: 40px;
         }
 
         .planet-section.reverse {
@@ -431,7 +319,7 @@
         }
 
         .planet-wrapper {
-            flex: 0 0 200px;
+            flex: 0 0 220px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -439,88 +327,171 @@
             padding-top: 20px;
         }
 
-        /* Three.js Planet Container */
-        .planet-3d {
-            width: 200px;
-            height: 200px;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            z-index: 3;
-        }
-
         .content-wrapper {
             flex: 1;
-            max-width: 700px;
-            padding: 0 10px;
+            max-width: 800px;
+            padding: 0 20px;
         }
 
         .content-title {
-            font-size: 2.4rem;
-            margin-bottom: 25px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            line-height: 1.2;
+            font-family: 'Orbitron', monospace;
+            font-size: 2.6rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.3;
+            text-shadow: 
+                0 0 15px currentColor,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Glowing "ti" effect for Raumstation branding */
+        .raumstation-ti {
+            color: #4facfe !important;
+            text-shadow: 
+                0 0 15px #4facfe,
+                0 0 30px #4facfe,
+                0 0 45px rgba(79, 172, 254, 0.5) !important;
+            font-weight: 700 !important;
+            animation: tiGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes tiGlow {
+            0% {
+                text-shadow: 
+                    0 0 15px #4facfe,
+                    0 0 30px #4facfe,
+                    0 0 45px rgba(79, 172, 254, 0.5);
+            }
+            100% {
+                text-shadow: 
+                    0 0 20px #4facfe,
+                    0 0 40px #4facfe,
+                    0 0 60px rgba(79, 172, 254, 0.8);
+            }
+        }
+
+        /* Harmonized subtitle styling - white and bold instead of thematic colors */
+        h4 {
+            font-family: 'Orbitron', monospace !important;
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 1px !important;
+            margin: 0 0 15px 0 !important;
+            color: #ffffff !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
         }
 
         .content-text {
-            font-size: 1.1rem;
-            line-height: 1.7;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.15rem;
+            line-height: 1.8;
             color: #d0d0d0;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: left;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .content-highlight {
             background: rgba(255, 255, 255, 0.05);
             border-left: 4px solid;
-            padding: 15px 20px;
-            margin: 15px 0;
+            padding: 25px 30px;
+            margin: 25px 0;
             border-radius: 8px;
+            position: relative;
+            z-index: 25;
         }
 
         .content-list {
             color: #d0d0d0;
-            margin: 10px 0;
-            padding-left: 20px;
-            line-height: 1.7;
+            margin: 15px 0;
+            padding-left: 25px;
+            line-height: 1.8;
+            font-family: 'Exo 2', sans-serif;
         }
 
         .content-list li {
-            margin-bottom: 10px;
-            font-size: 1.05rem;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 400;
         }
 
         .citation {
-            font-size: 0.9rem;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.95rem;
             color: rgba(255,255,255,0.5);
-            margin: 8px 0 20px 0;
-            line-height: 1.3;
+            margin: 15px 0 30px 0;
+            line-height: 1.4;
             font-style: italic;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        /* Planet-specific colors */
-        .planet-section-1 .content-title { color: #4facfe; }
-        .planet-section-1 .content-highlight { border-color: #4facfe; }
+        /* Planet-specific colors with enhanced styling */
+        .planet-section-1 .content-title { 
+            color: #4facfe;
+            text-shadow: 
+                0 0 20px #4facfe,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .planet-section-1 .content-highlight { 
+            border-color: #4facfe;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(79, 172, 254, 0.2);
+        }
 
-        .planet-section-2 .content-title { color: #667eea; }
-        .planet-section-2 .content-highlight { border-color: #667eea; }
+        .planet-section-2 .content-title { 
+            color: #667eea;
+            text-shadow: 
+                0 0 20px #667eea,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .planet-section-2 .content-highlight { 
+            border-color: #667eea;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(102, 126, 234, 0.2);
+        }
 
-        .planet-section-3 .content-title { color: #56ab2f; }
-        .planet-section-3 .content-highlight { border-color: #56ab2f; }
+        .planet-section-3 .content-title { 
+            color: #56ab2f;
+            text-shadow: 
+                0 0 20px #56ab2f,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .planet-section-3 .content-highlight { 
+            border-color: #56ab2f;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(86, 171, 47, 0.2);
+        }
 
-        .planet-section-4 .content-title { color: #ff6b35; }
-        .planet-section-4 .content-highlight { border-color: #ff6b35; }
+        .planet-section-4 .content-title { 
+            color: #ff6b35;
+            text-shadow: 
+                0 0 20px #ff6b35,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .planet-section-4 .content-highlight { 
+            border-color: #ff6b35;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 107, 53, 0.2);
+        }
 
-        /* Footer */
+        /* Footer - Enhanced */
         .footer {
-            background: rgba(0, 8, 20, 0.9);
-            backdrop-filter: blur(15px);
-            border-top: 1px solid rgba(135, 206, 250, 0.1);
-            padding: 30px 20px;
-            margin-top: 60px;
+            background: rgba(0, 8, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid rgba(79, 172, 254, 0.3);
+            box-shadow: 
+                0 -10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            margin-top: 80px;
             position: relative;
-            z-index: 10;
+            z-index: 30;
         }
 
         .footer-content {
@@ -530,50 +501,66 @@
         }
 
         .footer-links {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .footer-links a {
             color: #a8dadc;
             text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-            margin: 0 15px;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin: 0 20px;
+            padding: 8px 16px;
+            border-radius: 6px;
         }
 
         .footer-links a:hover {
             color: #4facfe;
+            background: rgba(79, 172, 254, 0.1);
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.8);
+            box-shadow: 
+                inset 0 0 10px rgba(79, 172, 254, 0.2),
+                0 0 15px rgba(79, 172, 254, 0.3);
         }
 
         .footer-separator {
             color: rgba(255, 255, 255, 0.3);
-            margin: 0 10px;
+            margin: 0 15px;
         }
 
         .footer-copyright {
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }
 
         .footer-copyright p {
             margin: 0;
         }
 
-        /* Cookie Banner */
+        /* Cookie Banner - Enhanced */
         .cookie-banner {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            max-width: 350px;
-            background: rgba(0, 8, 20, 0.95);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(79, 172, 254, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(79, 172, 254, 0.2);
+            bottom: 30px;
+            right: 30px;
+            max-width: 380px;
+            background: rgba(0, 8, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(79, 172, 254, 0.4);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.6), 
+                0 0 30px rgba(79, 172, 254, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             z-index: 1000;
             color: white;
-            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            font-family: 'Exo 2', sans-serif;
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease-in-out;
@@ -587,39 +574,43 @@
         }
 
         .cookie-banner h3 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
             color: #4facfe;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
         }
 
         .cookie-banner h3::before {
             content: '🚀';
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
         .cookie-banner p {
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 1rem;
+            line-height: 1.6;
             color: #e0e0e0;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 400;
         }
 
         .close-btn {
             position: absolute;
-            top: 8px;
-            right: 12px;
-            width: 20px;
-            height: 20px;
+            top: 10px;
+            right: 15px;
+            width: 24px;
+            height: 24px;
             color: rgba(255, 255, 255, 0.6);
-            font-size: 18px;
-            line-height: 20px;
+            font-size: 20px;
+            line-height: 24px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             font-weight: bold;
             border-radius: 50%;
             display: flex;
@@ -631,15 +622,17 @@
             color: rgba(255, 255, 255, 1);
             background: rgba(255, 255, 255, 0.1);
             transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .main-content h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
+                letter-spacing: 4px;
             }
             .main-content p {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
             }
             .hamburger {
                 display: flex;
@@ -647,18 +640,18 @@
             
             .nav {
                 position: fixed;
-                top: 80px;
+                top: 90px;
                 right: -100%;
                 width: 100%;
-                height: calc(100vh - 80px);
-                background: rgba(0, 8, 20, 0.95);
-                backdrop-filter: blur(15px);
+                height: calc(100vh - 90px);
+                background: rgba(0, 8, 20, 0.98);
+                backdrop-filter: blur(20px);
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: center;
-                padding-top: 50px;
+                padding-top: 60px;
                 transition: right 0.3s ease-in-out;
-                gap: 30px;
+                gap: 40px;
             }
             
             .nav.active {
@@ -666,28 +659,30 @@
             }
             
             .nav a {
-                font-size: 20px;
-                padding: 15px;
+                font-size: 22px;
+                padding: 20px;
                 width: 80%;
                 text-align: center;
-                border-bottom: 1px solid rgba(135, 206, 250, 0.1);
+                border-bottom: 1px solid rgba(79, 172, 254, 0.2);
             }
             
             .section-title {
-                font-size: 1.8rem;
+                font-size: 2.2rem;
+                letter-spacing: 2px;
             }
             
             .content-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
+                letter-spacing: 1px;
             }
             
             .planet-section {
                 flex-direction: column !important;
                 text-align: center;
-                gap: 30px;
+                gap: 40px;
                 align-items: center;
-                padding: 0 10px;
-                margin-bottom: 80px;
+                padding: 30px 20px;
+                margin-bottom: 100px;
             }
             
             .planet-section.reverse {
@@ -699,8 +694,8 @@
             }
             
             .planet-3d {
-                width: 160px;
-                height: 160px;
+                width: 180px;
+                height: 180px;
             }
             
             .content-wrapper {
@@ -710,12 +705,12 @@
             
             .content-text {
                 text-align: left;
-                font-size: 1rem;
+                font-size: 1.05rem;
             }
 
             .footer-links {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
             }
 
             .footer-separator {
@@ -723,15 +718,30 @@
             }
 
             .footer-links a {
-                margin: 5px 0;
+                margin: 8px 0;
             }
 
             .cookie-banner {
-                bottom: 10px;
-                right: 10px;
-                left: 10px;
+                bottom: 15px;
+                right: 15px;
+                left: 15px;
                 max-width: none;
-                margin: 0 10px;
+                margin: 0 15px;
+            }
+
+            /* Optimize starfield on mobile for performance */
+            .main-website-stars canvas {
+                transform: scale(0.7);
+                opacity: 0.8;
+            }
+            
+            /* Ensure content stays above starfield on mobile */
+            .main-content {
+                z-index: 20;
+            }
+
+            .planet-section {
+                z-index: 20;
             }
         }
     </style>
@@ -752,7 +762,7 @@
                 </div>
                 <nav class="nav">
                     <a href="#mission">Demokratiebildung</a>
-                    <a href="#raumstation">Raumsta<span style="color: #4facfe;">ti</span>on</a>
+                    <a href="#raumstation">Raumsta<span class="raumstation-ti">ti</span>on</a>
                     <a href="#paedagogik">Kinderperspektive</a>
                     <a href="#team">Team</a>
                 </nav>
@@ -802,7 +812,7 @@
                         <div class="planet-3d" id="blue-ring"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h4 style="color: #4facfe; font-size: 1.4rem; margin: 0 0 15px 0;">Unsere Projekte: Kinder gestalten Gesellschaft</h4>
+                        <h4>Unsere Projekte: Kinder gestalten Gesellschaft</h4>
                         <p class="content-text">Kinderrechte-Ausstellungen, Demokratie-Workshops oder Stadtplanungsprojekte – in der Raumstation gestalten Kinder aktiv ihre Zukunft. Unsere Projekte basieren auf den Kinderrechten und geben Kindern und Jugendlichen das Vertrauen und die Verantwortung, die sie verdienen.</p>
                         
                         <p class="content-text">Dabei erwerben sie wichtige Kompetenzen für die Welt von morgen: kreativ denken, Verantwortung übernehmen, Lösungen entwickeln. Wir trauen ihnen zu, Gesellschaft nicht nur zu erleben, sondern sie mitzugestalten.</p>
@@ -815,7 +825,7 @@
                         <div class="planet-3d" id="blue-solar"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h4 style="color: #4facfe; font-size: 1.4rem; margin: 0 0 15px 0;">Unsere Vision: Bildung neu denken</h4>
+                        <h4>Unsere Vision: Bildung neu denken</h4>
                         <p class="content-text">Wir glauben: Bildung muss mehr sein als Wissensvermittlung. In der Raumstation lernen Kinder, ihre Rechte zu kennen, Verantwortung zu übernehmen und Gesellschaft mitzugestalten. So entstehen Haltungen und Kompetenzen, die in keiner Prüfung abgefragt werden, aber über unsere gemeinsame Zukunft entscheiden.</p>
                         
                         <img src="images/demokratie2.gif" alt="Vision" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1); margin: 20px 0;">
@@ -830,9 +840,9 @@
                         <div class="planet-3d" id="purple-simple"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h3 class="content-title">Die Raumsta<span style="color: #667eea;">ti</span>on: Was, Wie, Warum</h3>
+                        <h3 class="content-title">Die Raumsta<span class="raumstation-ti">ti</span>on: Was, Wie, Warum</h3>
                         
-                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 0 0 15px 0;">Was wir tun: Raumstation-Projekte</h4>
+                        <h4>Was wir tun: Raumstation-Projekte</h4>
                         <p class="content-text">Seit fünf Jahren setzen wir im gesamten Kreis Kleve Projekte in Kitas und Schulen um. Durch die Raumstation-Pädagogik werden Kinder und Jugendliche individuell gefördert und erwerben Kompetenzen, die sie befähigen, ihre Zukunft selbstbewusst und sicher zu gestalten.</p>
                         
                         <p class="content-text">Gemeinsam mit den Institutionen vor Ort entwickeln wir Formate, die passgenau sind und sich direkt in den Schul- und Kita-Alltag implementieren lassen.</p>
@@ -847,7 +857,7 @@
                         <div class="planet-3d" id="purple-ring"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 0 0 15px 0;">Wie wir es tun: Raumstation-Pädagogik</h4>
+                        <h4>Wie wir es tun: Raumstation-Pädagogik</h4>
                         <p class="content-text">Die Raumstation-Pädagogik verwandelt pädagogische Situationen in sichere Räume, in denen Kinder eine intensive und prägende Zeit erleben.</p>
                         
                         <div class="content-highlight">
@@ -875,7 +885,7 @@
                         <div class="planet-3d" id="purple-solar"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h4 style="color: #667eea; font-size: 1.4rem; margin: 0 0 15px 0;">Warum wir es tun: Unsere Ziele</h4>
+                        <h4>Warum wir es tun: Unsere Ziele</h4>
                         <p class="content-text">Wir wollen, dass Kinder nicht ohnmächtig vor Zukunftsproblemen stehen, sondern sie gestalten lernen. Unsere Projekte hinterlassen Wirkung, die bleibt. Sie prägen Haltungen, fördern Beteiligung und machen erfahrbar, dass Gesellschaft nur gemeinsam gelingt.</p>
                         
                         <p class="content-text">Gleichzeitig verstehen wir uns als Partner der Fachkräfte. Wir erkennen ihre Expertise und ihre wertvolle Arbeit an und stimmen uns eng mit ihnen ab, um ihre Bedarfe präzise aufzugreifen. Auf dieser Basis entwickeln wir passgenaue Formate, die sich in den Alltag der Institutionen einfügen.</p>
@@ -890,7 +900,7 @@
                     <div class="content-wrapper">
                         <h3 class="content-title">Wünschestadt – Kinder erkunden ihre Kommune</h3>
                         
-                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 0 0 15px 0;">Ein demokratisches Beteiligungsprojekt für Kinder in der Stadtplanung</h4>
+                        <h4>Ein demokratisches Beteiligungsprojekt für Kinder in der Stadtplanung</h4>
                         <p class="content-text">Unser Projekt macht sichtbar, wie Kinder ihre Kommune erleben und gibt Impulse für eine Stadtplanung, die ihre Perspektiven ernst nimmt.</p>
                         
                         <p class="content-text">Welche Orte lieben sie? Wo fühlen sie sich sicher, wo unsicher? Gibt es Angsträume? Was fehlt ihnen? In Rundgängen durch ihre Stadt führen Kinder unser Raumstation-Team zu den Orten, die für sie Bedeutung haben.</p>
@@ -907,7 +917,7 @@
                         <div class="planet-3d" id="green-ring"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 0 0 15px 0;">Methoden: Analog trifft Digital</h4>
+                        <h4>Methoden: Analog trifft Digital</h4>
                         <p class="content-text">Traditionelles Erleben und digitale Werkzeuge verbinden sich zu neuen Beteiligungsformen. Die gesamte Projektzeit ist Raumstation-Zeit. Während der Stadtbegehungen und in den kreativen Phasen danach kommen Kinder in all ihren Ausdrucksformen zu Wort.</p>
                         
                         <p class="content-text">Wir hören zu, beobachten und führen Interviews. Kinder malen, zeichnen oder bauen Modelle und setzen sich so mit ihrer Stadt auseinander. Digitale Methoden wie QR-Codes, Collagen oder Stop-Motion erweitern diese Möglichkeiten.</p>
@@ -924,7 +934,7 @@
                         <div class="planet-3d" id="green-solar"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h4 style="color: #56ab2f; font-size: 1.4rem; margin: 0 0 15px 0;">Ein Stadtplan aus Kinderperspektive</h4>
+                        <h4>Ein Stadtplan aus Kinderperspektive</h4>
                         <p class="content-text">Mit der Wünschestadt entsteht ein Stadtplan aus Kinderperspektive, einzigartig für Ihre Kommune. Sie erfahren, was Kinder bewegt, welche Orte sie lieben, wo sie Unsicherheiten spüren und welche Ideen sie für die Zukunft haben.</p>
                         
                         <div class="content-highlight">
@@ -951,7 +961,7 @@
                     <div class="content-wrapper">
                         <h3 class="content-title">Das Team Raumstation: Wissenschaft & Praxis vereint</h3>
                         
-                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 0 0 15px 0;">Kinderrechte sind unser Fundament – Wertschätzung unser Prinzip</h4>
+                        <h4>Kinderrechte sind unser Fundament – Wertschätzung unser Prinzip</h4>
                         <p class="content-text">Kinder sind unsere Passion, ihre Rechte der Kompass unseres Handelns. Unser Ansatz: Wertschätzen statt bewerten.</p>
                         
                         <p class="content-text">Was uns ausmacht: Wir arbeiten mitten im Leben. In großen Kinderrechte-Ausstellungen, in kreativen Beteiligungsprojekten, in der Zusammenarbeit mit Kitas, Schulen und Jugendhilfe. Dort erleben wir täglich, wie viel Kraft in den Ideen von Kindern steckt.</p>
@@ -968,7 +978,7 @@
                         <div class="planet-3d" id="orange-ring"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 0 0 15px 0;">Unsere Kompetenz: Forschung trifft Praxis</h4>
+                        <h4>Unsere Kompetenz: Forschung trifft Praxis</h4>
                         <p class="content-text">Theorie und Praxis verbinden, um Lösungen zu schaffen, die sowohl wissenschaftlich fundiert als auch alltagspraktisch sind. Unser Team vereint wissenschaftliche Forschung und praktische Erfahrung.</p>
                         
                         <p class="content-text">Wir entwickeln Projekte auf Basis aktueller Bildungstheorien, Didaktik und Lernpsychologie und setzen sie mit Schulen, Kitas und Institutionen erfolgreich um. Wir beraten, begleiten und schaffen Formate, die passgenau zu den Bedarfen vor Ort passen.</p>
@@ -985,7 +995,7 @@
                         <div class="planet-3d" id="orange-solar"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h4 style="color: #ff6b35; font-size: 1.4rem; margin: 0 0 15px 0;">Unsere Stärke: Methodenvielfalt mit Medienkompetenz</h4>
+                        <h4>Unsere Stärke: Methodenvielfalt mit Medienkompetenz</h4>
                         <p class="content-text">Wir greifen auf die ganze Bandbreite pädagogischer Methoden zurück, von bewährten Formen wie Rollenspielen, kreativen Werkstätten, Projektarbeit und Gesprächsrunden bis hin zu innovativen digitalen Formaten.</p>
                         
                         <p class="content-text">Wir wissen, wie Kinder lernen, und setzen deshalb auf Methoden, die Neugier wecken, Beteiligung ermöglichen und nachhaltig wirken. Medien sind dabei eine wichtige Ergänzung. Interviews, QR-Codes, digitale Visualisierungen oder kreative Medienarbeit erweitern den Werkzeugkasten und eröffnen Kindern neue Ausdrucksformen.</p>
@@ -1008,7 +1018,7 @@
                         <a href="mailto:desk@diskurs-niederrhein.de">Kontakt</a>
                     </div>
                     <div class="footer-copyright">
-                        <p>&copy; 2025 DISKURS Niederrhein. Alle Rechte vorbehalten.</p>
+                        <p>&copy; 2025 Diskurs Niederrhein. Alle Rechte vorbehalten.</p>
                     </div>
                 </div>
             </footer>
@@ -1025,6 +1035,7 @@
     <script>
         // Global storage for all planet instances
         const planetInstances = {};
+        let starfieldScene, starfieldCamera, starfieldRenderer, starfieldStars, cosmicDustLayers;
         
         // Color configurations for each theme
         const colorConfigs = {
@@ -1063,7 +1074,7 @@
             const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             
-            renderer.setSize(200, 200);
+            renderer.setSize(220, 220);
             renderer.setClearColor(0x000000, 0);
             container.innerHTML = '';
             container.appendChild(renderer.domElement);
@@ -1113,10 +1124,10 @@
             
             camera.position.z = 3;
             
-            // Animation loop
+            // Animation loop - slower, more majestic rotation
             function animate() {
                 requestAnimationFrame(animate);
-                planet.rotation.y += 0.008;
+                planet.rotation.y += 0.004; // Reduced from 0.008 for slower, more majestic rotation
                 renderer.render(scene, camera);
             }
             animate();
@@ -1133,7 +1144,7 @@
             const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             
-            renderer.setSize(200, 200);
+            renderer.setSize(220, 220);
             renderer.setClearColor(0x000000, 0);
             container.innerHTML = '';
             container.appendChild(renderer.domElement);
@@ -1204,13 +1215,13 @@
             camera.position.y = 0.8;
             camera.lookAt(0, 0, 0);
             
-            // Animation
+            // Animation - slower planet rotation
             let time = 0;
             function animate() {
                 requestAnimationFrame(animate);
                 time += 0.02;
                 
-                planet.rotation.y += 0.005;
+                planet.rotation.y += 0.003; // Slower rotation for more majesty
                 ringGroup.rotation.y += 0.015;
                 
                 // Add pulsing effect to rings
@@ -1236,7 +1247,7 @@
             const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             
-            renderer.setSize(200, 200);
+            renderer.setSize(220, 220);
             renderer.setClearColor(0x000000, 0);
             container.innerHTML = '';
             container.appendChild(renderer.domElement);
@@ -1394,52 +1405,270 @@
             };
         }
 
-        // Create enhanced glowing stars
-        function createGlowingStars() {
-            const starsContainer = document.getElementById('mainWebsiteStars');
+        // Create procedural dust texture
+        function createDustTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const context = canvas.getContext('2d');
             
-            const starTypes = [
-                { class: 'glow-star', count: 20, minSize: 1, maxSize: 1.8 },
-                { class: 'glow-star bright', count: 12, minSize: 1.2, maxSize: 2 },
-                { class: 'glow-star micro', count: 32, minSize: 0.5, maxSize: 1.2 },
-                { class: 'glow-star blue', count: 16, minSize: 1, maxSize: 1.8 },
-                { class: 'glow-star blue bright', count: 8, minSize: 1.2, maxSize: 2 },
-                { class: 'glow-star blue micro', count: 24, minSize: 0.5, maxSize: 1.2 }
-            ];
-
-            starTypes.forEach(type => {
-                for (let i = 0; i < type.count; i++) {
-                    const star = document.createElement('div');
-                    star.className = type.class;
-                    
-                    star.style.left = Math.random() * 100 + '%';
-                    star.style.top = Math.random() * 100 + '%';
-                    
-                    const size = Math.random() * (type.maxSize - type.minSize) + type.minSize;
-                    star.style.width = size + 'px';
-                    star.style.height = size + 'px';
-                    
-                    star.style.animationDelay = Math.random() * 10 + 's';
-                    
-                    starsContainer.appendChild(star);
-                }
-            });
+            // Create radial gradient for soft dust particle
+            const gradient = context.createRadialGradient(64, 64, 0, 64, 64, 64);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+            gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.6)');
+            gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.3)');
+            gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.1)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, 128, 128);
+            
+            return new THREE.CanvasTexture(canvas);
         }
 
-        // Universe scroll effect
-        function initUniverseScroll() {
-            const starsContainer = document.getElementById('mainWebsiteStars');
+        // Create Three.js Starfield Background with Cosmic Dust
+        function createThreeJSStarfield() {
+            const container = document.getElementById('mainWebsiteStars');
             
-            function updateScrollEffect() {
-                const currentScrollY = window.scrollY;
-                const verticalOffset = -currentScrollY * 0.25;
+            // Create Three.js scene for starfield
+            starfieldScene = new THREE.Scene();
+            starfieldCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
+            starfieldRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            starfieldRenderer.setSize(window.innerWidth, window.innerHeight);
+            starfieldRenderer.setClearColor(0x000000, 0);
+            container.appendChild(starfieldRenderer.domElement);
+            
+            // Reduce complexity on mobile for performance
+            const isMobile = window.innerWidth < 768;
+            const multiplier = isMobile ? 0.6 : 1.0;
+            
+            // Balanced star distribution - more medium stars, fewer tiny ones
+            const starCounts = [
+                { count: Math.floor(600 * multiplier), size: 2.8, color: 0xffffff, intensity: 1.4, layer: 'near' },     // Large bright stars
+                { count: Math.floor(800 * multiplier), size: 2.2, color: 0x4facfe, intensity: 1.3, layer: 'near' },     // Large blue stars
+                { count: Math.floor(1000 * multiplier), size: 1.8, color: 0xffffff, intensity: 1.2, layer: 'mid' },     // Medium white stars
+                { count: Math.floor(900 * multiplier), size: 1.6, color: 0x667eea, intensity: 1.1, layer: 'mid' },      // Medium purple stars
+                { count: Math.floor(700 * multiplier), size: 1.4, color: 0x87ceeb, intensity: 1.0, layer: 'mid' },      // Medium light blue
+                { count: Math.floor(400 * multiplier), size: 1.2, color: 0xffd700, intensity: 0.9, layer: 'far' },      // Small golden stars
+                { count: Math.floor(300 * multiplier), size: 1.0, color: 0xffffff, intensity: 0.8, layer: 'far' }       // Small distant stars
+            ];
+            
+            starfieldStars = [];
+            
+            starCounts.forEach((starType, typeIndex) => {
+                const starGeometry = new THREE.BufferGeometry();
+                const starVertices = [];
+                const starColors = [];
+                const starSizes = [];
                 
-                if (starsContainer) {
-                    starsContainer.style.transform = `translateY(${verticalOffset}px)`;
+                // Layer-based Z positioning for better depth
+                let zRange;
+                switch(starType.layer) {
+                    case 'near': zRange = [-300, -50]; break;
+                    case 'mid': zRange = [-800, -300]; break;
+                    case 'far': zRange = [-1500, -800]; break;
                 }
+                
+                for (let i = 0; i < starType.count; i++) {
+                    // Better distribution for more visible stars
+                    const x = (Math.random() - 0.5) * 3000;
+                    const y = (Math.random() - 0.5) * 3000;
+                    const z = Math.random() * (zRange[1] - zRange[0]) + zRange[0];
+                    
+                    starVertices.push(x, y, z);
+                    
+                    // Enhanced color variation
+                    const color = new THREE.Color(starType.color);
+                    const variation = 0.3;
+                    color.r = Math.min(1, color.r + (Math.random() - 0.5) * variation);
+                    color.g = Math.min(1, color.g + (Math.random() - 0.5) * variation);
+                    color.b = Math.min(1, color.b + (Math.random() - 0.5) * variation);
+                    
+                    starColors.push(color.r, color.g, color.b);
+                    
+                    // Size variation based on distance
+                    const depthFactor = Math.abs(z) / 1500;
+                    const size = starType.size * (1.2 - depthFactor * 0.7) + (Math.random() - 0.5) * 1.0;
+                    starSizes.push(Math.max(0.5, size));
+                }
+                
+                starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+                starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
+                starGeometry.setAttribute('size', new THREE.Float32BufferAttribute(starSizes, 1));
+                
+                // Enhanced material for better visibility
+                const starMaterial = new THREE.PointsMaterial({
+                    size: starType.size,
+                    sizeAttenuation: true,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: starType.intensity,
+                    blending: THREE.AdditiveBlending,
+                    alphaTest: 0.01
+                });
+                
+                const stars = new THREE.Points(starGeometry, starMaterial);
+                starfieldScene.add(stars);
+                starfieldStars.push({
+                    mesh: stars,
+                    baseIntensity: starType.intensity,
+                    rotationSpeed: (Math.random() + 0.5) * 0.0003,
+                    twinkleSpeed: (Math.random() + 0.5) * 0.015,
+                    typeIndex: typeIndex,
+                    layer: starType.layer,
+                    parallaxFactor: starType.layer === 'near' ? 1.2 : starType.layer === 'mid' ? 0.8 : 0.4
+                });
+            });
+            
+            // CREATE COSMIC DUST LAYERS
+            cosmicDustLayers = [];
+            const dustTexture = createDustTexture();
+            
+            const dustConfigs = [
+                { count: Math.floor(80 * multiplier), size: 50, color: 0x4facfe, opacity: 0.15, layer: 'near', speed: 0.8 },
+                { count: Math.floor(120 * multiplier), size: 35, color: 0x667eea, opacity: 0.12, layer: 'mid', speed: 0.5 },
+                { count: Math.floor(100 * multiplier), size: 25, color: 0x87ceeb, opacity: 0.08, layer: 'far', speed: 0.3 },
+                { count: Math.floor(60 * multiplier), size: 80, color: 0xffffff, opacity: 0.06, layer: 'near', speed: 1.0 }
+            ];
+            
+            dustConfigs.forEach((dustType, index) => {
+                const dustGeometry = new THREE.BufferGeometry();
+                const dustVertices = [];
+                const dustColors = [];
+                const dustSizes = [];
+                
+                // Layer positioning similar to stars
+                let zRange;
+                switch(dustType.layer) {
+                    case 'near': zRange = [-200, -30]; break;
+                    case 'mid': zRange = [-600, -200]; break;
+                    case 'far': zRange = [-1200, -600]; break;
+                }
+                
+                for (let i = 0; i < dustType.count; i++) {
+                    const x = (Math.random() - 0.5) * 2500;
+                    const y = (Math.random() - 0.5) * 2500;
+                    const z = Math.random() * (zRange[1] - zRange[0]) + zRange[0];
+                    
+                    dustVertices.push(x, y, z);
+                    
+                    // Dust color with warm variation
+                    const color = new THREE.Color(dustType.color);
+                    const warmth = Math.random() * 0.2;
+                    color.r = Math.min(1, color.r + warmth);
+                    color.g = Math.min(1, color.g + warmth * 0.5);
+                    
+                    dustColors.push(color.r, color.g, color.b);
+                    
+                    // Variable dust sizes
+                    const size = dustType.size + (Math.random() - 0.5) * 20;
+                    dustSizes.push(Math.max(10, size));
+                }
+                
+                dustGeometry.setAttribute('position', new THREE.Float32BufferAttribute(dustVertices, 3));
+                dustGeometry.setAttribute('color', new THREE.Float32BufferAttribute(dustColors, 3));
+                dustGeometry.setAttribute('size', new THREE.Float32BufferAttribute(dustSizes, 1));
+                
+                const dustMaterial = new THREE.PointsMaterial({
+                    size: dustType.size,
+                    sizeAttenuation: true,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: dustType.opacity,
+                    blending: THREE.AdditiveBlending,
+                    map: dustTexture,
+                    alphaTest: 0.001
+                });
+                
+                const dust = new THREE.Points(dustGeometry, dustMaterial);
+                starfieldScene.add(dust);
+                cosmicDustLayers.push({
+                    mesh: dust,
+                    baseOpacity: dustType.opacity,
+                    swaySpeed: dustType.speed * 0.0002,
+                    driftSpeed: dustType.speed * 0.0001,
+                    layer: dustType.layer,
+                    parallaxFactor: dustType.layer === 'near' ? 1.5 : dustType.layer === 'mid' ? 1.0 : 0.6
+                });
+            });
+            
+            // Position camera
+            starfieldCamera.position.z = 50;
+            
+            // Start animation loop
+            animateStarfield();
+        }
+        
+        // Animate the starfield and cosmic dust
+        function animateStarfield() {
+            if (!starfieldRenderer || !starfieldScene || !starfieldCamera) return;
+            
+            requestAnimationFrame(animateStarfield);
+            
+            const time = Date.now() * 0.001;
+            
+            // Animate star groups
+            starfieldStars.forEach((starGroup, index) => {
+                // Gentle rotation for depth
+                starGroup.mesh.rotation.y += starGroup.rotationSpeed;
+                starGroup.mesh.rotation.z += starGroup.rotationSpeed * 0.3;
+                
+                // Enhanced twinkling effect
+                const twinkle = Math.sin(time * starGroup.twinkleSpeed + index * 1.5) * 0.4 + 0.8;
+                const pulse = Math.cos(time * starGroup.twinkleSpeed * 0.7 + index) * 0.2 + 0.9;
+                starGroup.mesh.material.opacity = starGroup.baseIntensity * twinkle * pulse;
+            });
+            
+            // Animate cosmic dust layers
+            if (cosmicDustLayers) {
+                cosmicDustLayers.forEach((dustLayer, index) => {
+                    // Slow swaying motion
+                    dustLayer.mesh.rotation.y += dustLayer.swaySpeed;
+                    dustLayer.mesh.rotation.z += dustLayer.driftSpeed;
+                    
+                    // Subtle breathing effect for dust
+                    const breathe = Math.sin(time * 0.3 + index * 2) * 0.3 + 0.7;
+                    const drift = Math.cos(time * 0.2 + index * 1.2) * 0.2 + 0.8;
+                    dustLayer.mesh.material.opacity = dustLayer.baseOpacity * breathe * drift;
+                    
+                    // Slight position drift for organic movement
+                    dustLayer.mesh.position.x = Math.sin(time * dustLayer.driftSpeed * 5 + index) * 10;
+                    dustLayer.mesh.position.y = Math.cos(time * dustLayer.driftSpeed * 3 + index) * 8;
+                });
             }
             
-            window.addEventListener('scroll', updateScrollEffect, { passive: true });
+            starfieldRenderer.render(starfieldScene, starfieldCamera);
+        }
+        
+        // FIXED: Handle starfield parallax scrolling (stars move UP when scrolling DOWN)
+        function updateStarfieldScroll() {
+            if (!starfieldCamera) return;
+            
+            const scrollY = window.scrollY;
+            
+            // CORRECTED: Stars fly upward as you scroll down (natural space flight feeling)
+            starfieldCamera.position.y = -scrollY * 0.8;  // Inverted for upward star movement
+            starfieldCamera.position.z = 50 + scrollY * 0.2;  // Move deeper into space
+            
+            // Dynamic camera tilt based on scroll speed
+            const scrollVelocity = scrollY * 0.0008;
+            starfieldCamera.rotation.z = Math.sin(scrollVelocity) * 0.03;
+            starfieldCamera.rotation.x = scrollVelocity * 0.05;
+            
+            // Apply different parallax speeds to different layers
+            starfieldStars.forEach(starGroup => {
+                const parallax = scrollY * starGroup.parallaxFactor * 0.5;
+                starGroup.mesh.position.y = -parallax;  // Stars move up
+            });
+            
+            // Dust moves slower for depth
+            if (cosmicDustLayers) {
+                cosmicDustLayers.forEach(dustLayer => {
+                    const dustParallax = scrollY * dustLayer.parallaxFactor * 0.3;
+                    dustLayer.mesh.position.y = -dustParallax * 0.7;  // Slower dust movement
+                });
+            }
         }
 
         // Cookie Banner Functionality
@@ -1503,24 +1732,34 @@
 
         // Handle window resize for Three.js
         window.addEventListener('resize', function() {
+            // Update planet renderers
             Object.keys(planetInstances).forEach(id => {
                 const instance = planetInstances[id];
                 if (instance && instance.renderer) {
                     const container = document.getElementById(id);
                     if (container) {
-                        const size = Math.min(container.offsetWidth, 200);
+                        const size = Math.min(container.offsetWidth, 220);
                         instance.renderer.setSize(size, size);
                         instance.camera.aspect = 1;
                         instance.camera.updateProjectionMatrix();
                     }
                 }
             });
+            
+            // Update starfield renderer
+            if (starfieldRenderer && starfieldCamera) {
+                starfieldCamera.aspect = window.innerWidth / window.innerHeight;
+                starfieldCamera.updateProjectionMatrix();
+                starfieldRenderer.setSize(window.innerWidth, window.innerHeight);
+            }
         });
+
+        // Add scroll listener for starfield parallax
+        window.addEventListener('scroll', updateStarfieldScroll, { passive: true });
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            createGlowingStars();
-            initUniverseScroll();
+            createThreeJSStarfield();
             checkCookieBanner();
             initMobileMenu();
             
@@ -1556,7 +1795,7 @@
                     if (target.startsWith('#')) {
                         const targetElement = document.querySelector(target);
                         if (targetElement) {
-                            const headerHeight = 100;
+                            const headerHeight = 120;
                             const targetPosition = targetElement.offsetTop - headerHeight;
                             window.scrollTo({
                                 top: targetPosition,
