@@ -4,10 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datenschutzerklärung - DISKURS Niederrhein</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Google Fonts for Retro-Futuristic Look -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Lokale Three.js-Bibliothek -->
+    <script src="./js/three.min.js"></script>
     <style>
+        /* Lokale Font-Definitionen - Ersetzt Google Fonts */
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 300;
+            src: url('./assets/fonts/exo-2-v25-latin-300.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./assets/fonts/exo-2-v25-latin-regular.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 500;
+            src: url('./assets/fonts/exo-2-v25-latin-500.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 600;
+            src: url('./assets/fonts/exo-2-v25-latin-600.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./assets/fonts/orbitron-v34-latin-regular.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 500;
+            src: url('./assets/fonts/orbitron-v34-latin-500.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 700;
+            src: url('./assets/fonts/orbitron-v34-latin-700.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 900;
+            src: url('./assets/fonts/orbitron-v34-latin-900.woff2') format('woff2');
+        }
         * {
             margin: 0;
             padding: 0;
@@ -399,8 +454,8 @@
                         E-Mail: <a href="mailto:desk@diskurs-niederrhein.de">desk@diskurs-niederrhein.de</a>
                     </p>
 
-                    <h2>2. Art und Umfang der Datenverarbeitung</h2>
-                    <p>Diese Website ist eine statische Internetpräsenz, die grundsätzlich ohne aktive Erhebung personenbezogener Daten auskommt. Es werden keine Cookies gesetzt, keine Tracking-Tools verwendet und keine Analyse-Software eingesetzt.</p>
+                     <h2>2. Art und Umfang der Datenverarbeitung</h2>
+                     <p>Diese Website ist eine vollständig statische Internetpräsenz, die <strong>keine personenbezogenen Daten erhebt oder verarbeitet</strong>. Es werden keine Cookies gesetzt, keine Tracking-Tools verwendet und keine Analyse-Software eingesetzt. Alle Ressourcen (Schriftarten, JavaScript-Bibliotheken) werden ausschließlich lokal von unserem Server geladen.</p>
 
                     <h3>2.1 Automatisch erhobene Daten (Server-Logfiles)</h3>
                     <p>Beim Besuch unserer Website werden automatisch Informationen an den Server übermittelt. Diese werden in sogenannten Server-Logfiles gespeichert. Folgende Informationen werden dabei erfasst:</p>
@@ -423,8 +478,8 @@
                     
                     <p><strong>Speicherdauer:</strong> Diese Daten werden automatisch nach 30 Tagen gelöscht.</p>
 
-                    <h3>2.2 Externe Schriftarten</h3>
-                    <p><strong>Hinweis:</strong> Falls externe Schriftarten (z.B. Google Fonts) geladen werden, werden beim Abruf dieser Schriftarten Ihre IP-Adresse und weitere technische Daten an den Anbieter übertragen. Wir bemühen uns, ausschließlich lokal gehostete Schriftarten zu verwenden, um solche Datenübertragungen zu vermeiden.</p>
+                     <h3>2.2 Externe Schriftarten</h3>
+                     <p><strong>Datenschutzfreundliche Lösung:</strong> Alle auf dieser Website verwendeten Schriftarten (Orbitron, Exo 2) und JavaScript-Bibliotheken (Three.js) werden ausschließlich von unserem eigenen Server geladen. Es findet <strong>keine Datenübertragung an externe Anbieter</strong> wie Google Fonts oder Content Delivery Networks (CDNs) statt. Ihre IP-Adresse wird nicht an Dritte weitergegeben.</p>
 
                     <h2>3. Hosting</h2>
                     <p>Unsere Website wird bei <strong>Netlify Inc.</strong> gehostet. Netlify kann im Rahmen des Hostings Zugriff auf die Server-Logfiles haben.</p>

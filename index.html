@@ -4,10 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DISKURS Niederrhein - Ihr Partner für Bildung</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Google Fonts for Retro-Futuristic Look -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Lokale Three.js-Bibliothek -->
+    <script src="./js/three.min.js"></script>
     <style>
+        /* Lokale Font-Definitionen - Ersetzt Google Fonts */
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 300;
+            src: url('./assets/fonts/exo-2-v25-latin-300.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./assets/fonts/exo-2-v25-latin-regular.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 500;
+            src: url('./assets/fonts/exo-2-v25-latin-500.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 600;
+            src: url('./assets/fonts/exo-2-v25-latin-600.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./assets/fonts/orbitron-v34-latin-regular.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 500;
+            src: url('./assets/fonts/orbitron-v34-latin-500.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 700;
+            src: url('./assets/fonts/orbitron-v34-latin-700.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 900;
+            src: url('./assets/fonts/orbitron-v34-latin-900.woff2') format('woff2');
+        }
         * {
             margin: 0;
             padding: 0;
