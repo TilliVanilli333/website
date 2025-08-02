@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>NRW Kompetenzstufen Animation</title>
+  <style>
+    /* Ensure the canvas takes up the entire window without scrollbars */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      /* We leave the background transparent so the embedding page's
+         own background shows through. */
+      background-color: transparent;
+      font-family: sans-serif;
+      color: #8dd9ff;
+    }
+
+    /* Title at the top of the page */
+    #title {
+      position: absolute;
+      top: 2%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 2vw;
+      font-weight: 600;
+      color: #8dd9ff;
+      text-shadow: 0 0 10px #12aaff, 0 0 20px #1271aa;
+      pointer-events: none; /* allow mouse events through */
+    }
+
+    /* Container for CSS2D objects (numbers and labels) */
+    #labels {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* Let mouse interactions pass through */
+    }
+
+    .number-label {
+      font-size: 2vw;
+      font-weight: bold;
+      color: #68cfff;
+      text-shadow: 0 0 8px #24c2ff, 0 0 15px #1468d4;
+      white-space: nowrap;
+    }
+
+    .desc-label {
+      font-size: 1vw;
+      color: #6fa8dc;
+      text-shadow: 0 0 5px #1468d4;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="title">Verteilung des politischen Wissens nach Kompetenzstufen für NRW</div>
+  <div id="labels"></div>
+  <!-- Base64 encoded textures for silhouettes are defined in this file -->
+  <script src="base64_textures.js"></script>
+  <!-- Include Three.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.0/three.min.js"></script>
+  <script>
+  (function() {
+    // Basic error handler to surface runtime errors on the page.  If an error occurs
+    // (for example, missing assets or syntax issues), a red banner will appear at
+    // the top of the page with the error message so we can debug what went wrong.
+    window.onerror = function(message, source, lineno, colno, error) {
+      const div = document.createElement('div');
+      div.style.position = 'fixed';
+      div.style.top = '0';
+      div.style.left = '0';
+      div.style.width = '100%';
+      div.style.background = '#c00';
+      div.style.color = '#fff';
+      div.style.padding = '5px';
+      div.style.zIndex = '10000';
+      div.textContent = 'Fehler: ' + message + ' at line ' + lineno;
+      document.body.appendChild(div);
+      return false;
+    };
+    const scene = new THREE.Scene();
+
+    // Perspective camera to provide depth to the scene
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 20);
+
+    // WebGL renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    // Transparent clear color so underlying page background shows through
+    renderer.setClearColor(0x000000, 0);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    document.body.appendChild(renderer.domElement);
+
+
+    // We intentionally omit the star field creation because the animation
+    // should have a transparent background.  If you wish to re-enable
+    // a decorative star field, you can reintroduce a createStarField()
+    // function and call it here to add stars to the scene.
+
+    // Point the camera at the origin for now; later in animate we will adjust
+    // its target implicitly by moving objects.  Since the scene is symmetric
+    // around the origin, looking at (0,0,0) is a reasonable default.
+    camera.lookAt(new THREE.Vector3(0, -0.2, 0));
+
+    /**
+     * Helper to create a glowing halo texture using a radial gradient.
+     * This is used to accentuate each character with a soft neon glow.
+     */
+    function createHaloTexture(color) {
+      const size = 256;
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      const rgb = new THREE.Color(color);
+      const r = Math.floor(rgb.r * 255);
+      const g = Math.floor(rgb.g * 255);
+      const b = Math.floor(rgb.b * 255);
+      gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.8)`);
+      gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+      const texture = new THREE.CanvasTexture(canvas);
+      return texture;
+    }
+
+    // Create halo texture (blueish) to match website color scheme
+    const haloTexture = createHaloTexture(0x24c8ff);
+
+    /**
+     * Preload all silhouettes as textures.
+     * Returns a promise that resolves when all textures are loaded.
+     */
+    function loadTextures(paths) {
+      const loader = new THREE.TextureLoader();
+      return Promise.all(paths.map(p => new Promise((resolve, reject) => {
+        loader.load(p, tex => {
+          tex.anisotropy = 4;
+          tex.minFilter = THREE.LinearFilter;
+          tex.magFilter = THREE.LinearFilter;
+          resolve(tex);
+        }, undefined, err => reject(err));
+      })));
+    }
+
+    /**
+     * Flip a texture horizontally by drawing it onto an offscreen canvas
+     * with a reversed X scale.  This is used to mirror certain sprites
+     * (e.g. the children for stages C and D) so they face towards
+     * the astronaut.  The returned texture inherits the same filter settings
+     * as the original.
+     * @param {THREE.Texture} texture
+     * @returns {THREE.Texture}
+     */
+    function flipTextureHorizontally(texture) {
+      const img = texture.image;
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      // Flip horizontally: move origin to the far right and scale X by -1
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(img, 0, 0);
+      const flipped = new THREE.CanvasTexture(canvas);
+      flipped.anisotropy = texture.anisotropy;
+      flipped.minFilter = texture.minFilter;
+      flipped.magFilter = texture.magFilter;
+      flipped.needsUpdate = true;
+      return flipped;
+    }
+
+    // Character definitions: Data URI (from base64Textures), label, percentage, and scale factor
+    const characters = [
+      { uri: base64Textures.astro, label: 'Kompetenzstufe A', value: '36%', height: 3.0 },
+      { uri: base64Textures.girl, label: 'Kompetenzstufe B', value: '34%', height: 2.7 },
+      { uri: base64Textures.boy_walk, label: 'Kompetenzstufe C', value: '20%', height: 2.2 },
+      { uri: base64Textures.boy_lean, label: 'Kompetenzstufe D', value: '10%', height: 1.8 }
+    ];
+
+    // Precompute 3D positions for the four stages along a curve that better matches
+    // the shape of the original graphic.  The first drop is modest, the second
+    // drop larger and the final drop the steepest.  Adjust these values to
+    // fine‑tune the slope shape.
+    const positions = [
+      new THREE.Vector3(-9, 2.0, 0),   // Stage A: highest point
+      new THREE.Vector3(-3, 0.8, 0),   // Stage B: modest drop
+      new THREE.Vector3(3, 0.8, 0),    // Stage C: roughly same height as B (nearly flat segment)
+      new THREE.Vector3(9, -1.2, 0)    // Stage D: lowest point with steep drop
+    ];
+
+    // Create slope segments as thin glowing rectangles to emulate the descending line
+    function createSlope() {
+      const material = new THREE.MeshBasicMaterial({ color: 0x24c8ff, transparent: true, opacity: 0.8 });
+      // Create a smooth curve through all points
+      const curve = new THREE.CatmullRomCurve3(positions);
+      const tubularSegments = 64;
+      const radius = 0.25;
+      const radialSegments = 8;
+      const closed = false;
+      const tubeGeometry = new THREE.TubeGeometry(curve, tubularSegments, radius, radialSegments, closed);
+      const tube = new THREE.Mesh(tubeGeometry, material);
+      tube.renderOrder = 1;
+      scene.add(tube);
+      // Add glowing spheres at each node on the curve
+      const sphereGeom = new THREE.SphereGeometry(radius * 1.2, 16, 16);
+      const sphereMat = new THREE.MeshBasicMaterial({ color: 0x24c8ff, emissive: 0x24c8ff });
+      positions.forEach(pos => {
+        const s = new THREE.Mesh(sphereGeom, sphereMat);
+        s.position.copy(pos);
+        scene.add(s);
+      });
+    }
+    createSlope();
+
+    // Store animated objects for updates
+    const animatedSprites = [];
+    const labelContainer = document.getElementById('labels');
+
+    // Load textures and initialize sprites
+    loadTextures(characters.map(c => c.uri)).then(textures => {
+      for (let i = 0; i < characters.length; i++) {
+        const char = characters[i];
+        let texture = textures[i];
+        // Flip the texture horizontally for stages C and D so the children face the astronaut
+        if (i >= 2) {
+          texture = flipTextureHorizontally(texture);
+        }
+        // Create halo sprite behind the character for glow
+        // Halo to provide a subtle glow behind the silhouette
+        const haloMaterial = new THREE.SpriteMaterial({ map: haloTexture, blending: THREE.AdditiveBlending, transparent: true });
+        // Do not write depth so glow is always visible
+        haloMaterial.depthWrite = false;
+        haloMaterial.depthTest = false;
+        const halo = new THREE.Sprite(haloMaterial);
+        halo.scale.set(char.height * 2.0, char.height * 2.0, 1);
+        halo.position.copy(positions[i]);
+        halo.position.z = 0.1; // halo sits just behind sprites
+        halo.renderOrder = 2;
+        scene.add(halo);
+
+        // Create the character sprite itself.  We tint it slightly to stand out against the dark background
+        const material = new THREE.SpriteMaterial({ map: texture, transparent: true, color: 0x122c47 });
+        // Disable depth testing/writing so the silhouettes always appear on top of the slope
+        material.depthTest = false;
+        material.depthWrite = false;
+        const sprite = new THREE.Sprite(material);
+        // Maintain aspect ratio when scaling
+        const aspect = texture.image.width / texture.image.height;
+        sprite.scale.set(char.height * aspect, char.height, 1);
+        // We no longer flip the X scale here because we already flip the
+        // texture for the last two characters using the helper function
+        // flipTextureHorizontally().  Leaving the scale positive ensures
+        // correct orientation.
+        // Raise the sprite in front of the slope so it renders above
+        const spritePos = positions[i].clone();
+        spritePos.z = 0.3;
+        sprite.position.copy(spritePos);
+        sprite.renderOrder = 3;
+        scene.add(sprite);
+
+        // Link halo and sprite for easy access in the animation loop
+        sprite.userData.halo = halo;
+        sprite.userData.basePosition = positions[i].clone();
+        sprite.userData.scaleFactor = char.height;
+        sprite.userData.index = i;
+        animatedSprites.push(sprite);
+
+        // Create DOM label for number and description.
+        const lbl = document.createElement('div');
+        lbl.style.position = 'absolute';
+        lbl.style.transform = 'translate(-50%, -50%)';
+        lbl.style.pointerEvents = 'none';
+        const numberSpan = document.createElement('div');
+        numberSpan.className = 'number-label';
+        numberSpan.textContent = char.value;
+        lbl.appendChild(numberSpan);
+        const descSpan = document.createElement('div');
+        descSpan.className = 'desc-label';
+        descSpan.textContent = char.label;
+        lbl.appendChild(descSpan);
+        // Append to label container in the DOM
+        document.getElementById('labels').appendChild(lbl);
+        // Store reference to the DOM label in sprite for position updates
+        sprite.userData.domLabel = lbl;
+      }
+    }).catch(err => {
+      console.error('Texture loading error:', err);
+    });
+
+    // Animate the scene
+    function animate() {
+      requestAnimationFrame(animate);
+      // We removed the star field, so there is nothing to rotate here.
+      // Animate characters: bobbing up and down; astronaut slight waving
+      const time = Date.now() * 0.001;
+      animatedSprites.forEach(sprite => {
+        const base = sprite.userData.basePosition;
+        const idx = sprite.userData.index;
+        // small vertical bobbing (phase offset per sprite)
+        const bob = 0.1 * Math.sin(time * 1.5 + idx);
+        sprite.position.y = base.y + bob;
+        // Keep halo in sync
+        // Keep associated halo in sync vertically with its sprite
+        const halo = sprite.userData.halo;
+        if (halo) {
+          halo.position.y = sprite.position.y;
+        }
+        // Astronaut gentle waving (rotate slightly around Z)
+        if (idx === 0) {
+          // Astronaut gently waves by tilting slightly back and forth
+          sprite.material.rotation = 0.3 * Math.sin(time * 1.5);
+        } else {
+          // Other children subtly lean toward the previous character along the slope
+          // Calculate a small parameter that oscillates between -0.1 and 0.1
+          const t = 0.05 * Math.sin(time * 0.5 + idx);
+          // Move toward previous position along slope
+          const start = sprite.userData.basePosition;
+          const prev = positions[idx - 1];
+          sprite.position.x = start.x + (prev.x - start.x) * t;
+          sprite.position.y = (start.y + (prev.y - start.y) * t) + bob;
+          // Update halo position accordingly
+          if (halo) {
+            halo.position.x = sprite.position.x;
+            halo.position.y = sprite.position.y;
+          }
+        }
+      });
+      // Update positions of DOM labels: project sprite positions to 2D screen space
+      animatedSprites.forEach(sprite => {
+        const lbl = sprite.userData.domLabel;
+        if (!lbl) return;
+        const pos = sprite.position.clone();
+        // project to normalized device coordinates
+        pos.project(camera);
+        const x = (pos.x * 0.5 + 0.5) * window.innerWidth;
+        const y = (-pos.y * 0.5 + 0.5) * window.innerHeight;
+        lbl.style.left = `${x}px`;
+        // Position the label slightly above the sprite; multiply world height by pixel factor
+        const offsetPixels = sprite.scale.y * 50;
+        lbl.style.top  = `${y - offsetPixels}px`;
+      });
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Handle window resizing
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  })();
+  </script>
+</body>
+</html>
