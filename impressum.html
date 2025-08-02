@@ -218,6 +218,8 @@
                 0 0 30px rgba(79, 172, 254, 0.5),
                 0 0 60px rgba(79, 172, 254, 0.3);
             position: relative;
+            text-align: left;
+            align-self: flex-start;
         }
 
         .main-content h1::after {
@@ -278,6 +280,27 @@
         }
 
         /* Responsive */
+        @media (max-width: 1200px) {
+            .nav {
+                gap: 30px;
+            }
+            .nav a {
+                font-size: 16px;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .nav {
+                gap: 20px;
+            }
+            .nav a {
+                font-size: 14px;
+                padding: 4px 8px;
+                letter-spacing: 1px;
+            }
+        }
+
         @media (max-width: 768px) {
             .main-content h1 {
                 font-size: 2.8rem;
