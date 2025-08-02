@@ -124,7 +124,10 @@
         .nav {
             display: flex;
             justify-content: center;
-            gap: 50px;
+            gap: 60px;
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .nav a {
@@ -426,6 +429,27 @@
         // Global storage for starfield
         let starfieldScene, starfieldCamera, starfieldRenderer, starfieldStars, cosmicDustLayers;
 
+        // Create round star texture
+        function createRoundStarTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const context = canvas.getContext('2d');
+            
+            // Create perfect circle gradient for round stars
+            const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.9)');
+            gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.7)');
+            gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, 64, 64);
+            
+            return new THREE.CanvasTexture(canvas);
+        }
+
         // Create procedural dust texture
         function createDustTexture() {
             const canvas = document.createElement('canvas');
@@ -477,6 +501,11 @@
             
             starfieldStars = [];
             
+            // CREATE COSMIC DUST LAYERS
+            cosmicDustLayers = [];
+            const dustTexture = createDustTexture();
+            const roundStarTexture = createRoundStarTexture();
+            
             starCounts.forEach((starType, typeIndex) => {
                 const starGeometry = new THREE.BufferGeometry();
                 const starVertices = [];
@@ -515,6 +544,8 @@
                 starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
                 starGeometry.setAttribute('size', new THREE.Float32BufferAttribute(starSizes, 1));
                 
+                // Enhanced material with ROUND texture for near/mid stars
+                const useRoundTexture = starType.layer === 'near' || starType.layer === 'mid';
                 const starMaterial = new THREE.PointsMaterial({
                     size: starType.size,
                     sizeAttenuation: true,
@@ -522,7 +553,8 @@
                     transparent: true,
                     opacity: starType.intensity,
                     blending: THREE.AdditiveBlending,
-                    alphaTest: 0.01
+                    alphaTest: 0.01,
+                    map: useRoundTexture ? roundStarTexture : null
                 });
                 
                 const stars = new THREE.Points(starGeometry, starMaterial);
@@ -539,8 +571,6 @@
             });
             
             // CREATE COSMIC DUST LAYERS
-            cosmicDustLayers = [];
-            const dustTexture = createDustTexture();
             
             const dustConfigs = [
                 { count: Math.floor(80 * multiplier), size: 50, color: 0x4facfe, opacity: 0.15, layer: 'near', speed: 0.8 },
