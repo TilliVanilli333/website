@@ -131,6 +131,17 @@
             z-index: 25;
         }
 
+        /* Animation Container Optimierung */
+        .animation-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            height: 450px;
+            overflow: visible;
+            position: relative;
+            z-index: 25;
+        }
+
         /* Header - Retro-Futuristic Style */
         .header {
             position: fixed;
@@ -139,12 +150,36 @@
             background: rgba(0, 8, 20, 0.9);
             backdrop-filter: blur(20px);
             border-bottom: 2px solid rgba(79, 172, 254, 0.3);
-            box-shadow: 
+            box-shadow:
                 0 4px 20px rgba(0, 0, 0, 0.5),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             z-index: 100;
             padding: 25px 0;
             height: 90px;
+        }
+
+        /* 3D-Ebenen Hierarchie */
+        .main-website-stars {
+            z-index: 1; /* Hintergrund-Sterne */
+        }
+
+        .main-content,
+        .planet-sections,
+        .planet-section {
+            z-index: 20; /* Inhalt in der Mitte */
+        }
+
+        .planet-3d,
+        img {
+            z-index: 25; /* Planeten und Bilder */
+        }
+
+        .foreground-stars {
+            z-index: 50; /* Vordergrund-Sterne */
+        }
+
+        .header {
+            z-index: 100; /* Header ganz oben */
         }
 
         .nav {
@@ -374,40 +409,40 @@
             }
         }
 
-        /* Harmonized subtitle styling - white and bold instead of thematic colors */
+        /* Richtige Farben: h4 farbig, Text weiß */
         h4 {
             font-family: 'Orbitron', monospace !important;
             font-size: 1.4rem !important;
             font-weight: 700 !important;
             letter-spacing: 1px !important;
             margin: 0 0 15px 0 !important;
-            color: #ffffff !important;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
         }
 
+        /* h4 Überschriften in Themenfarben */
+        .planet-section-1 h4 { 
+            color: #4facfe !important;
+        }
+        .planet-section-2 h4 { 
+            color: #667eea !important;
+        }
+        .planet-section-3 h4 { 
+            color: #56ab2f !important;
+        }
+        .planet-section-4 h4 { 
+            color: #ff6b35 !important;
+        }
+
+        /* Text immer weiß */
         .content-text {
             font-family: 'Exo 2', sans-serif;
             font-size: 1.15rem;
             line-height: 1.8;
-            color: #d0d0d0;
+            color: #ffffff !important;
             margin-bottom: 20px;
             text-align: left;
             font-weight: 400;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Thematic text colors for content sections */
-        .planet-section-1 .content-text { 
-            color: #4facfe;
-        }
-        .planet-section-2 .content-text { 
-            color: #667eea;
-        }
-        .planet-section-3 .content-text { 
-            color: #56ab2f;
-        }
-        .planet-section-4 .content-text { 
-            color: #ff6b35;
         }
 
         .content-highlight {
@@ -815,10 +850,16 @@
                         
                         <p class="content-text">Genau hier setzen wir an, mit Projekten, die Wissen vertiefen, Kompetenzen fördern und Demokratie erlebbar machen.</p>
                         
-                        <!-- HIER die neue Animation einfügen -->
-                        <div style="width: 100%; height: 300px; margin: 20px 0; display: flex; justify-content: center; align-items: center;">
-                            <!-- Animation aus nrw_animation (1) ordner einbinden -->
-                            <iframe src="nrw_animation (1)/index.html" style="width: 100%; height: 100%; border: none; border-radius: 8px;"></iframe>
+                        <!-- Vergrößerte Animation - bündig mit Text -->
+                        <div class="animation-container" style="width: 100%; height: 400px; margin: 20px 0; position: relative; z-index: 25;">
+                            <iframe src="nrw_animation (1)/index.html" 
+                                    style="width: 100%; 
+                                           height: 100%; 
+                                           border: none; 
+                                           border-radius: 8px; 
+                                           transform: scale(1.8); 
+                                           transform-origin: center center;">
+                            </iframe>
                         </div>
 
                         <p class="content-text">Die Grafik zeigt, dass nur 36 % der Schülerinnen und Schüler in NRW über ein hohes konzeptionelles politisches Wissen verfügen. Gleichzeitig erreicht ein erheblicher Teil nur die unteren Kompetenzstufen.</p>
@@ -1567,7 +1608,8 @@
                     twinkleSpeed: (Math.random() + 0.5) * 0.015,
                     typeIndex: typeIndex,
                     layer: starType.layer,
-                    parallaxFactor: starType.layer === 'near' ? 1.2 : starType.layer === 'mid' ? 0.8 : 0.4
+                    parallaxFactor: starType.layer === 'near' ? 1.2 : starType.layer === 'mid' ? 0.8 : 0.4,
+                    isLargeStar: starType.size >= 2.5 // Markiere große Sterne
                 });
             });
             
@@ -1648,7 +1690,77 @@
             // Start animation loop
             animateStarfield();
         }
-        
+
+        // Erstelle Vordergrund-Sterne für 3D-Effekt
+        function createForegroundStars() {
+            const foregroundContainer = document.createElement('div');
+            foregroundContainer.className = 'foreground-stars';
+            foregroundContainer.style.cssText = `
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                z-index: 50;
+                pointer-events: none;
+                overflow: hidden;
+            `;
+            
+            // Erstelle 8-12 große Vordergrund-Sterne
+            for (let i = 0; i < 10; i++) {
+                const star = document.createElement('div');
+                star.className = 'fg-star';
+                
+                const size = Math.random() * 3 + 2; // 2-5px große Sterne
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const animationDuration = Math.random() * 20 + 15; // 15-35s
+                
+                star.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 40%, transparent 100%);
+                    border-radius: 50%;
+                    left: ${x}%;
+                    top: ${y}%;
+                    animation: floatAcross ${animationDuration}s linear infinite;
+                    opacity: 0.7;
+                    box-shadow: 0 0 ${size * 2}px rgba(255,255,255,0.5);
+                `;
+                
+                foregroundContainer.appendChild(star);
+            }
+            
+            document.body.appendChild(foregroundContainer);
+        }
+
+        // CSS Animation für Vordergrund-Sterne hinzufügen
+        const foregroundStarStyles = document.createElement('style');
+        foregroundStarStyles.textContent = `
+            @keyframes floatAcross {
+                0% {
+                    transform: translateX(-100px) translateY(0px);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 0.7;
+                }
+                90% {
+                    opacity: 0.7;
+                }
+                100% {
+                    transform: translateX(calc(100vw + 100px)) translateY(-50px);
+                    opacity: 0;
+                }
+            }
+            
+            .fg-star {
+                will-change: transform, opacity;
+            }
+        `;
+        document.head.appendChild(foregroundStarStyles);
+
         // Animate the starfield and cosmic dust
         function animateStarfield() {
             if (!starfieldRenderer || !starfieldScene || !starfieldCamera) return;
@@ -1809,6 +1921,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createThreeJSStarfield();
+            createForegroundStars();
             checkCookieBanner();
             initMobileMenu();
             
