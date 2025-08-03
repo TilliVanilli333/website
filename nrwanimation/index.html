@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <title>NRW Kompetenzstufen Animation</title>
   <style>
+    :root {
+      --number-font-size: 40px;
+      --desc-font-size: 24px;
+    }
+
     /* Ensure the canvas takes up the entire window without scrollbars */
     html, body {
       margin: 0;
@@ -30,7 +35,7 @@
     }
 
     .number-label {
-      font-size: 16px;
+      font-size: var(--number-font-size);
       font-weight: bold;
       color: #68cfff;
       background: rgba(0, 0, 0, 0.8);
@@ -40,7 +45,7 @@
     }
 
     .desc-label {
-      font-size: 12px;
+      font-size: var(--desc-font-size);
       color: #6fa8dc;
       background: rgba(0, 0, 0, 0.7);
       padding: 2px 6px;
@@ -76,6 +81,8 @@
       return false;
     };
     const scene = new THREE.Scene();
+    const group = new THREE.Group();
+    scene.add(group);
 
     // Perspective camera to provide depth to the scene
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -197,6 +204,22 @@
       new THREE.Vector3(12, -0.8, 0)   // Stage D: lowest point with steep drop
     ];
 
+    // Scale vertical coordinates and character heights so the animation fills the container
+    (function scaleToContainer() {
+      const width = positions[positions.length - 1].x - positions[0].x;
+      const heights = characters.map(c => c.height);
+      const maxY = Math.max(...positions.map((p, i) => p.y + heights[i] / 2));
+      const minY = Math.min(...positions.map((p, i) => p.y - heights[i] / 2));
+      const height = maxY - minY;
+      const aspect = window.innerWidth / window.innerHeight;
+      const desiredHeight = width / aspect;
+      const scale = desiredHeight / height;
+      for (let i = 0; i < positions.length; i++) {
+        positions[i].y *= scale;
+        characters[i].height *= scale;
+      }
+    })();
+
     // Create slope segments as thin glowing rectangles to emulate the descending line
     function createSlope() {
       const material = new THREE.MeshBasicMaterial({ color: 0x24c8ff, transparent: true, opacity: 0.85 });
@@ -210,14 +233,14 @@
       const tubeGeometry = new THREE.TubeGeometry(curve, tubularSegments, radius, radialSegments, closed);
       const tube = new THREE.Mesh(tubeGeometry, material);
       tube.renderOrder = 1;
-      scene.add(tube);
+      group.add(tube);
       // Add glowing spheres at each node on the curve
       const sphereGeom = new THREE.SphereGeometry(radius * 1.4, 20, 20);
       const sphereMat = new THREE.MeshBasicMaterial({ color: 0x24c8ff, emissive: 0x24c8ff });
       positions.forEach(pos => {
         const s = new THREE.Mesh(sphereGeom, sphereMat);
         s.position.copy(pos);
-        scene.add(s);
+        group.add(s);
       });
     }
     createSlope();
@@ -253,6 +276,26 @@
       });
     }
 
+    function fitCameraToObject(camera, object, offset = 1.2) {
+      object.updateMatrixWorld();
+      const box = new THREE.Box3().setFromObject(object);
+      const size = box.getSize(new THREE.Vector3());
+      const center = box.getCenter(new THREE.Vector3());
+      const fov = THREE.MathUtils.degToRad(camera.fov);
+      const distanceY = size.y / (2 * Math.tan(fov / 2));
+      const fovh = 2 * Math.atan(Math.tan(fov / 2) * camera.aspect);
+      const distanceX = size.x / (2 * Math.tan(fovh / 2));
+      const distance = Math.max(distanceX, distanceY) * offset;
+      camera.position.set(center.x, center.y, distance);
+      camera.lookAt(center);
+    }
+
+    function setLabelSizes() {
+      document.documentElement.style.setProperty('--number-font-size', (window.innerHeight * 0.14) + 'px');
+      document.documentElement.style.setProperty('--desc-font-size', (window.innerHeight * 0.08) + 'px');
+    }
+    setLabelSizes();
+
     // Load textures and initialize sprites
     loadTextures(characters.map(c => c.uri)).then(textures => {
       for (let i = 0; i < characters.length; i++) {
@@ -273,7 +316,7 @@
         halo.position.copy(positions[i]);
         halo.position.z = 0.1; // halo sits just behind sprites
         halo.renderOrder = 2;
-        scene.add(halo);
+        group.add(halo);
 
         // Create the character sprite itself.  We tint it slightly to stand out against the dark background
         const material = new THREE.SpriteMaterial({ map: texture, transparent: true, color: 0x122c47 });
@@ -293,7 +336,7 @@
         spritePos.z = 0.3;
         sprite.position.copy(spritePos);
         sprite.renderOrder = 3;
-        scene.add(sprite);
+        group.add(sprite);
 
         // Link halo and sprite for easy access in the animation loop
         sprite.userData.halo = halo;
@@ -320,6 +363,7 @@
         // Store reference to the DOM label in sprite for position updates
         sprite.userData.domLabel = lbl;
       }
+      fitCameraToObject(camera, group);
     }).catch(err => {
       console.error('Texture loading error:', err);
     });
@@ -372,6 +416,8 @@
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      fitCameraToObject(camera, group);
+      setLabelSizes();
     });
   })();
   </script>
