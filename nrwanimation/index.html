@@ -82,7 +82,7 @@
     // Pull the camera back further so the widened slope and enlarged characters
     // fit comfortably inside the frame.  A Z distance of 35 gives
     // ample room for the entire scene without cropping.
-    camera.position.set(0, 0, 35);
+    camera.position.set(0, 0, 40);
 
     // WebGL renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -191,10 +191,10 @@
     // title above.  Feel free to adjust the X and Y values to fit your
     // layout perfectly.
     const positions = [
-      new THREE.Vector3(-8, 0.75, 0),  // Stage A: highest point, far left
-      new THREE.Vector3(-2.4, 0.3, 0), // Stage B: modest drop
-      new THREE.Vector3(2.4, 0.3, 0),  // Stage C: flat segment
-      new THREE.Vector3(8, -0.8, 0)    // Stage D: lowest point with steep drop
+      new THREE.Vector3(-12, 0.75, 0), // Stage A: highest point, far left
+      new THREE.Vector3(-4, 0.3, 0),   // Stage B: modest drop
+      new THREE.Vector3(4, 0.3, 0),    // Stage C: flat segment
+      new THREE.Vector3(12, -0.8, 0)   // Stage D: lowest point with steep drop
     ];
 
     // Create slope segments as thin glowing rectangles to emulate the descending line
