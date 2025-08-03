@@ -217,9 +217,6 @@
             z-index: 25; /* Planeten und Bilder */
         }
 
-        .foreground-stars {
-            z-index: 50; /* Vordergrund-Sterne */
-        }
 
         .header {
             z-index: 100; /* Header ganz oben */
@@ -586,7 +583,7 @@
             padding: 40px 30px;
             margin-top: 80px;
             position: relative;
-            z-index: 30;
+            z-index: 20;
         }
 
         .footer-content {
@@ -1736,75 +1733,6 @@
             animateStarfield();
         }
 
-        // Erstelle Vordergrund-Sterne für 3D-Effekt
-        function createForegroundStars() {
-            const foregroundContainer = document.createElement('div');
-            foregroundContainer.className = 'foreground-stars';
-            foregroundContainer.style.cssText = `
-                position: fixed;
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                z-index: 50;
-                pointer-events: none;
-                overflow: hidden;
-            `;
-            
-            // Erstelle 8-12 große Vordergrund-Sterne
-            for (let i = 0; i < 10; i++) {
-                const star = document.createElement('div');
-                star.className = 'fg-star';
-                
-                const size = Math.random() * 3 + 2; // 2-5px große Sterne
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
-                const animationDuration = Math.random() * 20 + 15; // 15-35s
-                
-                star.style.cssText = `
-                    position: absolute;
-                    width: ${size}px;
-                    height: ${size}px;
-                    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 40%, transparent 100%);
-                    border-radius: 50%;
-                    left: ${x}%;
-                    top: ${y}%;
-                    animation: floatAcross ${animationDuration}s linear infinite;
-                    opacity: 0.7;
-                    box-shadow: 0 0 ${size * 2}px rgba(255,255,255,0.5);
-                `;
-                
-                foregroundContainer.appendChild(star);
-            }
-            
-            document.body.appendChild(foregroundContainer);
-        }
-
-        // CSS Animation für Vordergrund-Sterne hinzufügen
-        const foregroundStarStyles = document.createElement('style');
-        foregroundStarStyles.textContent = `
-            @keyframes floatAcross {
-                0% {
-                    transform: translateX(-100px) translateY(0px);
-                    opacity: 0;
-                }
-                10% {
-                    opacity: 0.7;
-                }
-                90% {
-                    opacity: 0.7;
-                }
-                100% {
-                    transform: translateX(calc(100vw + 100px)) translateY(-50px);
-                    opacity: 0;
-                }
-            }
-            
-            .fg-star {
-                will-change: transform, opacity;
-            }
-        `;
-        document.head.appendChild(foregroundStarStyles);
 
         // Animate the starfield and cosmic dust
         function animateStarfield() {
@@ -1966,7 +1894,6 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createThreeJSStarfield();
-            createForegroundStars();
             checkCookieBanner();
             initMobileMenu();
             
