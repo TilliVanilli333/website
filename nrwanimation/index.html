@@ -8,28 +8,14 @@
     html, body {
       margin: 0;
       padding: 0;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       /* We leave the background transparent so the embedding page's
          own background shows through. */
       background-color: transparent;
       font-family: sans-serif;
       color: #8dd9ff;
-    }
-
-    /* Title at the top of the page – increased size and limited width for clarity */
-    #title {
-      position: absolute;
-      top: 3%;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      font-size: 2.2vw;
-      font-weight: 600;
-      color: #8dd9ff;
-      text-shadow: 0 0 10px #12aaff, 0 0 20px #1271aa;
-      pointer-events: none; /* allow mouse events through */
-      max-width: 90%;
-      line-height: 1.2;
     }
 
     /* Container for CSS2D objects (numbers and labels) */
@@ -39,69 +25,32 @@
       left: 0;
       width: 100%;
       height: 100%;
+      padding: 0 20px;
       pointer-events: none; /* Let mouse interactions pass through */
     }
 
-    /* Improved number labels: larger font, subtle background and border for readability */
     .number-label {
-      font-size: 2.5vw;
+      font-size: 16px;
       font-weight: bold;
       color: #68cfff;
-      text-shadow: 0 0 8px #24c2ff, 0 0 15px #1468d4, 0 0 20px rgba(36, 194, 255, 0.8);
-      white-space: nowrap;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.8);
       padding: 4px 8px;
       border-radius: 4px;
-      border: 1px solid rgba(104, 207, 255, 0.3);
+      text-align: center;
     }
 
-    /* Improved description labels: slightly larger font with background and margin */
     .desc-label {
-      font-size: 1.2vw;
+      font-size: 12px;
       color: #6fa8dc;
-      text-shadow: 0 0 5px #1468d4, 0 0 10px rgba(111, 168, 220, 0.6);
-      white-space: nowrap;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.7);
       padding: 2px 6px;
       border-radius: 3px;
-      margin-top: 5px;
-    }
-
-    /* Responsive adjustments for tablet sizes */
-    @media (max-width: 768px) {
-      #title {
-        font-size: 3vw;
-        top: 2%;
-      }
-      .number-label {
-        font-size: 3.5vw;
-        padding: 6px 10px;
-      }
-      .desc-label {
-        font-size: 1.8vw;
-        padding: 4px 8px;
-      }
-    }
-
-    /* Responsive adjustments for mobile */
-    @media (max-width: 480px) {
-      #title {
-        font-size: 4vw;
-        top: 1%;
-      }
-      .number-label {
-        font-size: 4.5vw;
-        padding: 8px 12px;
-      }
-      .desc-label {
-        font-size: 2.2vw;
-        padding: 6px 10px;
-      }
+      margin-top: 4px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <div id="title">Verteilung des politischen Wissens nach Kompetenzstufen für NRW</div>
   <div id="labels"></div>
   <!-- Base64 encoded textures for silhouettes are defined in this file -->
   <script src="base64_texture.js"></script>
@@ -244,10 +193,10 @@
     // title above.  Feel free to adjust the X and Y values to fit your
     // layout perfectly.
     const positions = [
-      new THREE.Vector3(-10, 1.5, 0), // Stage A: highest point, slightly lowered
-      new THREE.Vector3(-4, 0.6, 0),  // Stage B: modest drop, lowered
-      new THREE.Vector3(4, 0.6, 0),   // Stage C: flat segment, lowered
-      new THREE.Vector3(10, -1.6, 0)  // Stage D: lowest point with steep drop
+      new THREE.Vector3(-5, 0.75, 0),  // Stage A: highest point, adjusted for new width
+      new THREE.Vector3(-1.5, 0.3, 0), // Stage B: modest drop
+      new THREE.Vector3(1.5, 0.3, 0),  // Stage C: flat segment
+      new THREE.Vector3(5, -0.8, 0)    // Stage D: lowest point with steep drop
     ];
 
     // Create slope segments as thin glowing rectangles to emulate the descending line
@@ -278,6 +227,33 @@
     // Store animated objects for updates
     const animatedSprites = [];
     const labelContainer = document.getElementById('labels');
+
+    function project3DToScreen(position, camera, renderer) {
+      const vector = position.clone().project(camera);
+      return {
+        x: (vector.x * 0.5 + 0.5) * renderer.domElement.clientWidth,
+        y: (-vector.y * 0.5 + 0.5) * renderer.domElement.clientHeight
+      };
+    }
+
+    function updateLabelPositions() {
+      animatedSprites.forEach(sprite => {
+        const label = sprite.userData.domLabel;
+        if (!label) return;
+        const screenPos = project3DToScreen(sprite.position, camera, renderer);
+        const rect = label.getBoundingClientRect();
+        const halfWidth = rect.width / 2;
+        const margin = 5;
+        let clampedX = screenPos.x;
+        if (screenPos.x - halfWidth < margin) {
+          clampedX = margin + halfWidth;
+        } else if (screenPos.x + halfWidth > window.innerWidth - margin) {
+          clampedX = window.innerWidth - margin - halfWidth;
+        }
+        label.style.left = `${clampedX}px`;
+        label.style.top = `${screenPos.y + 60}px`;
+      });
+    }
 
     // Load textures and initialize sprites
     loadTextures(characters.map(c => c.uri)).then(textures => {
@@ -388,35 +364,7 @@
           }
         }
       });
-      // Update positions of DOM labels: project sprite positions to 2D screen space
-      animatedSprites.forEach(sprite => {
-        const lbl = sprite.userData.domLabel;
-        if (!lbl) return;
-        const pos = sprite.position.clone();
-        // project to normalized device coordinates
-        pos.project(camera);
-        const x = (pos.x * 0.5 + 0.5) * window.innerWidth;
-        const y = (-pos.y * 0.5 + 0.5) * window.innerHeight;
-        // Clamp the horizontal position so labels never overflow off the left or right side.
-        // Determine the half-width of the label to avoid clipping.  Since the
-        // DOM layout may not have updated in this animation frame yet, we call
-        // getBoundingClientRect() which returns up‑to‑date dimensions.
-        const rect = lbl.getBoundingClientRect();
-        const halfWidth = rect.width / 2;
-        const margin = 5; // pixels of margin from the edge
-        let clampedX = x;
-        if (x - halfWidth < margin) {
-          clampedX = margin + halfWidth;
-        } else if (x + halfWidth > window.innerWidth - margin) {
-          clampedX = window.innerWidth - margin - halfWidth;
-        }
-        lbl.style.left = `${clampedX}px`;
-        // Position the label slightly above the sprite; multiply world height by a
-        // larger pixel factor for more separation.  A higher multiplier lifts
-        // the labels further above the figures so they do not overlap the title.
-        const offsetPixels = sprite.scale.y * 60;
-        lbl.style.top  = `${y - offsetPixels}px`;
-      });
+      updateLabelPositions();
       renderer.render(scene, camera);
     }
     animate();
