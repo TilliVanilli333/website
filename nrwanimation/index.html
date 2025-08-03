@@ -5,8 +5,9 @@
   <title>NRW Kompetenzstufen Animation</title>
   <style>
     :root {
-      --number-font-size: 40px;
-      --desc-font-size: 24px;
+      /* Smaller defaults so labels stay subtle even before JS resizes them */
+      --number-font-size: 18px;
+      --desc-font-size: 12px;
     }
 
     /* Ensure the canvas takes up the entire window without scrollbars */
@@ -290,10 +291,11 @@
       camera.lookAt(center);
     }
 
-    function setLabelSizes() {
-      document.documentElement.style.setProperty('--number-font-size', (window.innerHeight * 0.14) + 'px');
-      document.documentElement.style.setProperty('--desc-font-size', (window.innerHeight * 0.08) + 'px');
-    }
+      function setLabelSizes() {
+        // Keep competency level labels and percentages small relative to figures
+        document.documentElement.style.setProperty('--number-font-size', (window.innerHeight * 0.06) + 'px');
+        document.documentElement.style.setProperty('--desc-font-size', (window.innerHeight * 0.04) + 'px');
+      }
     setLabelSizes();
 
     // Load textures and initialize sprites
