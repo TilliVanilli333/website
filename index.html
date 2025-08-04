@@ -324,8 +324,8 @@
             content: '';
             position: absolute;
             bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            transform: none;
             width: 100px;
             height: 2px;
             background: linear-gradient(90deg, transparent, #4facfe, transparent);
@@ -749,6 +749,10 @@
         }
 
         @media (max-width: 768px) {
+            .main-content {
+                text-align: left;
+                align-items: flex-start;
+            }
             .main-content h1 {
                 font-size: 2.8rem;
                 letter-spacing: 2px;
