@@ -365,6 +365,69 @@
             font-weight: 600;
         }
 
+        /* Footer - Enhanced */
+        .footer {
+            background: rgba(0, 8, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid rgba(79, 172, 254, 0.3);
+            box-shadow:
+                0 -10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            margin-top: 80px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #a8dadc;
+            text-decoration: none;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin: 0 20px;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        .footer-links a:hover {
+            color: #4facfe;
+            background: rgba(79, 172, 254, 0.1);
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.8);
+            box-shadow:
+                inset 0 0 10px rgba(79, 172, 254, 0.2),
+                0 0 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .footer-separator {
+            color: rgba(255, 255, 255, 0.3);
+            margin: 0 15px;
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-copyright p {
+            margin: 0;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .main-content h1 {
@@ -403,6 +466,19 @@
                 width: 80%;
                 text-align: center;
                 border-bottom: 1px solid rgba(79, 172, 254, 0.2);
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .footer-separator {
+                display: none;
+            }
+
+            .footer-links a {
+                margin: 8px 0;
             }
 
             .datenschutz-content {
@@ -557,6 +633,20 @@
                     </p>
                 </div>
             </main>
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <a href="impressum.html">Impressum</a>
+                        <span class="footer-separator">|</span>
+                        <a href="datenschutz.html">Datenschutz</a>
+                        <span class="footer-separator">|</span>
+                        <a href="mailto:desk@diskurs-niederrhein.de">Kontakt</a>
+                    </div>
+                    <div class="footer-copyright">
+                        <p>&copy; 2025 Diskurs Niederrhein. Alle Rechte vorbehalten.</p>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
 
