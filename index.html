@@ -390,7 +390,6 @@
             margin-bottom: 60px;
             min-height: 500px;
             position: relative;
-            scroll-margin-top: 120px;
             padding: 40px;
         }
 
@@ -420,9 +419,10 @@
             font-weight: 700;
             letter-spacing: 2px;
             line-height: 1.3;
-            text-shadow: 
+            text-shadow:
                 0 0 15px currentColor,
                 0 4px 8px rgba(0, 0, 0, 0.5);
+            scroll-margin-top: 140px;
         }
 
         /* Glowing "ti" effect for Raumstation branding */
@@ -926,12 +926,12 @@
             <!-- Planet Sections -->
             <section id="planets" class="planet-sections">
                 <!-- BLAU 1: Simple Planet Links -->
-                <div class="planet-section planet-section-1" id="mission">
+                <div class="planet-section planet-section-1">
                     <div class="planet-wrapper">
                         <div class="planet-3d" id="blue-simple"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h3 class="content-title">Vier wichtige Dinge für Bildung und Demokratie</h3>
+                        <h3 class="content-title" id="mission">Vier wichtige Dinge für Bildung und Demokratie</h3>
                         
                         <div class="content-highlight">
                             <ul class="content-list">
@@ -993,12 +993,12 @@
                 </div>
 
                 <!-- LILA 1: Simple Planet Rechts -->
-                <div class="planet-section planet-section-2 reverse" id="raumstation">
+                <div class="planet-section planet-section-2 reverse">
                     <div class="planet-wrapper">
                         <div class="planet-3d" id="purple-simple"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h3 class="content-title">Die Raumsta<span class="raumstation-ti">ti</span>on: Was, Wie, Warum</h3>
+                        <h3 class="content-title" id="raumstation">Die Raumsta<span class="raumstation-ti">ti</span>on: Was, Wie, Warum</h3>
                         
                         <h4>Was wir tun: Raumsta<span class="raumstation-ti">ti</span>on-Projekte</h4>
                         <p class="content-text">Seit fünf Jahren setzen wir im gesamten Kreis Kleve Projekte in Kitas und Schulen um. Durch die Raumstation-Pädagogik werden Kinder und Jugendliche individuell gefördert und erwerben Kompetenzen, die sie befähigen, ihre Zukunft selbstbewusst und sicher zu gestalten.</p>
@@ -1051,12 +1051,12 @@
                 </div>
 
                 <!-- GRÜN 1: Simple Planet Links -->
-                <div class="planet-section planet-section-3" id="paedagogik">
+                <div class="planet-section planet-section-3">
                     <div class="planet-wrapper">
                         <div class="planet-3d" id="green-simple"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h3 class="content-title">Wünschestadt – Kinder erkunden ihre Kommune</h3>
+                        <h3 class="content-title" id="paedagogik">Wünschestadt – Kinder erkunden ihre Kommune</h3>
                         
                         <h4>Ein demokratisches Beteiligungsprojekt für Kinder in der Stadtplanung</h4>
                         <p class="content-text">Unser Projekt macht sichtbar, wie Kinder ihre Kommune erleben und gibt Impulse für eine Stadtplanung, die ihre Perspektiven ernst nimmt.</p>
@@ -1112,12 +1112,12 @@
                 </div>
 
                 <!-- ORANGE 1: Simple Planet Rechts -->
-                <div class="planet-section planet-section-4 reverse" id="team">
+                <div class="planet-section planet-section-4 reverse">
                     <div class="planet-wrapper">
                         <div class="planet-3d" id="orange-simple"></div>
                     </div>
                     <div class="content-wrapper">
-                        <h3 class="content-title">Das Team Raumstation: Wissenschaft & Praxis vereint</h3>
+                        <h3 class="content-title" id="team">Das Team Raumstation: Wissenschaft & Praxis vereint</h3>
                         
                         <h4>Kinderrechte sind unser Fundament – Wertschätzung unser Prinzip</h4>
                         <p class="content-text">Kinder sind unsere Passion, ihre Rechte der Kompass unseres Handelns. Unser Ansatz: Wertschätzen statt bewerten.</p>
@@ -1972,24 +1972,33 @@
             }, 500);
             
             // Navigation functionality
-            const navLinks = document.querySelectorAll('.nav a');
+            function scrollToSection(hash, behavior = 'smooth') {
+                const targetElement = document.querySelector(hash);
+                const header = document.querySelector('.header');
+                if (targetElement && header) {
+                    const headerHeight = header.offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight;
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: behavior
+                    });
+                }
+            }
+
+            const navLinks = document.querySelectorAll('.nav a[href^="#"]');
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const target = this.getAttribute('href');
-                    if (target.startsWith('#')) {
-                        const targetElement = document.querySelector(target);
-                        if (targetElement) {
-                            const headerHeight = 120;
-                            const targetPosition = targetElement.offsetTop - headerHeight;
-                            window.scrollTo({
-                                top: targetPosition,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
+                    scrollToSection(this.getAttribute('href'));
                 });
             });
+
+            if (window.location.hash) {
+                setTimeout(() => {
+                    scrollToSection(window.location.hash, 'auto');
+                }, 100);
+            }
         });
     </script>
 </body>
