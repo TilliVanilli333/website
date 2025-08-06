@@ -263,21 +263,18 @@
 
         .main-content h1 {
             font-family: 'Orbitron', monospace;
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 40px;
-            letter-spacing: 4px;
+            font-size: clamp(2rem, 5vw, 3.8rem); /* Responsive Schriftgröße */
+            font-weight: 600;
+            text-align: left;
+            margin-bottom: 8px;
+            letter-spacing: clamp(1px, 1vw, 6px); /* Responsive Letter-spacing */
             text-transform: uppercase;
+            color: #ffffff;
             background: linear-gradient(135deg, #ffffff, #4facfe, #00f2fe);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 
-                0 0 30px rgba(79, 172, 254, 0.5),
-                0 0 60px rgba(79, 172, 254, 0.3);
             position: relative;
-            text-align: left;
-            align-self: flex-start;
         }
 
         .main-content h1::after {
@@ -428,9 +425,18 @@
                 align-items: flex-start;
             }
             .main-content h1 {
-                font-size: 2.8rem;
-                letter-spacing: 2px;
-                text-align: left !important;
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                letter-spacing: 1px;
+                line-height: 1.2;
+                /* WICHTIG: Kein Gradient auf Mobile - nur Glow-Effekt */
+                background: none !important;
+                -webkit-background-clip: initial !important;
+                -webkit-text-fill-color: initial !important;
+                color: #ffffff !important;
+                text-shadow:
+                    0 0 30px rgba(79, 172, 254, 0.8),
+                    0 0 60px rgba(79, 172, 254, 0.5),
+                    0 2px 4px rgba(0, 0, 0, 0.5);
             }
             
             .hamburger {
@@ -483,6 +489,22 @@
             }
             .impressum-content h2 {
                 font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content h1 {
+                font-size: clamp(1.5rem, 7vw, 2rem);
+                letter-spacing: 0.5px;
+                word-break: break-word;
+                hyphens: auto;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .main-content h1 {
+                font-size: 1.4rem;
+                letter-spacing: 0;
             }
         }
     </style>
