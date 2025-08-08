@@ -179,9 +179,10 @@
         .nav {
             display: flex;
             justify-content: center;
-            gap: 60px;
-            max-width: 1100px;
+            gap: clamp(8px, 2vw, 60px); /* Noch kleinere Minimum-Abstände */
+            max-width: 100%;
             margin: 0 auto;
+            padding: 0 15px;
             width: 100%;
         }
 
@@ -189,15 +190,41 @@
             color: white;
             text-decoration: none;
             font-family: 'Orbitron', monospace;
-            font-size: 18px;
+            font-size: clamp(10px, 1.8vw, 18px); /* Kleineres Minimum */
             font-weight: 500;
-            letter-spacing: 1.5px;
+            letter-spacing: clamp(0px, 0.15vw, 1.5px); /* Kann auf 0 gehen */
             text-transform: uppercase;
             transition: all 0.4s ease;
             cursor: pointer;
             position: relative;
-            padding: 8px 16px;
+            padding: clamp(3px, 0.8vw, 8px) clamp(5px, 1vw, 16px);
             border-radius: 6px;
+            white-space: nowrap;
+            flex-shrink: 1; /* ERLAUBT leichtes Schrumpfen */
+            min-width: 0; /* Ermöglicht Flexbox-Schrumpfung */
+        }
+
+        /* Spezielle Behandlung für "Raumstation" */
+        @media (max-width: 992px) {
+            .nav a[href*="raumstation"] {
+                letter-spacing: 0; /* Kein Letter-spacing für längste Wörter */
+            }
+        }
+
+        /* Kritischer Bereich 750-850px */
+        @media (max-width: 850px) and (min-width: 769px) {
+            .header {
+                padding: 20px 0;
+                height: 80px;
+            }
+            .nav {
+                gap: 10px;
+            }
+            .nav a {
+                font-size: 11px;
+                padding: 4px 6px;
+                letter-spacing: 0;
+            }
         }
 
         .nav a:hover {
@@ -249,16 +276,14 @@
         .main-content {
             padding-top: 140px;
             padding-bottom: 60px;
-            text-align: center;
-            min-height: 100vh;
+            padding-left: 40px;  /* WICHTIG: Einheitlicher Abstand */
+            padding-right: 40px; /* WICHTIG: Einheitlicher Abstand */
+            max-width: 800px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            align-items: center;
-            max-width: 800px;
-            margin: 0 auto;
-            padding-left: 20px;
-            padding-right: 20px;
+            align-items: stretch; /* WICHTIG: Volle Breite nutzen */
         }
 
         .main-content h1 {
@@ -266,6 +291,11 @@
             font-size: clamp(2rem, 5vw, 3.8rem); /* Responsive Schriftgröße */
             font-weight: 600;
             text-align: left;
+            margin-left: 0 !important;  /* KEIN extra Margin */
+            margin-right: 0 !important;
+            padding-left: 0 !important; /* KEIN extra Padding */
+            padding-right: 0 !important;
+            width: 100%; /* Volle verfügbare Breite */
             margin-bottom: 8px;
             letter-spacing: clamp(1px, 1vw, 6px); /* Responsive Letter-spacing */
             text-transform: uppercase;
@@ -290,11 +320,27 @@
         }
 
         .impressum-content {
+            margin-left: 0 !important;  /* KEIN extra Margin */
+            margin-right: 0 !important;
+            padding-left: 0 !important; /* KEIN extra Padding */
+            padding-right: 0 !important;
+            width: 100%; /* Volle verfügbare Breite */
             text-align: left;
             line-height: 1.8;
             font-size: 1rem;
             color: #e0e0e0;
-            max-width: 100%;
+        }
+
+        /* NUR ZUM TESTEN - Zeigt Fluchtlinien */
+        .main-content::before {
+            content: '';
+            position: absolute;
+            left: 40px; /* Gleicher Wert wie padding-left */
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: red;
+            z-index: 9999;
         }
 
         .impressum-content h2 {
@@ -398,32 +444,31 @@
         }
 
         /* Responsive */
-        @media (max-width: 1200px) {
-            .nav {
-                gap: 30px;
-            }
-            .nav a {
-                font-size: 16px;
-                padding: 6px 12px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .nav {
-                gap: 20px;
-            }
-            .nav a {
-                font-size: 14px;
-                padding: 4px 8px;
-                letter-spacing: 1px;
-            }
-        }
-
         @media (max-width: 768px) {
             .main-content {
+                padding-left: 20px;  /* Kleinerer aber einheitlicher Abstand */
+                padding-right: 20px;
+                padding-top: 110px;
                 text-align: left;
                 align-items: flex-start;
             }
+
+            /* Stelle sicher dass NICHTS extra Abstände hat */
+            .main-content h1,
+            .datenschutz-content,
+            .impressum-content,
+            .datenschutz-content h2,
+            .impressum-content h2,
+            .datenschutz-content p,
+            .impressum-content p {
+                margin-left: 0 !important;
+                padding-left: 0 !important;
+            }
+
+            .main-content::before {
+                left: 20px; /* Mobile padding-left */
+            }
+
             .main-content h1 {
                 font-size: clamp(1.8rem, 8vw, 2.5rem);
                 letter-spacing: 1px;
@@ -438,11 +483,11 @@
                     0 0 60px rgba(79, 172, 254, 0.5),
                     0 2px 4px rgba(0, 0, 0, 0.5);
             }
-            
+
             .hamburger {
                 display: flex;
             }
-            
+
             .nav {
                 position: fixed;
                 top: 90px;
@@ -458,11 +503,11 @@
                 transition: right 0.3s ease-in-out;
                 gap: 40px;
             }
-            
+
             .nav.active {
                 right: 0;
             }
-            
+
             .nav a {
                 font-size: 22px;
                 padding: 20px;
@@ -493,6 +538,10 @@
         }
 
         @media (max-width: 480px) {
+            .main-content {
+                padding-left: 15px;  /* Noch kleinerer Abstand auf sehr kleinen Screens */
+                padding-right: 15px;
+            }
             .main-content h1 {
                 font-size: clamp(1.5rem, 7vw, 2rem);
                 letter-spacing: 0.5px;
