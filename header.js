@@ -17,46 +17,60 @@ function createHeader() {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                gap: clamp(15px, 3vw, 50px) !important;
-                max-width: min(900px, 90vw);
+                gap: clamp(10px, 2vw, 40px) !important;
+                max-width: min(1100px, 90vw);
                 width: 100%;
                 margin: 0 auto;
                 padding: 0;
             }
             
             .nav-enhanced a {
-                font-size: clamp(11px, calc(1vw + 10px), 18px) !important;
-                padding: 10px clamp(8px, 1.5vw, 20px) !important;
-                letter-spacing: clamp(0.5px, 0.1vw, 1.5px) !important;
+                font-size: clamp(10px, calc(0.9vw + 9px), 16px) !important;
+                padding: 8px clamp(6px, 1.2vw, 18px) !important;
+                letter-spacing: clamp(0.3px, 0.08vw, 1.2px) !important;
                 white-space: nowrap;
                 display: flex;
                 align-items: center;
                 min-height: 40px;
                 flex-shrink: 1;
                 min-width: 0;
+                flex: 0 1 auto;
             }
             
             @media (max-width: 1200px) {
                 .nav-enhanced {
-                    gap: clamp(10px, 2vw, 30px) !important;
+                    gap: clamp(8px, 1.5vw, 25px) !important;
                 }
                 
                 .nav-enhanced a {
-                    font-size: clamp(10px, calc(0.8vw + 9px), 16px) !important;
-                    padding: 8px clamp(6px, 1vw, 15px) !important;
-                    letter-spacing: clamp(0.3px, 0.08vw, 1px) !important;
+                    font-size: clamp(9px, calc(0.7vw + 8px), 15px) !important;
+                    padding: 6px clamp(5px, 0.8vw, 12px) !important;
+                    letter-spacing: clamp(0.2px, 0.06vw, 0.8px) !important;
                 }
             }
             
             @media (max-width: 992px) {
                 .nav-enhanced {
-                    gap: 10px !important;
+                    gap: 8px !important;
                 }
                 
                 .nav-enhanced a {
-                    font-size: clamp(9px, calc(0.7vw + 8px), 14px) !important;
-                    padding: 6px 8px !important;
-                    letter-spacing: 0.5px !important;
+                    font-size: clamp(8px, calc(0.6vw + 7px), 13px) !important;
+                    padding: 5px 6px !important;
+                    letter-spacing: 0.3px !important;
+                }
+            }
+            
+            @media (max-width: 850px) and (min-width: 769px) {
+                .nav-enhanced {
+                    gap: 6px !important;
+                    max-width: 95vw;
+                }
+                
+                .nav-enhanced a {
+                    font-size: 11px !important;
+                    padding: 4px 5px !important;
+                    letter-spacing: 0 !important;
                 }
             }
             
