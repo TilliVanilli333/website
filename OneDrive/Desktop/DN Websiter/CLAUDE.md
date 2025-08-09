@@ -1,2 +1,0 @@
-- mach diesen schritt bitte wieder rückgängig
-- man sieht die figuren und den graphen nicht, außerdem ist kompetenzstufe a und die prozentzahl nicht ganz links
