@@ -292,6 +292,170 @@
                 0 0 15px rgba(79, 172, 254, 0.3);
         }
 
+        /* CSS Fallback for Planets when WebGL not supported */
+        .css-planet {
+            width: 220px;
+            height: 220px;
+            position: relative;
+            display: none; /* Hidden by default, shown via JS when needed */
+        }
+
+        .css-planet-sphere {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: planetRotate 20s linear infinite;
+            box-shadow: 
+                inset -20px -20px 40px rgba(0, 0, 0, 0.5),
+                inset 10px 10px 30px rgba(255, 255, 255, 0.2),
+                0 0 50px rgba(79, 172, 254, 0.3);
+        }
+
+        .css-planet-sphere.blue {
+            background: radial-gradient(circle at 30% 30%, #87ceeb, #4facfe, #2575fc);
+        }
+
+        .css-planet-sphere.purple {
+            background: radial-gradient(circle at 30% 30%, #ba9ce6, #667eea, #764ba2);
+        }
+
+        .css-planet-sphere.green {
+            background: radial-gradient(circle at 30% 30%, #a8e6cf, #56ab2f, #3a7f1f);
+        }
+
+        .css-planet-sphere.orange {
+            background: radial-gradient(circle at 30% 30%, #ffd700, #ff6b35, #e74c3c);
+        }
+
+        /* Ring planet CSS fallback */
+        .css-planet-ring {
+            width: 220px;
+            height: 60px;
+            border: 8px solid;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(75deg);
+            opacity: 0.7;
+        }
+
+        .css-planet-ring.blue {
+            border-color: #87ceeb;
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.5);
+        }
+
+        .css-planet-ring.purple {
+            border-color: #ba9ce6;
+            box-shadow: 0 0 20px rgba(186, 156, 230, 0.5);
+        }
+
+        /* Solar system CSS fallback */
+        .css-solar-system {
+            width: 220px;
+            height: 220px;
+            position: relative;
+            display: none;
+        }
+
+        .css-sun {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, #ffd700, #ff6b35);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+            animation: sunPulse 4s ease-in-out infinite;
+        }
+
+        .css-orbit {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .css-orbit-1 {
+            width: 150px;
+            height: 150px;
+            animation: orbit 10s linear infinite;
+        }
+
+        .css-orbit-2 {
+            width: 200px;
+            height: 200px;
+            animation: orbit 15s linear infinite reverse;
+        }
+
+        .css-orbiting-planet {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .css-orbiting-planet.inner {
+            background: radial-gradient(circle, #87ceeb, #4facfe);
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+
+        .css-orbiting-planet.outer {
+            background: radial-gradient(circle, #ba9ce6, #667eea);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+
+        @keyframes planetRotate {
+            from { transform: translate(-50%, -50%) rotateY(0deg); }
+            to { transform: translate(-50%, -50%) rotateY(360deg); }
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        @keyframes orbit {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* CSS Starfield fallback */
+        .css-starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: transparent;
+            display: none; /* Hidden by default */
+            z-index: -1;
+        }
+
+        .css-star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
         /* Hamburger Icon - Hidden on Desktop */
         .hamburger {
             display: none;
@@ -1442,6 +1606,85 @@
         const planetInstances = {};
         let starfieldScene, starfieldCamera, starfieldRenderer, starfieldStars, cosmicDustLayers;
 
+        // WebGL Support Check
+        function checkWebGLSupport() {
+            try {
+                const canvas = document.createElement('canvas');
+                const hasWebGL = !!(window.WebGLRenderingContext && 
+                    (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+                
+                if (!hasWebGL) {
+                    console.warn('WebGL not supported, using CSS fallback');
+                }
+                return hasWebGL;
+            } catch(e) {
+                console.error('WebGL check failed:', e);
+                return false;
+            }
+        }
+
+        const webGLSupported = checkWebGLSupport();
+
+        // Check if mobile device
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // CSS Fallback Functions
+        function createCSSPlanet(container, colorTheme) {
+            container.innerHTML = `
+                <div class="css-planet" style="display: block;">
+                    <div class="css-planet-sphere ${colorTheme}"></div>
+                </div>
+            `;
+        }
+
+        function createCSSRingPlanet(container, colorTheme) {
+            container.innerHTML = `
+                <div class="css-planet" style="display: block;">
+                    <div class="css-planet-sphere ${colorTheme}" style="width: 120px; height: 120px;"></div>
+                    <div class="css-planet-ring ${colorTheme}"></div>
+                </div>
+            `;
+        }
+
+        function createCSSSolarSystem(container, colorTheme) {
+            container.innerHTML = `
+                <div class="css-solar-system" style="display: block;">
+                    <div class="css-sun"></div>
+                    <div class="css-orbit css-orbit-1">
+                        <div class="css-orbiting-planet inner"></div>
+                    </div>
+                    <div class="css-orbit css-orbit-2">
+                        <div class="css-orbiting-planet outer"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createCSSStarfield() {
+            const container = document.getElementById('mainWebsiteStars');
+            if (!container) return;
+            
+            const starfield = document.createElement('div');
+            starfield.className = 'css-starfield';
+            starfield.style.display = 'block';
+            
+            // Create random stars
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'css-star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = Math.random() * 3 + 'px';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                starfield.appendChild(star);
+            }
+            
+            container.appendChild(starfield);
+        }
+
         // Create round star texture
         function createRoundStarTexture() {
             const canvas = document.createElement('canvas');
@@ -1495,10 +1738,22 @@
         function createSimplePlanet(containerId, colorTheme) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+            // Use CSS fallback if WebGL not supported
+            if (!webGLSupported) {
+                createCSSPlanet(container, colorTheme);
+                return;
+            }
+
+            try {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ 
+                    antialias: !isMobileDevice(), 
+                    alpha: true,
+                    powerPreference: "low-power",
+                    failIfMajorPerformanceCaveat: false
+                });
             
             renderer.setSize(220, 220);
             renderer.setClearColor(0x000000, 0);
@@ -1559,16 +1814,32 @@
             animate();
             
             planetInstances[containerId] = { scene, camera, renderer, planet };
+            } catch (error) {
+                console.error('WebGL initialization failed, using CSS fallback:', error);
+                createCSSPlanet(container, colorTheme);
+            }
         }
 
         // CREATE RING PLANET (SATURN-STYLE)
         function createRingPlanet(containerId, colorTheme) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+            // Use CSS fallback if WebGL not supported
+            if (!webGLSupported) {
+                createCSSRingPlanet(container, colorTheme);
+                return;
+            }
+
+            try {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ 
+                    antialias: !isMobileDevice(), 
+                    alpha: true,
+                    powerPreference: "low-power",
+                    failIfMajorPerformanceCaveat: false
+                });
             
             renderer.setSize(220, 220);
             renderer.setClearColor(0x000000, 0);
@@ -1662,16 +1933,32 @@
             animate();
             
             planetInstances[containerId] = { scene, camera, renderer, planet, ringGroup };
+            } catch (error) {
+                console.error('WebGL initialization failed, using CSS fallback:', error);
+                createCSSRingPlanet(container, colorTheme);
+            }
         }
 
         // CREATE SOLAR SYSTEM (CENTRAL STAR + 2 ORBITING PLANETS)
         function createSolarSystem(containerId, colorTheme) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+            // Use CSS fallback if WebGL not supported
+            if (!webGLSupported) {
+                createCSSSolarSystem(container, colorTheme);
+                return;
+            }
+
+            try {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ 
+                    antialias: !isMobileDevice(), 
+                    alpha: true,
+                    powerPreference: "low-power",
+                    failIfMajorPerformanceCaveat: false
+                });
             
             renderer.setSize(220, 220);
             renderer.setClearColor(0x000000, 0);
@@ -1829,6 +2116,10 @@
             planetInstances[containerId] = { 
                 scene, camera, renderer, centralStar, orbitGroup1, orbitGroup2, planet1, planet2 
             };
+            } catch (error) {
+                console.error('WebGL initialization failed, using CSS fallback:', error);
+                createCSSSolarSystem(container, colorTheme);
+            }
         }
 
         // Create procedural dust texture
@@ -1855,11 +2146,23 @@
         // Create Three.js Starfield Background with Cosmic Dust
         function createThreeJSStarfield() {
             const container = document.getElementById('mainWebsiteStars');
-            
-            // Create Three.js scene for starfield
-            starfieldScene = new THREE.Scene();
-            starfieldCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
-            starfieldRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+            // Use CSS fallback if WebGL not supported
+            if (!webGLSupported) {
+                createCSSStarfield();
+                return;
+            }
+
+            try {
+                // Create Three.js scene for starfield
+                starfieldScene = new THREE.Scene();
+                starfieldCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
+                starfieldRenderer = new THREE.WebGLRenderer({ 
+                    antialias: !isMobileDevice(), 
+                    alpha: true,
+                    powerPreference: "low-power",
+                    failIfMajorPerformanceCaveat: false
+                });
             
             starfieldRenderer.setSize(window.innerWidth, window.innerHeight);
             starfieldRenderer.setClearColor(0x000000, 0);
@@ -2029,6 +2332,10 @@
             
             // Start animation loop
             animateStarfield();
+            } catch (error) {
+                console.error('WebGL Starfield initialization failed, using CSS fallback:', error);
+                createCSSStarfield();
+            }
         }
 
 
