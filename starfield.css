@@ -1,0 +1,250 @@
+/* Universal Starfield Animation - Works on all browsers */
+
+/* Main starfield container */
+.universal-starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Canvas starfield (primary) */
+.starfield-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* CSS animated stars layers */
+.css-stars-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* Small distant stars */
+.star-small {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: twinkle 3s infinite;
+}
+
+/* Medium stars */
+.star-medium {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.7;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+    animation: twinkle 4s infinite;
+}
+
+/* Large near stars */
+.star-large {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+    animation: twinkle 5s infinite;
+}
+
+/* Twinkling animation - subtiler */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+
+/* Parallax layers */
+.stars-layer-1 {
+    /* Keine Animation - statische Sterne */
+}
+
+.stars-layer-2 {
+    animation: drift 300s linear infinite; /* Sehr langsame Bewegung */
+    opacity: 0.6;
+}
+
+/* Drift animation for parallax effect */
+@keyframes drift {
+    from {
+        transform: translateX(0) translateY(0);
+    }
+    to {
+        transform: translateX(-100px) translateY(-100px);
+    }
+}
+
+/* Cosmic dust particles */
+.cosmic-dust {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.dust-particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(135,206,250,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+.dust-1 {
+    width: 100px;
+    height: 100px;
+    animation: float-dust-1 25s infinite ease-in-out;
+}
+
+.dust-2 {
+    width: 150px;
+    height: 150px;
+    animation: float-dust-2 30s infinite ease-in-out;
+}
+
+.dust-3 {
+    width: 120px;
+    height: 120px;
+    animation: float-dust-3 35s infinite ease-in-out;
+}
+
+.dust-4 {
+    width: 80px;
+    height: 80px;
+    animation: float-dust-4 20s infinite ease-in-out;
+}
+
+/* Cosmic dust floating animations */
+@keyframes float-dust-1 {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.3;
+    }
+    25% {
+        transform: translate(100px, -50px) rotate(90deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(-50px, 100px) rotate(180deg);
+        opacity: 0.4;
+    }
+    75% {
+        transform: translate(50px, 50px) rotate(270deg);
+        opacity: 0.6;
+    }
+}
+
+@keyframes float-dust-2 {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.2;
+    }
+    33% {
+        transform: translate(-100px, 100px) scale(1.2);
+        opacity: 0.4;
+    }
+    66% {
+        transform: translate(100px, -100px) scale(0.8);
+        opacity: 0.3;
+    }
+}
+
+@keyframes float-dust-3 {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translate(-150px, 50px) rotate(180deg);
+        opacity: 0.6;
+    }
+}
+
+@keyframes float-dust-4 {
+    0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(80px, -80px);
+        opacity: 0.5;
+    }
+}
+
+/* Keine Sternschnuppen mehr */
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .star-large {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .star-medium {
+        width: 2px;
+        height: 2px;
+    }
+    
+    .dust-1, .dust-2, .dust-3, .dust-4 {
+        transform: scale(0.7);
+    }
+    
+    /* Reduce animation complexity on mobile */
+    .stars-layer-3 {
+        display: none;
+    }
+}
+
+/* Performance mode for slow devices */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Nebula background effect */
+.nebula-gradient {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: 
+        radial-gradient(ellipse at 20% 30%, rgba(79, 172, 254, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 70%, rgba(102, 126, 234, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(86, 171, 47, 0.05) 0%, transparent 50%);
+    animation: nebula-shift 60s ease-in-out infinite;
+    opacity: 0.3;
+}
+
+@keyframes nebula-shift {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        transform: translate(-5%, 5%) rotate(120deg);
+    }
+    66% {
+        transform: translate(5%, -5%) rotate(240deg);
+    }
+}

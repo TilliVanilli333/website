@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISKURS Niederrhein - Ihr Partner für Bildung</title>
+    <!-- Universal Starfield & Planet Animations -->
+    <link rel="stylesheet" href="./starfield.css">
+    <link rel="stylesheet" href="./planet-animations.css">
+    <!-- Header Script -->
+    <script src="./header.js"></script>
+    <script src="./starfield.js"></script>
+    <script src="./planet-animations.js"></script>
+    <style>
+        /* Lokale Font-Definitionen - Ersetzt Google Fonts */
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 300;
+            src: url('./assets/fonts/exo-2-v25-latin-300.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./assets/fonts/exo-2-v25-latin-regular.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 500;
+            src: url('./assets/fonts/exo-2-v25-latin-500.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 600;
+            src: url('./assets/fonts/exo-2-v25-latin-600.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./assets/fonts/orbitron-v34-latin-regular.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 500;
+            src: url('./assets/fonts/orbitron-v34-latin-500.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 700;
+            src: url('./assets/fonts/orbitron-v34-latin-700.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 900;
+            src: url('./assets/fonts/orbitron-v34-latin-900.woff2') format('woff2');
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Exo 2', 'Arial', sans-serif;
+            background: #000;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Fade-in effect for page load */
+        .page-container {
+            opacity: 0;
+            animation: fadeInPage 1.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Main Website */
+        #main-website {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, #000814 0%, #001d3d 40%, #000000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Enhanced Animated Cosmic Dust */
+        #main-website::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.08), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(135,206,250,0.12), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.06), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(173,216,230,0.1), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(255,255,255,0.04), transparent),
+                radial-gradient(1px 1px at 220px 120px, rgba(135,206,250,0.09), transparent),
+                radial-gradient(2px 2px at 280px 40px, rgba(255,255,255,0.07), transparent),
+                radial-gradient(1px 1px at 320px 180px, rgba(173,216,230,0.08), transparent);
+            background-repeat: repeat;
+            background-size: 350px 250px;
+            animation: cosmicFlow 25s linear infinite;
+            opacity: 0.7;
+            z-index: 1;
+            pointer-events: none;
+            transition: transform 0.1s ease-out;
+        }
+
+        @keyframes cosmicFlow {
+            0% { 
+                transform: translateX(0) translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            25% { 
+                opacity: 0.5;
+            }
+            50% { 
+                transform: translateX(-175px) translateY(-125px) rotate(180deg);
+                opacity: 0.9;
+            }
+            75% { 
+                opacity: 0.6;
+            }
+            100% { 
+                transform: translateX(-350px) translateY(-250px) rotate(360deg);
+                opacity: 0.7;
+            }
+        }
+
+        /* Three.js Stars Container - Always in background */
+        .main-website-stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* All content must be above starfield */
+        .main-content {
+            position: relative;
+            z-index: 20;
+        }
+
+        .planet-sections {
+            position: relative;
+            z-index: 20;
+        }
+
+        .planet-section {
+            position: relative;
+            z-index: 20;
+        }
+
+        /* Planet Container - Above starfield */
+        .planet-3d {
+            width: 220px;
+            height: 220px;
+            position: relative;
+            z-index: 25;
+            /* Kein border-radius oder overflow mehr */
+        }
+
+        /* Images and GIFs must be above starfield */
+        img {
+            position: relative;
+            z-index: 25;
+        }
+        /* Header - Retro-Futuristic Style */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 8, 20, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(79, 172, 254, 0.3);
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            padding: 25px 0;
+            height: 90px;
+        }
+
+        /* 3D-Ebenen Hierarchie */
+        .main-website-stars {
+            z-index: 1; /* Hintergrund-Sterne */
+        }
+
+        .main-content,
+        .planet-sections,
+        .planet-section {
+            z-index: 20; /* Inhalt in der Mitte */
+        }
+
+        .planet-3d,
+        img {
+            z-index: 25; /* Planeten und Bilder */
+        }
+
+
+        .header {
+            z-index: 100; /* Header ganz oben */
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: clamp(8px, 2vw, 60px); /* Noch kleinere Minimum-Abstände */
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px;
+            width: 100%;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(10px, 1.8vw, 18px); /* Kleineres Minimum */
+            font-weight: 500;
+            letter-spacing: clamp(0px, 0.15vw, 1.5px); /* Kann auf 0 gehen */
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            padding: clamp(8px, 1vw, 12px) clamp(12px, 1.5vw, 20px); /* Gleichmäßigeres Padding */
+            border-radius: 6px;
+            white-space: nowrap;
+            flex-shrink: 1; /* ERLAUBT leichtes Schrumpfen */
+            min-width: 0; /* Ermöglicht Flexbox-Schrumpfung */
+            display: inline-flex; /* Für bessere Zentrierung */
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Spezielle Behandlung für "Raumstation" */
+        @media (max-width: 992px) {
+            .nav a[href*="raumstation"] {
+                letter-spacing: 0; /* Kein Letter-spacing für längste Wörter */
+            }
+            .main-content p {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Kritischer Bereich 750-850px */
+        @media (max-width: 850px) and (min-width: 769px) {
+            .header {
+                padding: 20px 0;
+                height: 80px;
+            }
+            .nav {
+                gap: 10px;
+            }
+            .nav a {
+                font-size: 11px;
+                padding: 4px 6px;
+                letter-spacing: 0;
+            }
+        }
+
+        .nav a:hover {
+            color: #4facfe;
+            text-shadow: 
+                0 0 10px rgba(79, 172, 254, 0.8),
+                0 0 20px rgba(79, 172, 254, 0.4);
+            background: rgba(79, 172, 254, 0.1);
+            box-shadow: 
+                inset 0 0 10px rgba(79, 172, 254, 0.2),
+                0 0 15px rgba(79, 172, 254, 0.3);
+        }
+
+        /* CSS Fallback for Planets when WebGL not supported */
+        .css-planet {
+            width: 220px;
+            height: 220px;
+            position: relative;
+            display: none; /* Hidden by default, shown via JS when needed */
+        }
+
+        .css-planet-sphere {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: planetRotate 20s linear infinite;
+            box-shadow: 
+                inset -20px -20px 40px rgba(0, 0, 0, 0.5),
+                inset 10px 10px 30px rgba(255, 255, 255, 0.2),
+                0 0 50px rgba(79, 172, 254, 0.3);
+        }
+
+        .css-planet-sphere.blue {
+            background: radial-gradient(circle at 30% 30%, #87ceeb, #4facfe, #2575fc);
+        }
+
+        .css-planet-sphere.purple {
+            background: radial-gradient(circle at 30% 30%, #ba9ce6, #667eea, #764ba2);
+        }
+
+        .css-planet-sphere.green {
+            background: radial-gradient(circle at 30% 30%, #a8e6cf, #56ab2f, #3a7f1f);
+        }
+
+        .css-planet-sphere.orange {
+            background: radial-gradient(circle at 30% 30%, #ffd700, #ff6b35, #e74c3c);
+        }
+
+        /* Ring planet CSS fallback */
+        .css-planet-ring {
+            width: 220px;
+            height: 60px;
+            border: 8px solid;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(75deg);
+            opacity: 0.7;
+        }
+
+        .css-planet-ring.blue {
+            border-color: #87ceeb;
+            box-shadow: 0 0 20px rgba(135, 206, 235, 0.5);
+        }
+
+        .css-planet-ring.purple {
+            border-color: #ba9ce6;
+            box-shadow: 0 0 20px rgba(186, 156, 230, 0.5);
+        }
+
+        /* Solar system CSS fallback */
+        .css-solar-system {
+            width: 220px;
+            height: 220px;
+            position: relative;
+            display: none;
+        }
+
+        .css-sun {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, #ffd700, #ff6b35);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+            animation: sunPulse 4s ease-in-out infinite;
+        }
+
+        .css-orbit {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .css-orbit-1 {
+            width: 150px;
+            height: 150px;
+            animation: orbit 10s linear infinite;
+        }
+
+        .css-orbit-2 {
+            width: 200px;
+            height: 200px;
+            animation: orbit 15s linear infinite reverse;
+        }
+
+        .css-orbiting-planet {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .css-orbiting-planet.inner {
+            background: radial-gradient(circle, #87ceeb, #4facfe);
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+
+        .css-orbiting-planet.outer {
+            background: radial-gradient(circle, #ba9ce6, #667eea);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+
+        @keyframes planetRotate {
+            from { transform: translate(-50%, -50%) rotateY(0deg); }
+            to { transform: translate(-50%, -50%) rotateY(360deg); }
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        @keyframes orbit {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* CSS Starfield fallback */
+        .css-starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: transparent;
+            display: none; /* Hidden by default */
+            z-index: -1;
+        }
+
+        .css-star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Hamburger Icon - Hidden on Desktop */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 101;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Hamburger Animation when Active */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Main Content - Enhanced Typography */
+        .main-content {
+            padding-top: 140px;
+            text-align: center;
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+
+        .main-content h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 5vw, 3.8rem); /* Responsive Schriftgröße */
+            font-weight: 600;
+            text-align: left;
+            margin-bottom: 8px;
+            letter-spacing: clamp(1px, 1vw, 6px); /* Responsive Letter-spacing */
+            text-transform: uppercase;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ffffff, #4facfe, #00f2fe);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .word-diskurs,
+        .word-niederrhein {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .main-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4facfe, transparent);
+            box-shadow: 0 0 10px #4facfe;
+        }
+
+        .main-content p {
+            margin-top: 30px;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.6rem;
+            color: #a8dadc;
+            font-weight: 400;
+            margin-bottom: 50px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Content Sections - Clean without containers */
+        .content-section {
+            padding: 80px 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 
+                0 0 20px rgba(79, 172, 254, 0.6),
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-content {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* Enhanced Planet Sections */
+        .planet-sections {
+            padding: 100px 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+            background: transparent;
+        }
+
+        .planet-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 50px;
+            margin-bottom: 60px;
+            min-height: 500px;
+            position: relative;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            padding-left: 40px;  /* Gleicher Wert wie main-content */
+            padding-right: 40px;
+        }
+
+        .planet-section.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .planet-wrapper {
+            flex: 0 0 220px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            padding-top: 20px;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            max-width: 800px;
+            padding-left: 0;  /* Kein extra Padding */
+            padding-right: 0;
+        }
+
+        .content-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.6rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.3;
+            text-shadow:
+                0 0 15px currentColor,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+            scroll-margin-top: 140px;
+        }
+
+        /* Glowing "ti" effect for Raumstation branding */
+        .raumstation-ti {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        /* Subtle glow on hover for any raumstation-ti */
+        h3:hover .raumstation-ti,
+        h4:hover .raumstation-ti,
+        .nav a:hover .raumstation-ti {
+            color: #ffffff !important;
+            text-shadow:
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(79, 172, 254, 0.6),
+                0 0 30px rgba(79, 172, 254, 0.4);
+            transform: scale(1.05);
+        }
+        
+        /* Purple planet specific ti styling - default lila color */
+        .planet-section-2 .raumstation-ti {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        /* Special case: h3 with id="raumstation" - ti is white from the start */
+        .planet-section-2 h3#raumstation .raumstation-ti {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        /* On hover of the entire heading, ti becomes white with lila glow */
+        .planet-section-2 h3:hover .raumstation-ti,
+        .planet-section-2 h4:hover .raumstation-ti {
+            color: #ffffff !important;
+            text-shadow:
+                0 0 10px rgba(255, 255, 255, 0.9),
+                0 0 20px rgba(102, 126, 234, 0.8),
+                0 0 30px rgba(102, 126, 234, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* Richtige Farben: h4 farbig, Text weiß */
+        h4 {
+            font-family: 'Orbitron', monospace !important;
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 1px !important;
+            margin: 0 0 15px 0 !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        /* h4 Überschriften in Themenfarben */
+        .planet-section-1 h4 { 
+            color: #4facfe !important;
+        }
+        .planet-section-2 h4 { 
+            color: #667eea !important;
+        }
+        .planet-section-3 h4 { 
+            color: #56ab2f !important;
+        }
+        .planet-section-4 h4 { 
+            color: #ff6b35 !important;
+        }
+
+        /* Text immer weiß */
+        .content-text {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #ffffff !important;
+            margin-bottom: 20px;
+            text-align: left;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-highlight {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border-radius: 8px;
+            position: relative;
+            z-index: 25;
+        }
+
+        .content-list {
+            color: #d0d0d0;
+            margin: 15px 0;
+            padding-left: 25px;
+            line-height: 1.8;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .content-list li {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .citation {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.5);
+            margin: 15px 0 30px 0;
+            line-height: 1.4;
+            font-style: italic;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Planet-specific colors with enhanced styling */
+        .planet-section-1 .content-title { 
+            color: #4facfe;
+            text-shadow: 
+                0 0 20px #4facfe,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .planet-section-1 .content-highlight { 
+            border-color: #4facfe;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(79, 172, 254, 0.2);
+        }
+
+        .planet-section-2 .content-title { 
+            color: #667eea;
+            text-shadow: 
+                0 0 20px #667eea,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .planet-section-2 .content-highlight { 
+            border-color: #667eea;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(102, 126, 234, 0.2);
+        }
+
+        .planet-section-3 .content-title { 
+            color: #56ab2f;
+            text-shadow: 
+                0 0 20px #56ab2f,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .planet-section-3 .content-highlight { 
+            border-color: #56ab2f;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(86, 171, 47, 0.2);
+        }
+
+        .planet-section-4 .content-title { 
+            color: #ff6b35;
+            text-shadow: 
+                0 0 20px #ff6b35,
+                0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .planet-section-4 .content-highlight { 
+            border-color: #ff6b35;
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 107, 53, 0.2);
+        }
+
+        /* Footer - Enhanced */
+        .footer {
+            background: rgba(0, 8, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid rgba(79, 172, 254, 0.3);
+            box-shadow: 
+                0 -10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            margin-top: 80px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #a8dadc;
+            text-decoration: none;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin: 0 20px;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        .footer-links a:hover {
+            color: #4facfe;
+            background: rgba(79, 172, 254, 0.1);
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.8);
+            box-shadow: 
+                inset 0 0 10px rgba(79, 172, 254, 0.2),
+                0 0 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .footer-separator {
+            color: rgba(255, 255, 255, 0.3);
+            margin: 0 15px;
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-copyright p {
+            margin: 0;
+        }
+
+        /* Cookie Banner - Enhanced */
+        .cookie-banner {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            max-width: 380px;
+            background: rgba(0, 8, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(79, 172, 254, 0.4);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.6), 
+                0 0 30px rgba(79, 172, 254, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            color: white;
+            font-family: 'Exo 2', sans-serif;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-in-out;
+            pointer-events: none;
+        }
+
+        .cookie-banner.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .cookie-banner h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #4facfe;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+
+        .cookie-banner h3::before {
+            content: '🚀';
+            font-size: 1.3rem;
+        }
+
+        .cookie-banner p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            width: 24px;
+            height: 24px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            line-height: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: rgba(255, 255, 255, 1);
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                text-align: left;
+                align-items: flex-start;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+            .main-content::before {
+                left: 20px; /* Mobile padding-left */
+            }
+            .main-content h1 {
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                letter-spacing: 1px;
+                line-height: 1.2;
+                margin-left: 0;
+                margin-right: 0;
+                /* WICHTIG: Kein Gradient auf Mobile - nur Glow-Effekt */
+                background: none !important;
+                -webkit-background-clip: initial !important;
+                -webkit-text-fill-color: initial !important;
+                color: #ffffff !important;
+                text-shadow:
+                    0 0 30px rgba(79, 172, 254, 0.8),
+                    0 0 60px rgba(79, 172, 254, 0.5),
+                    0 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .main-content p {
+                font-size: 1.2rem;
+                letter-spacing: 1px;
+                text-align: left !important;
+            }
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav {
+                position: fixed;
+                top: 90px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 90px);
+                background: rgba(0, 8, 20, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 60px;
+                transition: right 0.3s ease-in-out;
+                gap: 40px;
+            }
+            
+            .nav.active {
+                right: 0;
+            }
+            
+            .nav a {
+                font-size: 22px;
+                padding: 20px;
+                width: 80%;
+                text-align: center;
+                border-bottom: 1px solid rgba(79, 172, 254, 0.2);
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+
+            .content-title {
+                font-size: 2.2rem;
+                letter-spacing: 1px;
+                text-align: left !important;
+            }
+            
+            .content-highlight {
+                text-align: left !important;
+                padding: 20px 20px;
+            }
+            
+            .content-list {
+                padding-left: 20px;
+                text-align: left !important;
+            }
+            
+            .content-list li {
+                text-align: left !important;
+            }
+            
+            .content-wrapper {
+                text-align: left !important;
+            }
+            
+            .content-wrapper p {
+                text-align: left !important;
+            }
+            
+            .planet-section {
+                flex-direction: column !important;
+                text-align: left;
+                gap: 40px;
+                align-items: flex-start;
+                padding-top: 30px;
+                padding-bottom: 30px;
+                padding-left: 20px;  /* Gleicher Wert wie main-content mobile */
+                padding-right: 20px;
+                margin-bottom: 60px;
+            }
+            
+            .planet-section.reverse {
+                flex-direction: column !important;
+            }
+            
+            .planet-wrapper {
+                flex: none;
+            }
+            
+            .planet-3d {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .content-wrapper {
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .content-text {
+                text-align: left;
+                font-size: 1.05rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .footer-separator {
+                display: none;
+            }
+
+            .footer-links a {
+                margin: 8px 0;
+            }
+
+            .cookie-banner {
+                bottom: 15px;
+                right: 15px;
+                left: 15px;
+                max-width: none;
+                margin: 0 15px;
+            }
+
+            /* Optimize starfield on mobile for performance */
+            .main-website-stars canvas {
+                transform: scale(0.7);
+                opacity: 0.8;
+            }
+            
+            /* Ensure content stays above starfield on mobile */
+            .main-content {
+                z-index: 20;
+            }
+
+            .planet-section {
+                z-index: 20;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            
+            .main-content h1 {
+                font-size: clamp(1.5rem, 7vw, 2rem);
+                letter-spacing: 0.5px;
+                word-break: normal;
+                hyphens: none;
+                white-space: normal;
+            }
+
+            .main-content p {
+                font-size: 1.1rem;
+            }
+
+            .content-title {
+                font-size: 1.8rem;
+                text-align: left !important;
+            }
+            
+            .content-highlight {
+                padding: 15px 15px;
+            }
+            
+            .content-list {
+                padding-left: 18px;
+            }
+            
+            .planet-3d {
+                margin: 0 auto;
+            }
+
+            .nav a {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .main-content h1 {
+                font-size: 1.4rem;
+                letter-spacing: 0;
+            }
+        }
+        
+        /* === ROBUSTNESS FIXES FOR ANDROID === */
+        
+        /* Verhindert leere Bilder-Kästen auf Android */
+        img[onerror], img[src=""], img:not([src]) { 
+            display: none !important; 
+        }
+        img { 
+            display: block; 
+            max-width: 100%; 
+            background: transparent !important; 
+        }
+        
+        /* Iframe Transparenz */
+        iframe { 
+            background: transparent; 
+            border: none; 
+            display: block; 
+            width: 100%; 
+        }
+        
+        /* Z-Index Hierarchie sauber ordnen */
+        #main-website::before,
+        .main-website-stars { 
+            z-index: 0 !important; 
+        }
+        
+        .main-content, 
+        .planet-sections, 
+        .planet-section { 
+            z-index: 10 !important; 
+        }
+        
+        .planet-3d, 
+        img, 
+        iframe { 
+            z-index: 15 !important; 
+        }
+        
+        .header { 
+            z-index: 100 !important; 
+        }
+        
+        .cookie-banner { 
+            z-index: 1000 !important; 
+        }
+        
+        /* Canvas transparent halten */
+        #mainWebsiteStars, 
+        #mainWebsiteStars canvas { 
+            background: transparent !important; 
+        }
+        
+        /* Performance-Optimierung für Mobile */
+        #main-website::before {
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        
+        /* Easter Egg - NIEKE glow effect on specific viewport range */
+        @media (min-width: 360px) and (max-width: 550px) {
+            /* Only activate when both words can be fully displayed */
+            .main-content h1 {
+                word-break: normal;
+                white-space: normal;
+            }
+            
+            /* Strong pulsing glow for N-I-E-K-E letters */
+            .easter-n, .easter-i, .easter-e1, .easter-k, .easter-e2 {
+                display: inline-block;
+                animation: easterGlow 2.5s ease-in-out infinite;
+                transition: all 0.3s ease;
+            }
+            
+            .easter-n { 
+                animation-delay: 0s;
+            }
+            .easter-i { 
+                animation-delay: 0.2s;
+            }
+            .easter-e1 { 
+                animation-delay: 0.4s;
+            }
+            .easter-k { 
+                animation-delay: 0.6s;
+            }
+            .easter-e2 { 
+                animation-delay: 0.8s;
+            }
+            
+            @keyframes easterGlow {
+                0%, 100% {
+                    color: #ffffff;
+                    text-shadow:
+                        0 0 30px rgba(79, 172, 254, 0.8),
+                        0 0 60px rgba(79, 172, 254, 0.5),
+                        0 2px 4px rgba(0, 0, 0, 0.5);
+                }
+                50% {
+                    color: #4facfe;
+                    text-shadow:
+                        0 0 40px rgba(79, 172, 254, 1),
+                        0 0 80px rgba(79, 172, 254, 0.8),
+                        0 0 120px rgba(0, 242, 254, 0.6),
+                        0 4px 8px rgba(0, 0, 0, 0.7);
+                    filter: brightness(1.3);
+                }
+            }
+        }
+        
+        /* Deactivate effect when text breaks incorrectly */
+        @media (max-width: 359px) {
+            .easter-n, .easter-i, .easter-e1, .easter-k, .easter-e2 {
+                animation: none !important;
+            }
+        }
+        
+        /* Hide easter egg effect on larger screens */
+        @media (min-width: 481px) {
+            .easter-n, .easter-i, .easter-e1, .easter-k, .easter-e2 {
+                display: inline;
+            }
+        }
+        
+        /* NRW Animation Embed Container */
+        .embed { 
+            position: relative; 
+            width: 100%; 
+            margin: 20px 0;
+        }
+        .embed--nrw { 
+            width: 100%;
+            height: 400px;
+            overflow: visible;
+        }
+        .embed--nrw iframe { 
+            width: 100%; 
+            height: 100%;
+            border: 0; 
+            display: block; 
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Main Website -->
+        <div id="main-website">
+            <!-- Enhanced Stars Container -->
+            <div class="main-website-stars" id="mainWebsiteStars"></div>
+            
+            <!-- Header Container -->
+            <div id="header-container"></div>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <h1><span class="word-diskurs">DIS<span class="easter-k">K</span>URS</span> <span class="word-niederrhein"><span class="easter-n">N</span><span class="easter-i">i</span><span class="easter-e1">e</span>d<span class="easter-e2">e</span>rrhein</span></h1>
+                <p>Medienbildung, Demokratiebildung: Euer Partner für Bildung</p>
+            </main>
+
+            <!-- Planet Sections -->
+            <section id="planets" class="planet-sections">
+                <!-- BLAU 1: Simple Planet Links -->
+                <div class="planet-section planet-section-1">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="blue-simple"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h3 class="content-title" id="mission">Vier wichtige Dinge für Bildung und Demokratie</h3>
+                        
+                        <div class="content-highlight">
+                            <p style="font-weight: 600; margin-bottom: 15px;">Wir müssen:</p>
+                            <ol class="content-list">
+                                <li><strong>Neue gesellschaftliche Impulse anregen</strong></li>
+                                <li><strong>Sichere Räume schaffen:</strong> Fremdes wird nicht als Bedrohung wahrgenommen, sondern Lösungen werden gemeinsam gestaltet</li>
+                                <li><strong>Kinder und Jugendliche stärken,</strong> damit sie Zukunftsproblemen nicht ohnmächtig gegenüberstehen, sondern sich als aktive Gestalter erleben</li>
+                                <li><strong>Engagement für Demokratie</strong> – damit aus Handeln Haltung wird</li>
+                            </ol>
+                        </div>
+
+                        <img src="images/demokratie1.gif" alt="Pädagogische Pflicht" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1); margin: 20px 0;">
+
+                        <p class="content-text"><strong>Warum wir genauer hinschauen müssen:</strong></p>
+                        <p class="content-text">Demokratiebildung braucht eine solide Grundlage. Studien zeigen, dass viele Jugendliche in NRW nur über begrenztes politisches Wissen verfügen und damit weniger sicher im Umgang mit demokratischen Prozessen sind.</p>
+                        
+                        <p class="content-text">Genau hier setzen wir an, mit Projekten, die Wissen vertiefen, Kompetenzen fördern und Demokratie erlebbar machen.</p>
+                        
+                        <!-- NRW-Animation in konsistentem Container -->
+                        <h4 style="color: #8dd9ff; text-align: left; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">
+                          Verteilung des politischen Wissens nach Kompetenzstufen für NRW
+                        </h4>
+                         <div class="embed embed--nrw">
+                            <iframe src="nrwanimation/index.html" 
+                                    title="NRW Bildungsdaten Demokratiekompetenz"
+                                    loading="lazy" 
+                                    referrerpolicy="no-referrer" 
+                                    sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                            <noscript><p style="color: #8dd9ff; text-align: center; padding: 20px;">Interaktive Grafik benötigt JavaScript.</p></noscript>
+                         </div>
+
+                        <p class="content-text">Die Grafik zeigt, dass nur 36 % der Schülerinnen und Schüler in NRW über ein hohes konzeptionelles politisches Wissen verfügen. Gleichzeitig erreicht ein erheblicher Teil nur die unteren Kompetenzstufen.</p>
+
+                        <p class="citation">Grafik eigen Darstellung: Quelle: Sudies et al. (2024), ICCS 2022 Länderbericht Deutschland (NRW).</p>
+                    </div>
+                </div>
+
+                <!-- BLAU 2: Ring Planet Rechts -->
+                <div class="planet-section planet-section-1 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="blue-ring"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4>Unsere Projekte: Kinder gestalten Gesellschaft</h4>
+                        <p class="content-text">Kinderrechte-Ausstellungen, Demokratie-Workshops oder Stadtplanungsprojekte – in der Raumstation gestalten Kinder aktiv ihre Zukunft. Unsere Projekte basieren auf den Kinderrechten und geben Kindern und Jugendlichen das Vertrauen und die Verantwortung, die sie verdienen.</p>
+                        
+                        <p class="content-text">Dabei erwerben sie wichtige Kompetenzen für die Welt von morgen: kreativ denken, Verantwortung übernehmen, Lösungen entwickeln. Wir trauen ihnen zu, Gesellschaft nicht nur zu erleben, sondern sie mitzugestalten.</p>
+
+                        <img src="images/demokratie2.gif" alt="Vision" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
+
+                <!-- BLAU 3: Solar System Links -->
+                <div class="planet-section planet-section-1">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="blue-solar"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4>Unsere Vision: Bildung neu denken</h4>
+                        <p class="content-text">Wir glauben: Bildung muss mehr sein als Wissensvermittlung. In der Raumstation lernen Kinder, ihre Rechte zu kennen, Verantwortung zu übernehmen und Gesellschaft mitzugestalten. So entstehen Haltungen und Kompetenzen, die in keiner Prüfung abgefragt werden, aber über unsere gemeinsame Zukunft entscheiden.</p>
+
+                        <img src="images/demokratie3.gif" alt="Methodische Vielfalt" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(79, 172, 254, 0.4); box-shadow: 0 0 15px rgba(79, 172, 254, 0.3), 0 0 30px rgba(79, 172, 254, 0.15), inset 0 0 10px rgba(79, 172, 254, 0.1); margin: 20px 0;">
+                        
+                        <p class="content-text"><strong>Kinderrechte ins Grundgesetz:</strong> Wir setzen uns dafür ein, dass Kinderrechte nicht nur anerkannt, sondern rechtlich fest verankert werden. Denn eine starke Demokratie beginnt mit starken Rechten für Kinder.</p>
+                    </div>
+                </div>
+
+                <!-- LILA 1: Simple Planet Rechts -->
+                <div class="planet-section planet-section-2 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="purple-simple"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h3 class="content-title" id="raumstation">Die Raumsta<span class="raumstation-ti">ti</span>on: Was, Wie, Warum</h3>
+                        
+                        <h4>Was wir tun: Raumsta<span class="raumstation-ti">ti</span>on-Projekte</h4>
+                        <p class="content-text">Seit fünf Jahren setzen wir im gesamten Kreis Kleve Projekte in Kitas und Schulen um. Durch die Raumstation-Pädagogik werden Kinder und Jugendliche individuell gefördert und erwerben Kompetenzen, die sie befähigen, ihre Zukunft selbstbewusst und sicher zu gestalten.</p>
+                        
+                        <p class="content-text">Gemeinsam mit den Institutionen vor Ort entwickeln wir Formate, die passgenau sind und sich direkt in den Schul- und Kita-Alltag implementieren lassen.</p>
+
+                        <img src="images/stuhl.gif" alt="Raumstation-Projekte" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(102, 126, 234, 0.4); box-shadow: 0 0 15px rgba(102, 126, 234, 0.3), 0 0 30px rgba(102, 126, 234, 0.15), inset 0 0 10px rgba(102, 126, 234, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
+
+                <!-- LILA 2: Ring Planet Links -->
+                <div class="planet-section planet-section-2">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="purple-ring"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4>Wie wir es tun: Raumsta<span class="raumstation-ti">ti</span>on-Pädagogik</h4>
+                        <p class="content-text">Die Raumstation-Pädagogik verwandelt pädagogische Situationen in sichere Räume, in denen Kinder eine intensive und prägende Zeit erleben.</p>
+
+                        <img src="images/demokratie3.gif" alt="Methodische Vielfalt" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(102, 126, 234, 0.4); box-shadow: 0 0 15px rgba(102, 126, 234, 0.3), 0 0 30px rgba(102, 126, 234, 0.15), inset 0 0 10px rgba(102, 126, 234, 0.1); margin: 20px 0;">
+
+                        <div class="content-highlight">
+                            <p style="font-weight: 600; margin-bottom: 15px; color: #667eea;">Ihre Merkmale:</p>
+                            <ul class="content-list">
+                                <li>Wertschätzung statt Bewertung</li>
+                                <li>Kinderrechte als Fundament jeder Situation</li>
+                                <li>Beteiligung auf allen Ebenen des Prozesses</li>
+                                <li>Anerkennung kindlicher Kompetenz</li>
+                                <li>Neugier und Begeisterung als Motor</li>
+                                <li>Individuelle Lernimpulse durch Raumstation-Fachkräfte</li>
+                                <li>Sichere Räume für optimale Entwicklungsbedingungen</li>
+                            </ul>
+                        </div>
+
+                        <p class="content-text">Der methodische Ansatz der Raumstation verbindet Bewährtes mit Neuem. Wir setzen auf traditionelle pädagogische Methoden, die Kindern ermöglichen, die Welt mit allen Sinnen zu erfahren.</p>
+                    </div>
+                </div>
+
+                <!-- LILA 3: Solar System Rechts -->
+                <div class="planet-section planet-section-2 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="purple-solar"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4>Warum wir es tun: Unsere Ziele</h4>
+                        <p class="content-text">Wir wollen, dass Kinder nicht ohnmächtig vor Zukunftsproblemen stehen, sondern sie gestalten lernen. Unsere Projekte hinterlassen Wirkung, die bleibt. Sie prägen Haltungen, fördern Beteiligung und machen erfahrbar, dass Gesellschaft nur gemeinsam gelingt.</p>
+                        
+                        <p class="content-text">Gleichzeitig verstehen wir uns als Partner der Fachkräfte. Wir erkennen ihre Expertise und ihre wertvolle Arbeit an und stimmen uns eng mit ihnen ab, um ihre Bedarfe präzise aufzugreifen. Auf dieser Basis entwickeln wir passgenaue Formate, die sich in den Alltag der Institutionen einfügen.</p>
+
+                        <img src="images/interviews.gif" alt="Pädagogische Prinzipien" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(102, 126, 234, 0.4); box-shadow: 0 0 15px rgba(102, 126, 234, 0.3), 0 0 30px rgba(102, 126, 234, 0.15), inset 0 0 10px rgba(102, 126, 234, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
+
+                <!-- GRÜN 1: Simple Planet Links -->
+                <div class="planet-section planet-section-3">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="green-simple"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h3 class="content-title" id="paedagogik">Wünschestadt – Kinder erkunden ihre Kommune</h3>
+                        <img src="images/WünschestadtGif1.gif" alt="Stadtbegehung aus der Kinderperspektive" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.4); box-shadow: 0 0 15px rgba(86, 171, 47, 0.3), 0 0 30px rgba(86, 171, 47, 0.15), inset 0 0 10px rgba(86, 171, 47, 0.1); margin: 20px 0;">
+
+                        <h4>Ein demokratisches Beteiligungsprojekt für Kinder in der Stadtplanung</h4>
+                        <p class="content-text">Unser Projekt macht sichtbar, wie Kinder ihre Kommune erleben und gibt Impulse für eine Stadtplanung, die ihre Perspektiven ernst nimmt.</p>
+                        
+                        <p class="content-text">Welche Orte lieben sie? Wo fühlen sie sich sicher, wo unsicher? Gibt es Angsträume? Was fehlt ihnen? In Rundgängen durch ihre Stadt führen Kinder unser Raumstation-Team zu den Orten, die für sie Bedeutung haben.</p>
+                        
+                        <p class="content-text">So wird deutlich, wie die Stadt mit Kinderaugen wahrgenommen wird – eine wichtige Perspektive, die bislang in der Stadtplanung wenig Beachtung findet.</p>
+                    </div>
+                </div>
+
+                <!-- GRÜN 2: Ring Planet Rechts -->
+                <div class="planet-section planet-section-3 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="green-ring"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4>Methoden: Analog trifft Digital</h4>
+                        <p class="content-text">Traditionelles Erleben und digitale Werkzeuge verbinden sich zu neuen Beteiligungsformen. Die gesamte Projektzeit ist Raumstation-Zeit. Während der Stadtbegehungen und in den kreativen Phasen danach kommen Kinder in all ihren Ausdrucksformen zu Wort.</p>
+
+                        <img src="images/Greenscreen.gif" alt="Verbindung von Analogem und Digitalem" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.4); box-shadow: 0 0 15px rgba(86, 171, 47, 0.3), 0 0 30px rgba(86, 171, 47, 0.15), inset 0 0 10px rgba(86, 171, 47, 0.1); margin: 20px 0;">
+
+                        <p class="content-text">Wir hören zu, beobachten und führen Interviews. Kinder malen, zeichnen oder bauen Modelle und setzen sich so mit ihrer Stadt auseinander. Digitale Methoden wie QR-Codes, Collagen oder Stop-Motion erweitern diese Möglichkeiten.</p>
+
+                        <p class="content-text">So entsteht ein besonderer Raum, in dem Kinder uns ihre Sichtweise näher bringen und uns zeigen, wie sie sich ihre Stadt wünschen – eben: Wünschestadt!</p>
+                    </div>
+                </div>
+
+                <!-- GRÜN 3: Solar System Links -->
+                <div class="planet-section planet-section-3">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="green-solar"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4>Ein Stadtplan aus Kinderperspektive</h4>
+                        <p class="content-text">Mit der Wünschestadt entsteht ein Stadtplan aus Kinderperspektive, einzigartig für Ihre Kommune. Sie erfahren, was Kinder bewegt, welche Orte sie lieben, wo sie Unsicherheiten spüren und welche Ideen sie für die Zukunft haben.</p>
+                        
+                        <div class="content-highlight">
+                            <p style="font-weight: 600; margin-bottom: 15px; color: #56ab2f;">Das zeigt, wie Ihre Stadt ist:</p>
+                            <ul class="content-list">
+                                <li><strong>Kinderfreundlich</strong> – Sie geben den jüngsten Bürgern und Bürgerinnen Raum, ihre Sicht einzubringen</li>
+                                <li><strong>Innovativ</strong> – Sie nutzen ein Beteiligungsformat, das analoge und digitale Methoden verbindet</li>
+                                <li><strong>Demokratisch</strong> – Sie machen deutlich, dass Partizipation ernst genommen wird</li>
+                                <li><strong>Attraktiv</strong> – Sie setzen ein Zeichen für Familienfreundlichkeit und Zukunftsgestaltung</li>
+                            </ul>
+                        </div>
+                        
+                        <p class="content-text">So gewinnt Ihre Kommune Impulse, die unmittelbar in die Stadtentwicklung einfließen und zeigt gleichzeitig, dass sie Kinder und Jugendliche als wichtigen Teil der Gesellschaft wertschätzt.</p>
+
+                        <img src="images/gifemmerichpan.gif" alt="Stadtplan aus Kinderperspektive" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(86, 171, 47, 0.4); box-shadow: 0 0 15px rgba(86, 171, 47, 0.3), 0 0 30px rgba(86, 171, 47, 0.15), inset 0 0 10px rgba(86, 171, 47, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
+
+                <!-- ORANGE 1: Simple Planet Rechts -->
+                <div class="planet-section planet-section-4 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="orange-simple"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h3 class="content-title" id="team">Team Raumsta<span class="raumstation-ti">ti</span>on: Wir bringen Menschen für Kinderrechte zusammen</h3>
+                        <img src="images/crowd.gif" alt="Team Raumstation" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1); margin: 20px 0;">
+
+                        <h4>Kinderrechte sind unser Fundament – Wertschätzung unser Prinzip</h4>
+                        <p class="content-text">Kinder sind unsere Passion, ihre Rechte der Kompass unseres Handelns. Unser Ansatz: Wertschätzen statt bewerten.</p>
+                        
+                        <p class="content-text">Was uns ausmacht: Wir arbeiten mitten im Leben. In großen Kinderrechte-Ausstellungen, in kreativen Beteiligungsprojekten, in der Zusammenarbeit mit Kitas, Schulen und Jugendhilfe. Dort erleben wir täglich, wie viel Kraft in den Ideen von Kindern steckt.</p>
+                        
+                        <p class="content-text">Diese Erfahrungen begeistern uns und treiben uns an, Theorie und Praxis so zu verbinden, dass echte Veränderungen möglich werden, für Kinder, für Fachkräfte, für die Gesellschaft.</p>
+
+                        <img src="images/galaxieraum.gif" alt="Pädagogische Expertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
+
+                <!-- ORANGE 2: Ring Planet Links -->
+                <div class="planet-section planet-section-4">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="orange-ring"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4>Unsere Kompetenz: Forschung trifft Praxis</h4>
+                        <p class="content-text">Theorie und Praxis verbinden, um Lösungen zu schaffen, die sowohl wissenschaftlich fundiert als auch alltagspraktisch sind. Unser Team vereint wissenschaftliche Forschung und praktische Erfahrung.</p>
+                        
+                        <p class="content-text">Wir entwickeln Projekte auf Basis aktueller Bildungstheorien, Didaktik und Lernpsychologie und setzen sie mit Schulen, Kitas und Institutionen erfolgreich um. Wir beraten, begleiten und schaffen Formate, die passgenau zu den Bedarfen vor Ort passen.</p>
+                        
+                        <p class="content-text">Unsere Stärke: Wir können analysieren, konzipieren und gleichzeitig anpacken.</p>
+
+                        <img src="images/november24.gif" alt="Beratungsexpertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
+
+                <!-- ORANGE 3: Solar System Rechts -->
+                <div class="planet-section planet-section-4 reverse">
+                    <div class="planet-wrapper">
+                        <div class="planet-3d" id="orange-solar"></div>
+                    </div>
+                    <div class="content-wrapper">
+                        <h4>Unsere Stärke: Methodenvielfalt mit Medienkompetenz</h4>
+                        <p class="content-text">Wir greifen auf die ganze Bandbreite pädagogischer Methoden zurück, von bewährten Formen wie Rollenspielen, kreativen Werkstätten, Projektarbeit und Gesprächsrunden bis hin zu innovativen digitalen Formaten.</p>
+                        
+                        <p class="content-text">Wir wissen, wie Kinder lernen, und setzen deshalb auf Methoden, die Neugier wecken, Beteiligung ermöglichen und nachhaltig wirken. Medien sind dabei eine wichtige Ergänzung. Interviews, QR-Codes, digitale Visualisierungen oder kreative Medienarbeit erweitern den Werkzeugkasten und eröffnen Kindern neue Ausdrucksformen.</p>
+
+                        <p class="content-text">So verbinden wir Tradition und Innovation, geben Fachkräften praxisnahe Methoden an die Hand und schaffen Ergebnisse, die sichtbar und wirksam sind.</p>
+
+                        <img src="images/november2024.gif" alt="Praxisexpertise" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255, 107, 53, 0.4); box-shadow: 0 0 15px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.15), inset 0 0 10px rgba(255, 107, 53, 0.1); margin: 20px 0;">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <a href="impressum.html">Impressum</a>
+                        <span class="footer-separator">|</span>
+                        <a href="datenschutz.html">Datenschutz</a>
+                        <span class="footer-separator">|</span>
+                        <a href="mailto:desk@diskurs-niederrhein.de">Kontakt</a>
+                    </div>
+                    <div class="footer-copyright">
+                        <p>&copy; 2025 Diskurs Niederrhein. Alle Rechte vorbehalten.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Cookie Banner -->
+        <div class="cookie-banner" id="cookieBanner">
+            <span class="close-btn" id="closeBanner">&times;</span>
+            <h3>Cookie-freie Zone!</h3>
+            <p>Medien liegen uns am Herzen – und Ihre Privatsphäre und Daten auch! Deshalb sehen wir von der Nutzung von Trackern und Cookies ab. 🚀</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Universal Starfield and Planets
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize starfield for main website
+            const starfieldContainer = document.querySelector('.main-website-stars');
+            if (starfieldContainer) {
+                starfieldContainer.id = 'main-starfield';
+                new UniversalStarfield('main-starfield');
+            }
+            
+            // Planets are auto-initialized by planet-animations.js
+            console.log('Universal animations initialized successfully');
+        });
+
+        // Cookie Banner Functionality
+        let autoCloseTimer;
+
+        function dismissCookieBanner() {
+            const banner = document.getElementById('cookieBanner');
+            banner.classList.remove('show');
+            localStorage.setItem('cookieBannerDismissed', 'true');
+
+            if (autoCloseTimer) {
+                clearTimeout(autoCloseTimer);
+            }
+        }
+
+        function checkCookieBanner() {
+            const banner = document.getElementById('cookieBanner');
+            const isDismissed = localStorage.getItem('cookieBannerDismissed') === 'true');
+
+            if (!isDismissed) {
+                setTimeout(() => {
+                    banner.classList.add('show');
+                }, 800);
+
+                autoCloseTimer = setTimeout(() => {
+                    dismissCookieBanner();
+                }, 8000);
+            }
+        }
+
+        // Mobile Hamburger Menu
+        function initMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.nav');
+            
+            if (hamburger && nav) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    nav.classList.toggle('active');
+                });
+
+                const navLinks = nav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Cookie Banner Functionality
+        let autoCloseTimer;
+
+        function dismissCookieBanner() {
+            const banner = document.getElementById('cookieBanner');
+            banner.classList.remove('show');
+            localStorage.setItem('cookieBannerDismissed', 'true');
+
+            if (autoCloseTimer) {
+                clearTimeout(autoCloseTimer);
+            }
+        }
+
+        function checkCookieBanner() {
+            const isDismissed = localStorage.getItem('cookieBannerDismissed') === 'true';
+
+            if (!isDismissed) {
+                setTimeout(() => {
+                    const banner = document.getElementById('cookieBanner');
+                    banner.classList.add('show');
+                }, 800);
+                
+                const closeBtn = document.getElementById('closeBanner');
+                closeBtn.addEventListener('click', dismissCookieBanner);
+
+                autoCloseTimer = setTimeout(() => {
+                    dismissCookieBanner();
+                }, 8000);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkCookieBanner();
+            initMobileMenu();
+            
+            // Navigation functionality
+            function scrollToSection(hash, behavior = 'smooth') {
+                const targetElement = document.querySelector(hash);
+                const header = document.querySelector('.header');
+                if (targetElement && header) {
+                    const headerHeight = header.offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerHeight;
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: behavior
+                    });
+                }
+            }
+
+            const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    scrollToSection(this.getAttribute('href'));
+                });
+            });
+
+            if (window.location.hash) {
+                setTimeout(() => {
+                    scrollToSection(window.location.hash, 'auto');
+                }, 100);
+            }
+        });
+    </script>
+    
+    <!-- Broken Image/Iframe Failover Script -->
+    <script>
+        // 1) Bilder ohne oder mit kaputter Quelle automatisch ausblenden
+        document.querySelectorAll('img').forEach((img) => {
+            const hide = () => { 
+                img.style.display = 'none'; 
+                console.warn('Hidden broken image:', img.src);
+            };
+            img.addEventListener('error', hide, { once: true });
+            if (!img.getAttribute('src') || img.getAttribute('src').trim() === '') hide();
+        });
+
+        // 2) Iframes mit Fehlern abfangen
+        document.querySelectorAll('iframe').forEach((frame) => {
+            let loaded = false;
+            const timer = setTimeout(() => {
+                if (!loaded) {
+                    frame.style.display = 'none';
+                    console.warn('Hidden unloaded iframe:', frame.src);
+                }
+            }, 4000); // wenn nach 4s nichts geladen → ausblenden
+
+            frame.addEventListener('load', () => {
+                loaded = true;
+                clearTimeout(timer);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>NRW Kompetenzstufen Animation</title>
+  <style>
+    /* Reset and base styles */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: transparent;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    /* Animation container fills entire viewport */
+    #animation-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    /* Canvas styles */
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    
+    /* Loading message */
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #4facfe;
+      font-size: 18px;
+      text-align: center;
+    }
+    
+    /* Error display */
+    .error {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #c00;
+      color: #fff;
+      padding: 10px;
+      z-index: 10000;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="animation-container">
+    <div class="loading">Lade Animation...</div>
+  </div>
+  <div class="error" id="error-display"></div>
+  
+  <!-- Include base64 textures if available -->
+  <script src="base64_texture.js"></script>
+  <!-- Include new Canvas 2D animation -->
+  <script src="canvas-animation.js"></script>
+  
+  <script>
+    // Error handler
+    window.onerror = function(message, source, lineno, colno, error) {
+      const errorDiv = document.getElementById('error-display');
+      if (errorDiv) {
+        errorDiv.style.display = 'block';
+        errorDiv.textContent = 'Fehler: ' + message + ' (Zeile ' + lineno + ')';
+      }
+      console.error('Animation Error:', message, error);
+      return false;
+    };
+    
+    // Hide loading message when animation starts
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        const loading = document.querySelector('.loading');
+        if (loading) {
+          loading.style.display = 'none';
+        }
+      }, 500);
+    });
+  </script>
+</body>
+</html>
