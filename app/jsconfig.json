@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es2020",
+        "module": "none",
+        "lib": ["es2020", "dom"],
+        "checkJs": false,
+        "allowJs": true,
+        "noEmit": true,
+        "strict": false,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": false
+    },
+    "include": [
+        "*.html",
+        "*.js",
+        "dev-config.js"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
